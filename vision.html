@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>绿岛理念 - Green Island</title>
+<script src="https://cdn.tailwindcss.com/3.4.16"></script>
+<script>tailwind.config={theme:{extend:{colors:{primary:'#4CAF50',secondary:'#8BC34A'},borderRadius:{'none':'0px','sm':'4px',DEFAULT:'8px','md':'12px','lg':'16px','xl':'20px','2xl':'24px','3xl':'32px','full':'9999px','button':'8px'}}}}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.5.0/echarts.min.js"></script>
+<style>
+:where([class^="ri-"])::before { content: "\f3c2"; }
+@keyframes fadeIn {
+0% { opacity: 0; transform: translateY(10px); }
+100% { opacity: 1; transform: translateY(0); }
+}
+.animate-fadeIn {
+animation: fadeIn 0.6s ease forwards;
+}
+.text-shadow-sm {
+text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+.text-shadow {
+text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+.text-shadow-lg {
+text-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+.bg-gradient-green {
+background: linear-gradient(135deg, rgba(46,125,50,0.9) 0%, rgba(76,175,80,0.8) 50%, rgba(139,195,74,0.7) 100%);
+}
+.bg-card {
+background-color: rgba(255, 255, 255, 0.95);
+}
+.vision-card {
+transition: all 0.3s ease;
+}
+.vision-card:hover {
+transform: translateY(-5px);
+box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+.scrollbar-hide::-webkit-scrollbar {
+display: none;
+}
+.scrollbar-hide {
+-ms-overflow-style: none;
+scrollbar-width: none;
+}
+</style>
+</head>
+<body class="bg-white font-sans">
+<!-- 顶部导航栏 -->
+<header class="fixed top-0 left-0 w-full bg-white/90 backdrop-blur-sm shadow-sm z-50">
+<div class="flex items-center px-4 py-3">
+<a href=""  class="w-8 h-8 flex items-center justify-center text-primary cursor-pointer">
+<i class="ri-arrow-left-line text-xl"></i>
+</a>
+<h1 class="text-lg font-medium text-center flex-1">绿岛理念</h1>
+<div id="shareBtn" class="w-8 h-8 flex items-center justify-center text-primary cursor-pointer">
+</div>
+<!-- Share Menu Dialog -->
+<div id="shareMenu" class="fixed inset-0 bg-black/50 z-50 hidden">
+<div class="fixed bottom-0 left-0 right-0 bg-white rounded-t-2xl p-6 animate-fadeIn">
+<div class="flex justify-between items-center mb-4">
+<h3 class="text-lg font-medium">分享到</h3>
+<button id="closeShareMenu" class="w-8 h-8 flex items-center justify-center text-gray-500">
+<i class="ri-close-line text-xl"></i>
+</button>
+</div>
+<div class="flex items-center justify-around mb-6">
+<button class="share-option flex flex-col items-center" data-platform="wechat">
+<div class="w-12 h-12 bg-[#07C160] rounded-full flex items-center justify-center mb-1">
+<i class="ri-wechat-fill text-white text-2xl"></i>
+</div>
+<span class="text-xs">微信</span>
+</button>
+<button class="share-option flex flex-col items-center" data-platform="moments">
+<div class="w-12 h-12 bg-[#07C160] rounded-full flex items-center justify-center mb-1">
+<i class="ri-wechat-moments-fill text-white text-2xl"></i>
+</div>
+<span class="text-xs">朋友圈</span>
+</button>
+<button class="share-option flex flex-col items-center" data-platform="qq">
+<div class="w-12 h-12 bg-[#12B7F5] rounded-full flex items-center justify-center mb-1">
+<i class="ri-qq-fill text-white text-2xl"></i>
+</div>
+<span class="text-xs">QQ</span>
+</button>
+<button class="share-option flex flex-col items-center" data-platform="weibo">
+<div class="w-12 h-12 bg-[#FF8200] rounded-full flex items-center justify-center mb-1">
+<i class="ri-weibo-fill text-white text-2xl"></i>
+</div>
+<span class="text-xs">微博</span>
+</button>
+</div>
+<div class="bg-gray-50 rounded-lg p-4 mb-6">
+<div class="flex items-start space-x-3">
+<img src="https://readdy.ai/api/search-image?query=Sustainable%20eco-friendly%20community%20with%20modern%20green%20buildings%20and%20solar%20panels%2C%20minimalist%20illustration%20style&width=80&height=80&seq=share_preview&orientation=squarish" class="w-20 h-20 rounded-lg object-cover" alt="绿岛预览图">
+<div class="flex-1">
+<h4 class="font-medium mb-1">绿岛理念</h4>
+<p class="text-sm text-gray-600 line-clamp-2">在绿岛，每一个环保行为都被记录和鼓励，让我们共同创造一个可持续发展的未来。</p>
+</div>
+</div>
+</div>
+<button id="copyLink" class="w-full py-3 bg-gray-100 text-gray-700 rounded-button flex items-center justify-center space-x-2">
+<i class="ri-links-line"></i>
+<span>复制链接</span>
+</button>
+</div>
+</div>
+</div>
+</header>
+<!-- 主内容区域 -->
+<main class="pt-14 pb-16">
+<!-- 顶部视觉区域 -->
+<section class="relative h-[280px] overflow-hidden">
+<img src="https://static.readdy.ai/image/8a17cb5c2119510729cbd5c13557ee5c/289fafb35fa0670134790cd6291dabd8.jpeg" class="w-full h-full object-cover" alt="绿岛鸟瞰图">
+<div class="absolute inset-0 bg-gradient-green"></div>
+<div class="absolute inset-0 flex flex-col justify-end p-6 pl-8">
+<h2 class="text-3xl font-['Pacifico'] text-white text-shadow-lg mb-2">绿岛，为你定制的零碳未来</h2>
+<p class="text-lg text-white/90 text-shadow-sm italic">我们不是逃离城市，而是重启文明。</p>
+</div>
+</section>
+<!-- 理念主张文案段落 -->
+<section class="px-5 py-6 bg-card -mt-4 rounded-t-3xl shadow-sm relative z-10 animate-fadeIn">
+<div class="border-l-4 border-primary pl-4 py-1 mb-4">
+<h3 class="text-xl font-medium text-primary">绿岛理念</h3>
+</div>
+<p class="text-gray-700 leading-relaxed mb-4">
+在纷扰的世界之外，绿岛应运而生。它不仅是一座岛，更是一种生活方式的承诺。我们相信，自然不应被补救，而应被拥护；环境不是口号，而是日常。
+</p>
+<p class="text-gray-700 leading-relaxed mb-4">
+在绿岛，每一口呼吸都经过智能调控，每一滴水都被温柔回收，每一项行动都有绿色反馈。垃圾不是负担，它是再生的起点；能量不是耗费，它是社区间温柔的流动。
+</p>
+<p class="text-gray-700 leading-relaxed mb-4">
+我们构建的不只是住宅，而是一种高效、温暖、被算法保护的生态亲密关系。这里没有汽车，没有噪音，没有能源浪费——只有风的低语、阳光的数据，以及你与未来的共同节律。
+</p>
+<p class="text-gray-700 leading-relaxed">
+绿岛不是城市的替代，它是文明的进化。搬来绿岛，不是逃避现实，而是拥抱理想。我们欢迎每一个渴望被善待、愿意善待地球的你。
+</p>
+</section>
+<!-- 我们的理念 -->
+<section class="px-5 py-6 bg-white">
+<div class="flex justify-between items-center mb-5">
+<h3 class="text-xl font-medium text-primary">我们的理念 · Our Vision</h3>
+<div class="flex items-center space-x-1">
+<button class="scroll-left w-6 h-6 flex items-center justify-center text-primary bg-primary/10 rounded-full">
+<i class="ri-arrow-left-s-line"></i>
+</button>
+<button class="scroll-right w-6 h-6 flex items-center justify-center text-primary bg-primary/10 rounded-full">
+<i class="ri-arrow-right-s-line"></i>
+</button>
+</div>
+</div>
+<div class="overflow-x-auto scrollbar-hide -mx-5 px-5 scroll-smooth">
+<div class="flex space-x-4 min-w-max pb-2">
+<div class="vision-card bg-white rounded-lg shadow-md p-5 w-[250px]">
+<div class="w-14 h-14 flex items-center justify-center bg-primary/10 rounded-full mb-4">
+<i class="ri-recycle-line text-2xl text-primary"></i>
+</div>
+<h4 class="text-lg font-medium mb-2">可持续即日常</h4>
+<p class="text-gray-600 text-sm">在绿岛，资源循环不只是制度，更是生活方式的一部分。每一个居民的日常行为都与可持续发展紧密相连。</p>
+</div>
+<div class="vision-card bg-white rounded-lg shadow-md p-5 w-[250px]">
+<div class="w-14 h-14 flex items-center justify-center bg-primary/10 rounded-full mb-4">
+<i class="ri-plant-line text-2xl text-primary"></i>
+</div>
+<h4 class="text-lg font-medium mb-2">生态是一种信仰</h4>
+<p class="text-gray-600 text-sm">我们相信环境不是负担，而是福祉的起点。绿岛的每一项设计都以生态平衡为核心价值。</p>
+</div>
+<div class="vision-card bg-white rounded-lg shadow-md p-5 w-[250px]">
+<div class="w-14 h-14 flex items-center justify-center bg-primary/10 rounded-full mb-4">
+<i class="ri-community-line text-2xl text-primary"></i>
+</div>
+<h4 class="text-lg font-medium mb-2">集体即幸福</h4>
+<p class="text-gray-600 text-sm">绿岛摒弃传统都市孤岛，构建互助的生态社群。我们相信真正的幸福来自于共同体的力量。</p>
+</div>
+</div>
+</div>
+</section>
+<!-- 绿色成就数据展示 -->
+<section class="px-5 py-6 bg-gray-50">
+<h3 class="text-xl font-medium text-primary mb-5">绿色成就</h3>
+<div class="grid grid-cols-2 gap-4">
+<div class="bg-white rounded-lg shadow-sm p-4" id="airPurityChart">
+<h4 class="text-sm font-medium text-gray-600 mb-2">空气纯度指数</h4>
+<div class="h-[120px]"></div>
+<p class="text-2xl font-medium text-primary text-center mt-2">99.998%</p>
+</div>
+<div class="bg-white rounded-lg shadow-sm p-4" id="recycleRateChart">
+<h4 class="text-sm font-medium text-gray-600 mb-2">垃圾资源化率</h4>
+<div class="h-[120px]"></div>
+<p class="text-2xl font-medium text-primary text-center mt-2">100%</p>
+</div>
+<div class="bg-white rounded-lg shadow-sm p-4" id="greenCoverageChart">
+<h4 class="text-sm font-medium text-gray-600 mb-2">绿色覆盖率</h4>
+<div class="h-[120px]"></div>
+<p class="text-2xl font-medium text-primary text-center mt-2">103.7%</p>
+</div>
+<div class="bg-white rounded-lg shadow-sm p-4" id="carbonOutputChart">
+<h4 class="text-sm font-medium text-gray-600 mb-2">居民碳输出</h4>
+<div class="h-[120px]"></div>
+<p class="text-2xl font-medium text-primary text-center mt-2">-1.2kg/人/日</p>
+</div>
+</div>
+<p class="text-center text-gray-600 italic mt-4">在绿岛，每个数据不只可测量，更可骄傲。</p>
+</section>
+<!-- 业主感言区 -->
+<section class="px-5 py-6 bg-white">
+<div class="flex justify-between items-center mb-5">
+<h3 class="text-xl font-medium text-primary">业主感言</h3>
+<div class="flex items-center space-x-1">
+<button class="scroll-left w-6 h-6 flex items-center justify-center text-primary bg-primary/10 rounded-full">
+<i class="ri-arrow-left-s-line"></i>
+</button>
+<button class="scroll-right w-6 h-6 flex items-center justify-center text-primary bg-primary/10 rounded-full">
+<i class="ri-arrow-right-s-line"></i>
+</button>
+</div>
+</div>
+<div class="overflow-x-auto scrollbar-hide -mx-5 px-5 scroll-smooth">
+<div class="flex space-x-4 min-w-max pb-2">
+<div class="bg-gradient-to-br from-primary/10 to-secondary/5 rounded-lg p-5 w-[280px]">
+<div class="flex items-center mb-4">
+<img src="https://readdy.ai/api/search-image?query=Professional%20headshot%20of%20a%20middle-aged%20Asian%20woman%20with%20short%20hair%2C%20natural%20makeup%2C%20warm%20smile%2C%20neutral%20background%2C%20high%20quality%20portrait&width=48&height=48&seq=resident1&orientation=squarish" class="w-12 h-12 rounded-full border-2 border-white shadow-md" alt="居民头像">
+<div class="ml-3">
+<h4 class="font-medium">张雅琴</h4>
+<p class="text-xs text-gray-600">绿岛居民 · 2年</p>
+</div>
+</div>
+<p class="text-gray-700 italic">"搬来绿岛的第一天，我的孩子就说，这里像一片安静又聪明的森林。每天醒来，呼吸着纯净的空气，感觉生活重获新生。"</p>
+</div>
+<div class="bg-gradient-to-br from-primary/10 to-secondary/5 rounded-lg p-5 w-[280px]">
+<div class="flex items-center mb-4">
+<img src="https://readdy.ai/api/search-image?query=Professional%20headshot%20of%20a%20young%20Asian%20man%20with%20glasses%2C%20business%20casual%20attire%2C%20confident%20smile%2C%20clean%20background%2C%20high%20quality%20portrait&width=48&height=48&seq=resident2&orientation=squarish" class="w-12 h-12 rounded-full border-2 border-white shadow-md" alt="居民头像">
+<div class="ml-3">
+<h4 class="font-medium">刘明哲</h4>
+<p class="text-xs text-gray-600">绿岛居民 · 1年</p>
+</div>
+</div>
+<p class="text-gray-700 italic">"绿色信用评分系统让我对生活有了全新目标感。每一个环保行为都被记录和鼓励，让我感到自己正在为地球做出实际贡献。"</p>
+</div>
+<div class="bg-gradient-to-br from-primary/10 to-secondary/5 rounded-lg p-5 w-[280px]">
+<div class="flex items-center mb-4">
+<img src="https://readdy.ai/api/search-image?query=Professional%20headshot%20of%20an%20elderly%20Asian%20couple%2C%20warm%20smiles%2C%20casual%20elegant%20clothing%2C%20soft%20lighting%2C%20neutral%20background%2C%20high%20quality%20portrait&width=48&height=48&seq=resident3&orientation=squarish" class="w-12 h-12 rounded-full border-2 border-white shadow-md" alt="居民头像">
+<div class="ml-3">
+<h4 class="font-medium">王家夫妇</h4>
+<p class="text-xs text-gray-600">绿岛居民 · 3年</p>
+</div>
+</div>
+<p class="text-gray-700 italic">"我们不种花，我们种的是共同体的根。在绿岛，邻里关系不再是点头之交，而是真正的生活共同体，彼此支持，共同成长。"</p>
+</div>
+<div class="bg-gradient-to-br from-primary/10 to-secondary/5 rounded-lg p-5 w-[280px]">
+<div class="flex items-center mb-4">
+<img src="https://readdy.ai/api/search-image?query=Professional%20headshot%20of%20a%20young%20Asian%20woman%20in%20her%2030s%2C%20business%20professional%2C%20thoughtful%20expression%2C%20minimalist%20background%2C%20high%20quality%20portrait&width=48&height=48&seq=resident4&orientation=squarish" class="w-12 h-12 rounded-full border-2 border-white shadow-md" alt="居民头像">
+<div class="ml-3">
+<h4 class="font-medium">林思远</h4>
+<p class="text-xs text-gray-600">绿岛居民 · 1.5年</p>
+</div>
+</div>
+<p class="text-gray-700 italic">"搬到绿岛以后，我开始重新理解了'责任'这个词。每天的低碳选择，像晨练一样自然。在这里，环保不是负担，而是生活的律动。"</p>
+</div>
+<div class="bg-gradient-to-br from-primary/10 to-secondary/5 rounded-lg p-5 w-[280px]">
+<div class="flex items-center mb-4">
+<img src="https://readdy.ai/api/search-image?query=Professional%20headshot%20of%20a%20middle-aged%20Asian%20man%2C%20casual%20smart%20attire%2C%20genuine%20smile%2C%20environmental%20background%2C%20high%20quality%20portrait&width=48&height=48&seq=resident5&orientation=squarish" class="w-12 h-12 rounded-full border-2 border-white shadow-md" alt="居民头像">
+<div class="ml-3">
+<h4 class="font-medium">陈志远</h4>
+<p class="text-xs text-gray-600">绿岛居民 · 2年</p>
+</div>
+</div>
+<p class="text-gray-700 italic">"离开城市喧嚣来到绿岛，仿佛人生按下了重启键。我终于可以为地球而活，而不是为忙碌而活。这里的每一天都充满了意义。"</p>
+</div>
+<div class="bg-gradient-to-br from-primary/10 to-secondary/5 rounded-lg p-5 w-[280px]">
+<div class="flex items-center mb-4">
+<img src="https://readdy.ai/api/search-image?query=Professional%20headshot%20of%20a%20mature%20Asian%20woman%2C%20artistic%20style%2C%20serene%20expression%2C%20eco-friendly%20background%2C%20high%20quality%20portrait&width=48&height=48&seq=resident6&orientation=squarish" class="w-12 h-12 rounded-full border-2 border-white shadow-md" alt="居民头像">
+<div class="ml-3">
+<h4 class="font-medium">郑美玲</h4>
+<p class="text-xs text-gray-600">绿岛居民 · 2.5年</p>
+</div>
+</div>
+<p class="text-gray-700 italic">"绿岛教会我，最美的风景不是自然生成的，而是我们共同维护、共同创造的。这里的每个人都在用行动诠释着美好。"</p>
+</div>
+</div>
+</div>
+</section>
+<!-- 绿岛六条信仰 -->
+<section class="px-5 py-6 bg-gray-50">
+<h3 class="text-xl font-medium text-primary mb-5">绿岛六条信仰</h3>
+<div class="space-y-4">
+<div class="bg-white rounded-lg shadow-sm p-4 flex">
+<div class="w-10 h-10 flex items-center justify-center bg-primary text-white rounded-full font-medium mr-4 flex-shrink-0">1</div>
+<div>
+<h4 class="font-medium text-lg">绿色至上</h4>
+<p class="text-gray-600 text-sm italic mt-1">环保不是选择，而是必然。</p>
+</div>
+</div>
+<div class="bg-white rounded-lg shadow-sm p-4 flex">
+<div class="w-10 h-10 flex items-center justify-center bg-primary text-white rounded-full font-medium mr-4 flex-shrink-0">2</div>
+<div>
+<h4 class="font-medium text-lg">行为同化</h4>
+<p class="text-gray-600 text-sm italic mt-1">集体的力量源于一致的行动。</p>
+</div>
+</div>
+<div class="bg-white rounded-lg shadow-sm p-4 flex">
+<div class="w-10 h-10 flex items-center justify-center bg-primary text-white rounded-full font-medium mr-4 flex-shrink-0">3</div>
+<div>
+<h4 class="font-medium text-lg">思想简化</h4>
+<p class="text-gray-600 text-sm italic mt-1">思想愈清，生态愈纯。</p>
+</div>
+</div>
+<div class="bg-white rounded-lg shadow-sm p-4 flex">
+<div class="w-10 h-10 flex items-center justify-center bg-primary text-white rounded-full font-medium mr-4 flex-shrink-0">4</div>
+<div>
+<h4 class="font-medium text-lg">节制是美德</h4>
+<p class="text-gray-600 text-sm italic mt-1">少即是多，节约即是创造。</p>
+</div>
+</div>
+<div class="bg-white rounded-lg shadow-sm p-4 flex">
+<div class="w-10 h-10 flex items-center justify-center bg-primary text-white rounded-full font-medium mr-4 flex-shrink-0">5</div>
+<div>
+<h4 class="font-medium text-lg">数据即诚实</h4>
+<p class="text-gray-600 text-sm italic mt-1">透明的数据是绿色生活的基础。</p>
+</div>
+</div>
+<div class="bg-white rounded-lg shadow-sm p-4 flex">
+<div class="w-10 h-10 flex items-center justify-center bg-primary text-white rounded-full font-medium mr-4 flex-shrink-0">6</div>
+<div>
+<h4 class="font-medium text-lg">反馈即正义</h4>
+<p class="text-gray-600 text-sm italic mt-1">每一个环保行为都应得到及时反馈。</p>
+</div>
+</div>
+</div>
+</section>
+<!-- 发展历程 -->
+<section class="px-5 py-6 bg-white">
+<h3 class="text-xl font-medium text-primary mb-5">绿岛发展历程</h3>
+<div class="relative">
+<div class="absolute left-4 top-0 bottom-0 w-0.5 bg-primary/20"></div>
+<div class="space-y-8">
+<div class="relative pl-12">
+<div class="absolute left-0 w-8 h-8 bg-primary rounded-full flex items-center justify-center text-white">
+<i class="ri-flag-line"></i>
+</div>
+<div class="bg-primary/5 rounded-lg p-4">
+<h4 class="font-medium">2020 - 概念诞生</h4>
+<p class="text-sm text-gray-600 mt-2">绿岛概念由一群环保建筑师和可持续发展专家共同提出，旨在创建一个完全自给自足的生态社区。</p>
+</div>
+</div>
+<div class="relative pl-12">
+<div class="absolute left-0 w-8 h-8 bg-primary rounded-full flex items-center justify-center text-white">
+<i class="ri-draft-line"></i>
+</div>
+<div class="bg-primary/5 rounded-lg p-4">
+<h4 class="font-medium">2021 - 规划设计</h4>
+<p class="text-sm text-gray-600 mt-2">完成绿岛总体规划设计，包括零碳建筑、可再生能源系统、水资源循环利用和社区共享空间等。</p>
+</div>
+</div>
+<div class="relative pl-12">
+<div class="absolute left-0 w-8 h-8 bg-primary rounded-full flex items-center justify-center text-white">
+<i class="ri-building-line"></i>
+</div>
+<div class="bg-primary/5 rounded-lg p-4">
+<h4 class="font-medium">2022 - 开工建设</h4>
+<p class="text-sm text-gray-600 mt-2">绿岛项目正式开工，采用100%可持续材料，建设过程中实现零废弃物排放。</p>
+</div>
+</div>
+<div class="relative pl-12">
+<div class="absolute left-0 w-8 h-8 bg-primary rounded-full flex items-center justify-center text-white">
+<i class="ri-home-heart-line"></i>
+</div>
+<div class="bg-primary/5 rounded-lg p-4">
+<h4 class="font-medium">2023 - 首批入住</h4>
+<p class="text-sm text-gray-600 mt-2">首批50户居民入住绿岛，开始实践绿色生活方式，建立社区共享经济系统。</p>
+</div>
+</div>
+<div class="relative pl-12">
+<div class="absolute left-0 w-8 h-8 bg-primary rounded-full flex items-center justify-center text-white">
+<i class="ri-award-line"></i>
+</div>
+<div class="bg-primary/5 rounded-lg p-4">
+<h4 class="font-medium">2024 - 获得认证</h4>
+<p class="text-sm text-gray-600 mt-2">绿岛获得国际LEED白金级认证和零碳社区认证，成为亚洲首个完全自给自足的生态社区。</p>
+</div>
+</div>
+<div class="relative pl-12">
+<div class="absolute left-0 w-8 h-8 bg-primary rounded-full flex items-center justify-center text-white">
+<i class="ri-global-line"></i>
+</div>
+<div class="bg-primary/5 rounded-lg p-4">
+<h4 class="font-medium">2025 - 全面运营</h4>
+<p class="text-sm text-gray-600 mt-2">绿岛社区全面运营，居民数量达到300户，社区服务设施完善，开始接待全球生态旅游参观者。</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 未来规划 -->
+<section class="px-5 py-6 bg-gray-50">
+<h3 class="text-xl font-medium text-primary mb-5">绿岛未来规划</h3>
+<div class="bg-white rounded-lg shadow-sm p-5">
+<div class="flex items-center mb-4">
+<div class="w-12 h-12 flex items-center justify-center bg-primary/10 rounded-full mr-4">
+<i class="ri-expand-line text-2xl text-primary"></i>
+</div>
+<h4 class="text-lg font-medium">扩建计划</h4>
+</div>
+<p class="text-gray-600 mb-4">计划在2026年开始绿岛二期建设，预计新增200户居住单元，同时扩大社区共享空间和绿色能源设施。</p>
+<div class="flex items-center mb-4 mt-6">
+<div class="w-12 h-12 flex items-center justify-center bg-primary/10 rounded-full mr-4">
+<i class="ri-seedling-line text-2xl text-primary"></i>
+</div>
+<h4 class="text-lg font-medium">生态研究中心</h4>
+</div>
+<p class="text-gray-600 mb-4">2027年将建成绿岛生态研究中心，专注于可持续生活方式研究和技术创新，向全球分享绿岛经验。</p>
+<div class="flex items-center mb-4 mt-6">
+<div class="w-12 h-12 flex items-center justify-center bg-primary/10 rounded-full mr-4">
+<i class="ri-earth-line text-2xl text-primary"></i>
+</div>
+<h4 class="text-lg font-medium">国际推广</h4>
+</div>
+<p class="text-gray-600">计划到2030年，在全球5个不同气候区域复制绿岛模式，建立绿岛国际联盟，推动可持续社区建设全球化。</p>
+</div>
+</section>
+<!-- 入驻申请按钮 -->
+<section class="px-5 py-8 bg-white">
+<button id="applyBtn" class="w-full py-4 bg-gradient-to-r from-primary to-secondary text-white font-medium rounded-button shadow-lg flex items-center justify-center !rounded-button cursor-pointer">
+<i class="ri-home-heart-line mr-2"></i>
+我想成为绿岛居民
+</button>
+</section>
+</main>
+<!-- 底部导航栏 -->
+<footer class="fixed bottom-0 left-0 w-full bg-white border-t border-gray-200 z-50">
+<div class="grid grid-cols-4 h-14">
+<a href=""  class="flex flex-col items-center justify-center cursor-pointer text-gray-500">
+<div class="w-6 h-6 flex items-center justify-center">
+<i class="ri-home-5-line"></i>
+</div>
+<span class="text-xs mt-0.5">首页</span>
+</a>
+<a href=""  class="flex flex-col items-center justify-center cursor-pointer text-gray-500">
+<div class="w-6 h-6 flex items-center justify-center">
+<i class="ri-qr-code-line"></i>
+</div>
+<span class="text-xs mt-0.5">园区码</span>
+</a>
+<a href="#" class="flex flex-col items-center justify-center cursor-pointer text-primary">
+<div class="w-6 h-6 flex items-center justify-center">
+<i class="ri-leaf-fill"></i>
+</div>
+<span class="text-xs mt-0.5">绿岛理念</span>
+</a>
+<a href=""  class="flex flex-col items-center justify-center cursor-pointer text-gray-500">
+<div class="w-6 h-6 flex items-center justify-center">
+<i class="ri-user-line"></i>
+</div>
+<span class="text-xs mt-0.5">我的</span>
+</a>
+</div>
+</footer>
+<!-- 园区码弹窗 -->
+<div id="qrCodeModal" class="fixed inset-0 bg-black/50 z-50 hidden flex items-center justify-center">
+<div class="bg-white rounded-2xl w-[320px] p-6 relative animate-fadeIn">
+<button id="closeQrCodeBtn" class="absolute right-4 top-4 w-8 h-8 flex items-center justify-center text-gray-500">
+<i class="ri-close-line text-xl"></i>
+</button>
+<h3 class="text-xl font-medium text-center mb-2">绿岛园区码</h3>
+<p class="text-gray-600 text-sm text-center mb-6">扫描此码访问绿岛园区</p>
+<div class="w-48 h-48 mx-auto mb-6 bg-gray-100 rounded-lg flex items-center justify-center">
+<img src="https://readdy.ai/api/search-image?query=QR%20code%20with%20green%20island%20logo%20in%20center%2C%20minimalist%20design%2C%20high%20contrast&width=192&height=192&seq=qrcode&orientation=squarish" alt="绿岛园区码" class="w-full h-full object-cover rounded-lg">
+</div>
+<div class="flex space-x-3">
+<button id="saveQrCodeBtn" class="flex-1 py-3 bg-primary/10 text-primary font-medium rounded-button flex items-center justify-center">
+<i class="ri-download-line mr-1"></i>保存二维码
+</button>
+<button id="shareQrCodeBtn" class="flex-1 py-3 bg-primary text-white font-medium rounded-button flex items-center justify-center">
+<i class="ri-share-line mr-1"></i>分享
+</button>
+</div>
+</div>
+</div>
+<!-- 申请表单弹窗 -->
+<div id="applyModal" class="fixed inset-0 bg-black/50 z-50 hidden flex items-end justify-center">
+<div class="bg-white rounded-t-2xl w-full max-h-[80%] overflow-y-auto animate-fadeIn">
+<div class="p-5">
+<div class="flex justify-between items-center mb-6">
+<h3 class="text-xl font-medium">绿岛居民申请</h3>
+<button id="closeModalBtn" class="w-8 h-8 flex items-center justify-center text-gray-500 cursor-pointer">
+<i class="ri-close-line text-xl"></i>
+</button>
+</div>
+<form id="applyForm" class="space-y-5">
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-1">姓名</label>
+<input type="text" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-primary" placeholder="请输入您的真实姓名">
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-1">联系电话</label>
+<input type="tel" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-primary" placeholder="请输入您的联系电话">
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-1">当前城市</label>
+<input type="text" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-primary" placeholder="请输入您当前居住的城市">
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-1">家庭成员数量</label>
+<input type="number" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-primary" placeholder="请输入您的家庭成员数量">
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-1">您的环保经验</label>
+<textarea class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-primary h-24" placeholder="请描述您的环保经验和理念"></textarea>
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-1">您为什么想加入绿岛社区？</label>
+<textarea class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-primary h-24" placeholder="请描述您加入绿岛社区的原因和期望"></textarea>
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-2">您愿意接受绿岛社区的生活方式吗？</label>
+<div class="flex items-center space-x-4">
+<label class="flex items-center">
+<input type="radio" name="accept" value="yes" class="mr-2">
+<span>是，我完全接受</span>
+</label>
+<label class="flex items-center">
+<input type="radio" name="accept" value="no" class="mr-2">
+<span>需要进一步了解</span>
+</label>
+</div>
+</div>
+<button type="submit" class="w-full py-4 bg-gradient-to-r from-primary to-secondary text-white font-medium rounded-button shadow-md !rounded-button cursor-pointer">
+提交申请
+</button>
+</form>
+</div>
+</div>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+// 初始化滑动指示器
+function initScrollIndicators() {
+const scrollContainers = document.querySelectorAll('.overflow-x-auto');
+const dotContainers = document.querySelectorAll('#visionDots, #testimonialDots, #newsDots');
+scrollContainers.forEach((container, index) => {
+const scrollLeftBtn = container.parentElement.querySelector('.scroll-left');
+const scrollRightBtn = container.parentElement.querySelector('.scroll-right');
+const dots = dotContainers[index]?.children || [];
+const cards = container.querySelector('.flex').children;
+const cardWidth = cards[0]?.offsetWidth || 0;
+if (scrollLeftBtn && scrollRightBtn) {
+scrollLeftBtn.addEventListener('click', () => {
+container.scrollBy({
+left: -cardWidth,
+behavior: 'smooth'
+});
+});
+scrollRightBtn.addEventListener('click', () => {
+container.scrollBy({
+left: cardWidth,
+behavior: 'smooth'
+});
+});
+container.addEventListener('scroll', () => {
+const isAtStart = container.scrollLeft === 0;
+const isAtEnd = container.scrollLeft + container.offsetWidth >= container.scrollWidth;
+scrollLeftBtn.style.opacity = isAtStart ? '0.5' : '1';
+scrollRightBtn.style.opacity = isAtEnd ? '0.5' : '1';
+});
+}
+container.addEventListener('scroll', () => {
+const scrollPosition = container.scrollLeft;
+const activeIndex = Math.round(scrollPosition / cardWidth);
+Array.from(dots).forEach((dot, i) => {
+if (i === activeIndex) {
+dot.classList.remove('bg-gray-300');
+dot.classList.add('bg-primary');
+} else {
+dot.classList.remove('bg-primary');
+dot.classList.add('bg-gray-300');
+}
+});
+});
+});
+}
+// 初始化图表
+function initCharts() {
+// 空气纯度指数图表
+const airPurityChart = echarts.init(document.getElementById('airPurityChart').querySelector('.h-\\[120px\\]'));
+airPurityChart.setOption({
+series: [{
+type: 'gauge',
+progress: {
+show: true,
+width: 10
+},
+axisLine: {
+lineStyle: {
+width: 10,
+color: [[1, '#E8F5E9']]
+}
+},
+axisTick: { show: false },
+splitLine: { show: false },
+axisLabel: { show: false },
+anchor: { show: false },
+pointer: { show: false },
+detail: { show: false },
+data: [{ value: 99.998 }],
+radius: '100%',
+startAngle: 90,
+endAngle: -270,
+itemStyle: {
+color: '#4CAF50'
+}
+}]
+});
+// 垃圾资源化率图表
+const recycleRateChart = echarts.init(document.getElementById('recycleRateChart').querySelector('.h-\\[120px\\]'));
+recycleRateChart.setOption({
+series: [{
+type: 'gauge',
+progress: {
+show: true,
+width: 10
+},
+axisLine: {
+lineStyle: {
+width: 10,
+color: [[1, '#E8F5E9']]
+}
+},
+axisTick: { show: false },
+splitLine: { show: false },
+axisLabel: { show: false },
+anchor: { show: false },
+pointer: { show: false },
+detail: { show: false },
+data: [{ value: 100 }],
+radius: '100%',
+startAngle: 90,
+endAngle: -270,
+itemStyle: {
+color: '#4CAF50'
+}
+}]
+});
+// 绿色覆盖率图表
+const greenCoverageChart = echarts.init(document.getElementById('greenCoverageChart').querySelector('.h-\\[120px\\]'));
+greenCoverageChart.setOption({
+series: [{
+type: 'gauge',
+progress: {
+show: true,
+width: 10
+},
+axisLine: {
+lineStyle: {
+width: 10,
+color: [[1, '#E8F5E9']]
+}
+},
+axisTick: { show: false },
+splitLine: { show: false },
+axisLabel: { show: false },
+anchor: { show: false },
+pointer: { show: false },
+detail: { show: false },
+data: [{ value: 103.7 }],
+radius: '100%',
+startAngle: 90,
+endAngle: -270,
+itemStyle: {
+color: '#4CAF50'
+}
+}]
+});
+// 居民碳输出图表
+const carbonOutputChart = echarts.init(document.getElementById('carbonOutputChart').querySelector('.h-\\[120px\\]'));
+carbonOutputChart.setOption({
+series: [{
+type: 'gauge',
+progress: {
+show: true,
+width: 10
+},
+axisLine: {
+lineStyle: {
+width: 10,
+color: [[1, '#E8F5E9']]
+}
+},
+axisTick: { show: false },
+splitLine: { show: false },
+axisLabel: { show: false },
+anchor: { show: false },
+pointer: { show: false },
+detail: { show: false },
+data: [{ value: 90 }],
+radius: '100%',
+startAngle: 90,
+endAngle: -270,
+itemStyle: {
+color: '#4CAF50'
+}
+}]
+});
+// 窗口大小变化时重新调整图表大小
+window.addEventListener('resize', function() {
+airPurityChart.resize();
+recycleRateChart.resize();
+greenCoverageChart.resize();
+carbonOutputChart.resize();
+});
+}
+// 初始化弹窗
+function initModal() {
+const applyBtn = document.getElementById('applyBtn');
+const applyModal = document.getElementById('applyModal');
+const closeModalBtn = document.getElementById('closeModalBtn');
+const applyForm = document.getElementById('applyForm');
+applyBtn.addEventListener('click', function() {
+applyModal.classList.remove('hidden');
+document.body.style.overflow = 'hidden';
+});
+closeModalBtn.addEventListener('click', function() {
+applyModal.classList.add('hidden');
+document.body.style.overflow = 'auto';
+});
+applyModal.addEventListener('click', function(e) {
+if (e.target === applyModal) {
+applyModal.classList.add('hidden');
+document.body.style.overflow = 'auto';
+}
+});
+applyForm.addEventListener('submit', function(e) {
+e.preventDefault();
+const inputs = applyForm.querySelectorAll('input[type="text"], input[type="tel"], input[type="number"], textarea');
+const acceptRadio = applyForm.querySelector('input[name="accept"][value="yes"]');
+let isValid = true;
+inputs.forEach(input => {
+if (!input.value.trim()) {
+isValid = false;
+input.classList.add('border-red-500');
+} else {
+input.classList.remove('border-red-500');
+}
+});
+if (!acceptRadio.checked) {
+isValid = false;
+acceptRadio.closest('div').classList.add('text-red-500');
+} else {
+acceptRadio.closest('div').classList.remove('text-red-500');
+}
+if (!isValid) {
+const errorToast = document.createElement('div');
+errorToast.className = 'fixed top-20 left-1/2 transform -translate-x-1/2 bg-red-500 text-white px-6 py-3 rounded-lg shadow-lg z-50 animate-fadeIn';
+errorToast.textContent = '请填写所有必填项并确认接受绿岛社区生活方式';
+document.body.appendChild(errorToast);
+setTimeout(() => {
+errorToast.style.opacity = '0';
+errorToast.style.transform = 'translate(-50%, -10px)';
+errorToast.style.transition = 'opacity 0.5s, transform 0.5s';
+setTimeout(() => {
+document.body.removeChild(errorToast);
+}, 500);
+}, 3000);
+return;
+}
+applyModal.classList.add('hidden');
+document.body.style.overflow = 'auto';
+const successToast = document.createElement('div');
+successToast.className = 'fixed top-20 left-1/2 transform -translate-x-1/2 bg-primary text-white px-6 py-3 rounded-lg shadow-lg z-50 animate-fadeIn';
+successToast.textContent = '申请已提交，我们将尽快与您联系！';
+document.body.appendChild(successToast);
+setTimeout(() => {
+successToast.style.opacity = '0';
+successToast.style.transform = 'translate(-50%, -10px)';
+successToast.style.transition = 'opacity 0.5s, transform 0.5s';
+setTimeout(() => {
+document.body.removeChild(successToast);
+}, 500);
+}, 3000);
+applyForm.reset();
+});
+inputs.forEach(input => {
+input.addEventListener('input', function() {
+if (input.value.trim()) {
+input.classList.remove('border-red-500');
+}
+});
+});
+}
+// 动态调整内容区域高度，避免被底部导航栏遮挡
+const main = document.querySelector('main');
+const footer = document.querySelector('footer');
+const footerHeight = footer.offsetHeight;
+main.style.paddingBottom = `${footerHeight + 16}px`;
+// 初始化园区码弹窗
+function initQrCodeModal() {
+const qrCodeModal = document.getElementById('qrCodeModal');
+const closeQrCodeBtn = document.getElementById('closeQrCodeBtn');
+const saveQrCodeBtn = document.getElementById('saveQrCodeBtn');
+const shareQrCodeBtn = document.getElementById('shareQrCodeBtn');
+closeQrCodeBtn.addEventListener('click', function() {
+qrCodeModal.classList.add('hidden');
+document.body.style.overflow = 'auto';
+});
+qrCodeModal.addEventListener('click', function(e) {
+if (e.target === qrCodeModal) {
+qrCodeModal.classList.add('hidden');
+document.body.style.overflow = 'auto';
+}
+});
+saveQrCodeBtn.addEventListener('click', function() {
+const successToast = document.createElement('div');
+successToast.className = 'fixed top-20 left-1/2 transform -translate-x-1/2 bg-primary text-white px-6 py-3 rounded-lg shadow-lg z-50 animate-fadeIn';
+successToast.textContent = '二维码已保存到相册';
+document.body.appendChild(successToast);
+setTimeout(() => {
+successToast.style.opacity = '0';
+successToast.style.transform = 'translate(-50%, -10px)';
+successToast.style.transition = 'opacity 0.5s, transform 0.5s';
+setTimeout(() => {
+document.body.removeChild(successToast);
+}, 500);
+}, 2000);
+});
+shareQrCodeBtn.addEventListener('click', function() {
+const successToast = document.createElement('div');
+successToast.className = 'fixed top-20 left-1/2 transform -translate-x-1/2 bg-primary text-white px-6 py-3 rounded-lg shadow-lg z-50 animate-fadeIn';
+successToast.textContent = '分享链接已复制';
+document.body.appendChild(successToast);
+setTimeout(() => {
+successToast.style.opacity = '0';
+successToast.style.transform = 'translate(-50%, -10px)';
+successToast.style.transition = 'opacity 0.5s, transform 0.5s';
+setTimeout(() => {
+document.body.removeChild(successToast);
+}, 500);
+}, 2000);
+});
+}
+// 初始化所有功能
+initCharts();
+initModal();
+initScrollIndicators();
+initQrCodeModal();
+// Initialize share menu
+function initShareMenu() {
+const shareBtn = document.getElementById('shareBtn');
+const shareMenu = document.getElementById('shareMenu');
+const closeShareMenu = document.getElementById('closeShareMenu');
+const shareOptions = document.querySelectorAll('.share-option');
+const copyLinkBtn = document.getElementById('copyLink');
+shareBtn.addEventListener('click', () => {
+shareMenu.classList.remove('hidden');
+document.body.style.overflow = 'hidden';
+});
+closeShareMenu.addEventListener('click', () => {
+shareMenu.classList.add('hidden');
+document.body.style.overflow = 'auto';
+});
+shareMenu.addEventListener('click', (e) => {
+if (e.target === shareMenu) {
+shareMenu.classList.add('hidden');
+document.body.style.overflow = 'auto';
+}
+});
+shareOptions.forEach(option => {
+option.addEventListener('click', () => {
+const platform = option.getAttribute('data-platform');
+const successToast = document.createElement('div');
+successToast.className = 'fixed top-20 left-1/2 transform -translate-x-1/2 bg-primary text-white px-6 py-3 rounded-lg shadow-lg z-50 animate-fadeIn';
+successToast.textContent = `已打开${platform === 'wechat' ? '微信' : platform === 'moments' ? '朋友圈' : platform === 'qq' ? 'QQ' : '微博'}分享`;
+document.body.appendChild(successToast);
+setTimeout(() => {
+successToast.style.opacity = '0';
+successToast.style.transform = 'translate(-50%, -10px)';
+successToast.style.transition = 'opacity 0.5s, transform 0.5s';
+setTimeout(() => {
+document.body.removeChild(successToast);
+}, 500);
+}, 2000);
+shareMenu.classList.add('hidden');
+document.body.style.overflow = 'auto';
+});
+});
+copyLinkBtn.addEventListener('click', () => {
+navigator.clipboard.writeText(window.location.href).then(() => {
+const successToast = document.createElement('div');
+successToast.className = 'fixed top-20 left-1/2 transform -translate-x-1/2 bg-primary text-white px-6 py-3 rounded-lg shadow-lg z-50 animate-fadeIn';
+successToast.textContent = '链接已复制到剪贴板';
+document.body.appendChild(successToast);
+setTimeout(() => {
+successToast.style.opacity = '0';
+successToast.style.transform = 'translate(-50%, -10px)';
+successToast.style.transition = 'opacity 0.5s, transform 0.5s';
+setTimeout(() => {
+document.body.removeChild(successToast);
+}, 500);
+}, 2000);
+shareMenu.classList.add('hidden');
+document.body.style.overflow = 'auto';
+});
+});
+}
+initShareMenu();
+});
+</script>
+</body>
+</html>

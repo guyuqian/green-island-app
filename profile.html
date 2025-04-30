@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>我的 - 绿岛</title>
+<script src="https://cdn.tailwindcss.com/3.4.16"></script>
+<script>tailwind.config={theme:{extend:{colors:{primary:'#4CAF50',secondary:'#8BC34A'},borderRadius:{'none':'0px','sm':'4px',DEFAULT:'8px','md':'12px','lg':'16px','xl':'20px','2xl':'24px','3xl':'32px','full':'9999px','button':'8px'}}}}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.5.0/echarts.min.js"></script>
+<style>
+:where([class^="ri-"])::before { content: "\f3c2"; }
+@keyframes pulse {
+0%, 100% { opacity: 0.8; }
+50% { opacity: 1; }
+}
+.pulse-animation {
+animation: pulse 2s infinite;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+-webkit-appearance: none;
+margin: 0;
+}
+</style>
+</head>
+<body class="bg-gray-50 font-sans">
+<!-- 顶部导航栏 -->
+<header class="fixed top-0 left-0 w-full bg-white shadow-sm z-50">
+<div class="flex items-center justify-between px-4 py-3">
+<div class="flex items-center">
+<h1 class="text-xl font-medium text-gray-800">个人中心</h1>
+</div>
+<div class="flex items-center space-x-3">
+<a href=""  class="w-8 h-8 flex items-center justify-center">
+<i class="ri-settings-3-line text-xl text-gray-600"></i>
+</a>
+<div class="w-8 h-8 flex items-center justify-center">
+<a href=""  class="text-gray-600">
+<i class="ri-notification-3-line text-xl"></i>
+</a>
+</div>
+</div>
+</div>
+</header>
+<!-- 主内容区域 -->
+<main class="pt-14 pb-16">
+<!-- 用户信息区域 -->
+<section class="bg-white p-4">
+<div class="flex items-center">
+<div class="relative">
+<div class="w-16 h-16 rounded-full border-2 border-primary bg-primary/10 flex items-center justify-center">
+<i class="ri-user-smile-line text-2xl text-primary"></i>
+</div>
+<div class="absolute -bottom-1 -right-1 w-6 h-6 bg-white rounded-full flex items-center justify-center">
+<div class="w-5 h-5 flex items-center justify-center bg-primary rounded-full text-white">
+<i class="ri-verified-badge-fill text-xs"></i>
+</div>
+</div>
+</div>
+<div class="ml-4 flex-1">
+<div class="flex items-center justify-between">
+<div class="relative flex-1 mr-2">
+<div class="relative flex-1">
+<input type="text" id="userName" placeholder="请输入您的姓名" class="text-lg font-medium w-full bg-transparent border-b border-gray-200 focus:border-primary outline-none pb-1 pl-6" maxlength="10" value="">
+<i class="ri-edit-line absolute left-0 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
+</div>
+</div>
+<span class="text-xs px-2 py-0.5 bg-primary/10 text-primary rounded-full whitespace-nowrap">绿岛精英会员</span>
+</div>
+<div class="flex items-center mt-1 text-sm text-gray-500">
+<span>绿岛居民ID: GI-25874</span>
+</div>
+<div class="flex items-center mt-2">
+<div class="flex items-center text-xs text-gray-500">
+<i class="ri-plant-line text-primary text-sm mr-1"></i>
+<span>生态评级: A</span>
+</div>
+<div class="mx-2 w-px h-3 bg-gray-300"></div>
+<div class="flex items-center text-xs text-gray-500">
+<i class="ri-recycle-line text-primary text-sm mr-1"></i>
+<span>碳中和: 98%</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 绿色贡献值模块 -->
+<section class="mt-3 bg-white p-4">
+<div class="flex justify-between items-center mb-3">
+<h3 class="text-lg font-medium text-gray-800">绿色贡献值</h3>
+<span class="text-xs text-primary">查看详情</span>
+</div>
+<div class="bg-gradient-to-r from-primary/5 to-secondary/5 p-4 rounded-lg">
+<div class="flex items-end justify-between">
+<div>
+<span class="text-sm text-gray-500">当前绿值</span>
+<div class="flex items-baseline">
+<span class="text-3xl font-medium text-primary">177</span>
+<span class="ml-1 text-xs text-gray-500">较低</span>
+</div>
+</div>
+<div class="flex items-center text-xs text-amber-600 bg-amber-50 px-2 py-1 rounded-full">
+<i class="ri-alert-line mr-1"></i>
+<span>今日绿感轻微下降</span>
+</div>
+</div>
+<div class="text-xs text-gray-500 mt-2">
+请及时调整内在频率，提升绿色贡献
+</div>
+<div class="mt-4 h-40" id="greenValueChart"></div>
+<div class="text-xs text-gray-400 text-center mt-1">
+最近7日评分波动 (单位: g-Index)
+</div>
+</div>
+</section>
+<!-- 个人轨迹模块 -->
+<section class="mt-3 bg-white p-4">
+<div class="flex justify-between items-center mb-3">
+<h3 class="text-lg font-medium text-gray-800">轨迹</h3>
+<div class="flex items-center text-xs text-primary">
+<span>查看完整记录</span>
+<i class="ri-arrow-right-s-line ml-1"></i>
+</div>
+</div>
+<div class="relative">
+<div class="absolute top-12 right-2 z-10">
+<div class="bg-amber-50 text-amber-600 text-xs px-2 py-1 rounded-full">
+昨日步频略高，已反馈至安静建议系统
+</div>
+</div>
+<div class="bg-white rounded-lg border border-gray-100 shadow-sm overflow-hidden">
+<div class="p-3 border-b border-gray-100">
+<div class="flex items-center justify-between">
+<span class="text-sm font-medium">个人72小时绿色轨迹图</span>
+<div class="flex space-x-2">
+<div class="flex items-center text-xs">
+<span class="inline-block w-2 h-2 rounded-full bg-primary mr-1"></span>
+<span>行动路径</span>
+</div>
+<div class="flex items-center text-xs">
+<span class="inline-block w-2 h-2 rounded-full bg-blue-400 mr-1"></span>
+<span>呼吸节律</span>
+</div>
+<div class="flex items-center text-xs">
+<span class="inline-block w-2 h-2 rounded-full bg-amber-400 mr-1"></span>
+<span>情绪稳定度</span>
+</div>
+</div>
+</div>
+</div>
+<div class="h-48" id="trajectoryChart"></div>
+</div>
+</div>
+</section>
+<!-- 每日记录模块 -->
+<section class="mt-3 bg-white p-4">
+<div class="flex justify-between items-center mb-3">
+<h3 class="text-lg font-medium text-gray-800">记录</h3>
+<div class="flex items-center text-xs text-primary">
+<span>查看全部</span>
+<i class="ri-arrow-right-s-line ml-1"></i>
+</div>
+</div>
+<div class="bg-white rounded-lg border border-gray-100 shadow-sm">
+<div class="p-3 border-b border-gray-100">
+<span class="text-sm font-medium">每日上传任务状态</span>
+</div>
+<div class="p-3">
+<div class="space-y-3">
+<div class="flex items-center justify-between">
+<div class="flex items-center">
+<div class="w-6 h-6 flex items-center justify-center text-white bg-primary rounded-full">
+<i class="ri-check-line text-sm"></i>
+</div>
+<span class="ml-2 text-sm">早晨绿笑已上传</span>
+</div>
+<span class="text-xs text-gray-400">08:15</span>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center">
+<div class="w-6 h-6 flex items-center justify-center text-white bg-primary rounded-full">
+<i class="ri-check-line text-sm"></i>
+</div>
+<span class="ml-2 text-sm">语音节律检测完成</span>
+</div>
+<span class="text-xs text-gray-400">12:30</span>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center">
+<div class="w-6 h-6 flex items-center justify-center text-white bg-red-400 rounded-full">
+<i class="ri-close-line text-sm"></i>
+</div>
+<span class="ml-2 text-sm">未完成低碳饮食照片同步</span>
+</div>
+<span class="text-xs text-red-400">待完成</span>
+</div>
+</div>
+<a href=""  class="w-full mt-4 py-2 bg-primary text-white rounded-button flex items-center justify-center cursor-pointer no-underline">
+<i class="ri-upload-2-line mr-1"></i>
+<span>补交今日环境回响</span>
+</a>
+</div>
+</div>
+</section>
+<!-- 奖章成就模块 -->
+<section class="mt-3 bg-white p-4">
+<div class="flex justify-between items-center mb-3">
+<h3 class="text-lg font-medium text-gray-800">奖章</h3>
+<div class="flex items-center text-xs text-primary">
+<span>全部奖章</span>
+<i class="ri-arrow-right-s-line ml-1"></i>
+</div>
+</div>
+<div class="grid grid-cols-3 gap-3">
+<div class="flex flex-col items-center">
+<div class="w-16 h-16 flex items-center justify-center bg-primary/10 rounded-full mb-2 relative">
+<img src="https://readdy.ai/api/search-image?query=Minimalist%2520icon%2520of%2520silent%2520meditation%252C%2520simple%2520line%2520art%252C%2520person%2520sitting%2520quietly%252C%2520clean%2520design%252C%2520green%2520color%2520scheme%252C%2520achievement%2520badge%2520style&width=64&height=64&seq=1002&orientation=squarish" alt="静默之星" class="w-12 h-12 object-contain">
+<div class="absolute -top-1 -right-1 w-5 h-5 bg-primary rounded-full flex items-center justify-center text-white text-xs">
+<i class="ri-star-fill"></i>
+</div>
+</div>
+<span class="text-xs text-center">静默之星</span>
+</div>
+<div class="flex flex-col items-center">
+<div class="w-16 h-16 flex items-center justify-center bg-primary/10 rounded-full mb-2 relative">
+<img src="https://readdy.ai/api/search-image?query=Minimalist%2520icon%2520of%2520eye%2520with%2520green%2520iris%252C%2520simple%2520line%2520art%252C%2520clean%2520design%252C%2520green%2520color%2520scheme%252C%2520achievement%2520badge%2520style&width=64&height=64&seq=1003&orientation=squarish" alt="绿眼神" class="w-12 h-12 object-contain">
+<div class="absolute -top-1 -right-1 w-5 h-5 bg-primary rounded-full flex items-center justify-center text-white text-xs">
+<i class="ri-star-fill"></i>
+</div>
+</div>
+<span class="text-xs text-center">绿眼神</span>
+</div>
+<div class="flex flex-col items-center">
+<div class="w-16 h-16 flex items-center justify-center bg-primary/10 rounded-full mb-2 relative">
+<img src="https://readdy.ai/api/search-image?query=Minimalist%2520icon%2520of%2520person%2520talking%2520to%2520plant%252C%2520simple%2520line%2520art%252C%2520clean%2520design%252C%2520green%2520color%2520scheme%252C%2520achievement%2520badge%2520style&width=64&height=64&seq=1004&orientation=squarish" alt="植物同频" class="w-12 h-12 object-contain">
+<div class="absolute -top-1 -right-1 w-5 h-5 bg-primary rounded-full flex items-center justify-center text-white text-xs">
+<i class="ri-star-fill"></i>
+</div>
+</div>
+<span class="text-xs text-center">植物同频</span>
+</div>
+</div>
+<div class="mt-4 text-xs text-gray-500">
+<div class="flex items-center">
+<i class="ri-information-line mr-1 text-primary"></i>
+<span>连续获得5个奖章可解锁"绿色先锋"称号</span>
+</div>
+</div>
+</section>
+<!-- 系统反馈模块 -->
+<section class="mt-3 bg-white p-4">
+<div class="flex justify-between items-center mb-3">
+<h3 class="text-lg font-medium text-gray-800">反馈</h3>
+</div>
+<div class="bg-gray-50 p-4 rounded-lg border border-gray-100">
+<p class="text-sm text-gray-600">如您对社区制度存有疑问，系统将为您重新定义理解路径。</p>
+<button id="confirmBtn" class="w-full mt-4 py-2 bg-primary text-white rounded-button flex items-center justify-center cursor-pointer">
+<i class="ri-checkbox-circle-line mr-1"></i>
+<span>我理解并服从</span>
+</button>
+</div>
+</section>
+<div id="toast" class="fixed top-16 left-1/2 -translate-x-1/2 bg-black/75 text-white px-4 py-2 rounded-lg text-sm transform transition-all duration-300 opacity-0 -translate-y-4 pointer-events-none">
+感谢您的理解与配合，您的绿值将获得+2点奖励
+</div>
+<!-- 其他功能模块 -->
+<section class="mt-3 bg-white p-4">
+<div class="space-y-4">
+<div class="flex items-center justify-between cursor-pointer">
+<div class="flex items-center">
+<div class="w-8 h-8 flex items-center justify-center bg-primary/10 rounded-full text-primary">
+<i class="ri-calendar-check-line"></i>
+</div>
+<span class="ml-3 text-sm">我的预约记录</span>
+</div>
+<i class="ri-arrow-right-s-line text-gray-400"></i>
+</div>
+<div class="flex items-center justify-between cursor-pointer">
+<div class="flex items-center">
+<div class="w-8 h-8 flex items-center justify-center bg-primary/10 rounded-full text-primary">
+<i class="ri-heart-line"></i>
+</div>
+<span class="ml-3 text-sm">我的收藏</span>
+</div>
+<i class="ri-arrow-right-s-line text-gray-400"></i>
+</div>
+<div class="flex items-center justify-between cursor-pointer">
+<div class="flex items-center">
+<div class="w-8 h-8 flex items-center justify-center bg-primary/10 rounded-full text-primary">
+<i class="ri-history-line"></i>
+</div>
+<span class="ml-3 text-sm">绿色生活记录</span>
+</div>
+<i class="ri-arrow-right-s-line text-gray-400"></i>
+</div>
+<div class="flex items-center justify-between cursor-pointer">
+<div class="flex items-center">
+<div class="w-8 h-8 flex items-center justify-center bg-primary/10 rounded-full text-primary">
+<i class="ri-customer-service-2-line"></i>
+</div>
+<span class="ml-3 text-sm">绿岛客服</span>
+</div>
+<i class="ri-arrow-right-s-line text-gray-400"></i>
+</div>
+</div>
+</section>
+<!-- 注销按钮 -->
+<section class="mt-3 mb-6 flex justify-center">
+<button id="logoutBtn" class="text-gray-400 text-sm cursor-pointer">注销账户</button>
+</section>
+</main>
+<!-- 底部导航栏 -->
+<footer class="fixed bottom-0 left-0 w-full bg-white border-t border-gray-200 z-50">
+<div class="grid grid-cols-4 h-14">
+<a href=""  class="flex flex-col items-center justify-center cursor-pointer text-gray-500">
+<div class="w-6 h-6 flex items-center justify-center">
+<i class="ri-home-5-line"></i>
+</div>
+<span class="text-xs mt-0.5">首页</span>
+</a>
+<a href=""  class="flex flex-col items-center justify-center cursor-pointer text-gray-500">
+<div class="w-6 h-6 flex items-center justify-center">
+<i class="ri-qr-code-line"></i>
+</div>
+<span class="text-xs mt-0.5">园区码</span>
+</a>
+<a href=""  class="flex flex-col items-center justify-center cursor-pointer text-gray-500">
+<div class="w-6 h-6 flex items-center justify-center">
+<i class="ri-leaf-line"></i>
+</div>
+<span class="text-xs mt-0.5">绿岛居民内网</span>
+</a>
+<a href="#" class="flex flex-col items-center justify-center cursor-pointer text-primary">
+<div class="w-6 h-6 flex items-center justify-center">
+<i class="ri-user-fill"></i>
+</div>
+<span class="text-xs mt-0.5">我的</span>
+</a>
+</div>
+</footer>
+<!-- 注销弹窗 -->
+<div id="logoutModal" class="fixed inset-0 bg-black/50 z-50 hidden flex items-center justify-center">
+<div class="bg-white rounded-lg w-4/5 p-5">
+<h3 class="text-lg font-medium text-center mb-3">系统提示</h3>
+<p class="text-sm text-center text-gray-600 mb-4">
+经绿岛主系统评估，您当前不具备脱离资格。建议继续提升绿值贡献，感谢配合。
+</p>
+<div class="flex justify-center">
+<button id="closeModal" class="px-5 py-2 bg-primary text-white rounded-button cursor-pointer">
+我知道了
+</button>
+</div>
+</div>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+// Toast提示功能
+function showToast() {
+const toast = document.getElementById('toast');
+toast.classList.remove('opacity-0', '-translate-y-4');
+setTimeout(() => {
+toast.classList.add('opacity-0', '-translate-y-4');
+}, 2000);
+}
+// 确认按钮处理
+const confirmBtn = document.getElementById('confirmBtn');
+confirmBtn.addEventListener('click', function() {
+showToast();
+this.classList.remove('bg-primary');
+this.classList.add('bg-gray-400');
+this.innerHTML = '<i class="ri-checkbox-circle-line mr-1"></i><span>已确认</span>';
+this.disabled = true;
+});
+// 用户名输入处理
+const userNameInput = document.getElementById('userName');
+const savedUserName = localStorage.getItem('userName');
+if (savedUserName) {
+userNameInput.value = savedUserName;
+}
+userNameInput.addEventListener('input', function(e) {
+const name = e.target.value.trim();
+localStorage.setItem('userName', name);
+updateUserNameDisplay(name);
+// 同步到其他页面的用户名输入框
+const event = new CustomEvent('userNameChanged', { detail: name });
+window.dispatchEvent(event);
+});
+userNameInput.addEventListener('blur', function(e) {
+const name = e.target.value.trim();
+if (name) {
+localStorage.setItem('userName', name);
+}
+});
+// 页面加载时恢复保存的用户名
+window.addEventListener('load', function() {
+const savedName = localStorage.getItem('userName');
+if (savedName) {
+userNameInput.value = savedName;
+updateUserNameDisplay(savedName);
+}
+});
+// 页面刷新或返回时恢复保存的用户名
+window.addEventListener('pageshow', function(event) {
+const savedName = localStorage.getItem('userName');
+if (savedName) {
+userNameInput.value = savedName;
+updateUserNameDisplay(savedName);
+}
+});
+// 页面加载时恢复保存的用户名
+document.addEventListener('DOMContentLoaded', function() {
+const savedName = localStorage.getItem('userName');
+if (savedName) {
+userNameInput.value = savedName;
+updateUserNameDisplay(savedName);
+}
+});
+userNameInput.addEventListener('blur', function(e) {
+const name = e.target.value.trim();
+if (name) {
+localStorage.setItem('userName', name);
+}
+});
+// 页面加载时恢复保存的用户名
+window.addEventListener('load', function() {
+const savedName = localStorage.getItem('userName');
+if (savedName) {
+userNameInput.value = savedName;
+updateUserNameDisplay(savedName);
+}
+});
+// 页面刷新或返回时恢复保存的用户名
+window.addEventListener('pageshow', function(event) {
+const savedName = localStorage.getItem('userName');
+if (savedName) {
+userNameInput.value = savedName;
+updateUserNameDisplay(savedName);
+}
+});
+// 页面加载时恢复保存的用户名
+document.addEventListener('DOMContentLoaded', function() {
+const savedName = localStorage.getItem('userName');
+if (savedName) {
+userNameInput.value = savedName;
+updateUserNameDisplay(savedName);
+}
+});
+function updateUserNameDisplay(name) {
+const displayName = name || '未设置姓名';
+document.title = `${displayName} - 绿岛`;
+}
+// 监听其他页面的用户名变化
+window.addEventListener('userNameChanged', function(e) {
+userNameInput.value = e.detail;
+updateUserNameDisplay(e.detail);
+});
+// 初始化显示
+updateUserNameDisplay(savedUserName);
+// 绿色贡献值图表
+const greenValueChart = echarts.init(document.getElementById('greenValueChart'));
+const greenValueOption = {
+grid: {
+top: 10,
+right: 10,
+bottom: 20,
+left: 40,
+},
+xAxis: {
+type: 'category',
+data: ['4.24', '4.25', '4.26', '4.27', '4.28', '4.29', '4.30'],
+axisLine: {
+lineStyle: {
+color: '#ddd'
+}
+},
+axisLabel: {
+fontSize: 10,
+color: '#999'
+}
+},
+yAxis: {
+type: 'value',
+min: 150,
+max: 220,
+axisLine: {
+show: false
+},
+axisLabel: {
+fontSize: 10,
+color: '#999'
+},
+splitLine: {
+lineStyle: {
+color: '#eee'
+}
+}
+},
+series: [{
+data: [195, 188, 185, 179, 182, 180, 177],
+type: 'line',
+smooth: true,
+symbol: 'circle',
+symbolSize: 6,
+itemStyle: {
+color: '#4CAF50'
+},
+lineStyle: {
+color: '#4CAF50',
+width: 2
+},
+areaStyle: {
+color: {
+type: 'linear',
+x: 0,
+y: 0,
+x2: 0,
+y2: 1,
+colorStops: [{
+offset: 0,
+color: 'rgba(76, 175, 80, 0.3)'
+}, {
+offset: 1,
+color: 'rgba(76, 175, 80, 0.05)'
+}]
+}
+}
+}]
+};
+greenValueChart.setOption(greenValueOption);
+// 轨迹图表
+const trajectoryChart = echarts.init(document.getElementById('trajectoryChart'));
+const trajectoryOption = {
+grid: {
+top: 10,
+right: 10,
+bottom: 20,
+left: 40,
+},
+tooltip: {
+trigger: 'axis'
+},
+xAxis: {
+type: 'category',
+data: ['04-28', '04-29', '04-30', '今日'],
+axisLine: {
+lineStyle: {
+color: '#ddd'
+}
+},
+axisLabel: {
+fontSize: 10,
+color: '#999'
+}
+},
+yAxis: {
+type: 'value',
+min: 0,
+max: 100,
+axisLine: {
+show: false
+},
+axisLabel: {
+fontSize: 10,
+color: '#999'
+},
+splitLine: {
+lineStyle: {
+color: '#eee'
+}
+}
+},
+series: [
+{
+name: '行动路径',
+type: 'line',
+data: [85, 82, 78, 75],
+smooth: true,
+symbol: 'circle',
+symbolSize: 5,
+itemStyle: {
+color: '#4CAF50'
+},
+lineStyle: {
+color: '#4CAF50',
+width: 2
+}
+},
+{
+name: '呼吸节律',
+type: 'line',
+data: [90, 88, 85, 82],
+smooth: true,
+symbol: 'circle',
+symbolSize: 5,
+itemStyle: {
+color: '#42A5F5'
+},
+lineStyle: {
+color: '#42A5F5',
+width: 2
+}
+},
+{
+name: '情绪稳定度',
+type: 'line',
+data: [75, 70, 72, 68],
+smooth: true,
+symbol: 'circle',
+symbolSize: 5,
+itemStyle: {
+color: '#FFA726'
+},
+lineStyle: {
+color: '#FFA726',
+width: 2
+}
+}
+]
+};
+trajectoryChart.setOption(trajectoryOption);
+// 窗口大小变化时重新调整图表大小
+window.addEventListener('resize', function() {
+greenValueChart.resize();
+trajectoryChart.resize();
+});
+// 注销弹窗
+const logoutBtn = document.getElementById('logoutBtn');
+const logoutModal = document.getElementById('logoutModal');
+const closeModal = document.getElementById('closeModal');
+logoutBtn.addEventListener('click', function() {
+logoutModal.classList.remove('hidden');
+});
+closeModal.addEventListener('click', function() {
+logoutModal.classList.add('hidden');
+});
+// 点击弹窗外部关闭弹窗
+logoutModal.addEventListener('click', function(e) {
+if (e.target === logoutModal) {
+logoutModal.classList.add('hidden');
+}
+});
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>绿岛美食 - 绿色饮食系统</title>
+<script src="https://cdn.tailwindcss.com/3.4.16"></script>
+<script>tailwind.config={theme:{extend:{colors:{primary:'#4CAF50',secondary:'#8BC34A'},borderRadius:{'none':'0px','sm':'4px',DEFAULT:'8px','md':'12px','lg':'16px','xl':'20px','2xl':'24px','3xl':'32px','full':'9999px','button':'8px'}}}}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.5.0/echarts.min.js"></script>
+<style>
+:where([class^="ri-"])::before { content: "\f3c2"; }
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+-webkit-appearance: none;
+margin: 0;
+}
+.gradient-bg {
+background: linear-gradient(135deg, rgba(76, 175, 80, 0.1), rgba(139, 195, 74, 0.2));
+}
+.carbon-badge {
+position: relative;
+display: inline-flex;
+align-items: center;
+justify-content: center;
+padding: 2px 8px;
+border-radius: 12px;
+font-size: 10px;
+font-weight: 500;
+background: rgba(76, 175, 80, 0.1);
+color: #4CAF50;
+}
+.carbon-badge::before {
+content: "";
+display: inline-block;
+width: 6px;
+height: 6px;
+border-radius: 50%;
+background-color: currentColor;
+margin-right: 4px;
+}
+</style>
+</head>
+<body class="bg-gray-50 font-sans">
+<!-- 顶部导航栏 -->
+<header class="fixed top-0 left-0 w-full bg-white shadow-sm z-50">
+<div class="flex items-center justify-between px-4 py-3">
+<div class="flex items-center">
+<a href=""  class="w-8 h-8 flex items-center justify-center text-primary">
+<i class="ri-arrow-left-s-line text-xl"></i>
+</a>
+<h1 class="text-lg font-medium ml-2">绿岛美食</h1>
+</div>
+<div class="flex items-center">
+<div class="flex items-center mr-2 px-2 py-1 bg-primary/10 rounded-full">
+<i class="ri-leaf-line text-primary text-xs mr-1"></i>
+<span class="text-xs text-primary">绿值: 177</span>
+</div>
+<div class="w-8 h-8 flex items-center justify-center">
+<i class="ri-share-line text-lg text-gray-600"></i>
+</div>
+</div>
+</div>
+</header>
+<!-- 主内容区域 -->
+<main class="pt-14 pb-16">
+<!-- 顶部标语 -->
+<section class="relative h-48 overflow-hidden">
+<img src="https://readdy.ai/api/search-image?query=Eco-friendly%2520dining%2520concept%2520with%2520fresh%2520organic%2520vegetables%2520and%2520sustainable%2520tableware%2520on%2520wooden%2520table%252C%2520soft%2520natural%2520lighting%252C%2520green%2520plants%2520in%2520background%252C%2520minimalist%2520aesthetic%252C%2520professional%2520food%2520photography%252C%2520banner%2520style&width=375&height=192&seq=1001&orientation=landscape" class="w-full h-full object-cover" alt="绿色食物理念">
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex flex-col justify-center p-4">
+<h2 class="text-2xl font-bold text-white leading-tight">食物，是我们向地球表达尊重的方式</h2>
+<p class="text-sm text-white/90 mt-1">绿岛生态食堂 · 营养配给系统</p>
+</div>
+</section>
+<!-- 用户碳排信息 -->
+<section class="mx-4 -mt-6 relative z-10 bg-white rounded-lg shadow-md p-4">
+<div class="flex items-center justify-between">
+<div class="flex items-center">
+<div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+<i class="ri-user-line text-primary"></i>
+</div>
+<div class="ml-3">
+<p class="text-sm font-medium">您</p>
+<p class="text-xs text-gray-500">绿岛居民</p>
+</div>
+</div>
+<div class="flex flex-col items-end">
+<div class="flex items-center">
+<span class="text-xs text-gray-500 mr-1">今日剩余碳排额度</span>
+<span class="text-sm font-medium text-primary">0.12kg</span>
+</div>
+<div class="w-24 h-2 bg-gray-200 rounded-full mt-1 overflow-hidden">
+<div class="h-full bg-primary rounded-full" style="width: 60%"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- 美食分类 -->
+<section class="mt-4 bg-white p-4">
+<h3 class="text-lg font-medium mb-3">餐厅分类</h3>
+<div class="grid grid-cols-5 gap-2">
+<a href="#eco-canteen" class="flex flex-col items-center cursor-pointer">
+<div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-1">
+<i class="ri-restaurant-line text-primary text-xl"></i>
+</div>
+<span class="text-xs whitespace-nowrap overflow-hidden text-overflow-ellipsis">生态食堂</span>
+</a>
+<a href="#vegan" class="flex flex-col items-center cursor-pointer">
+<div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-1">
+<i class="ri-leaf-line text-primary text-xl"></i>
+</div>
+<span class="text-xs whitespace-nowrap overflow-hidden text-overflow-ellipsis">素食餐厅</span>
+</a>
+<a href="#organic" class="flex flex-col items-center cursor-pointer">
+<div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-1">
+<i class="ri-seedling-line text-primary text-xl"></i>
+</div>
+<span class="text-xs whitespace-nowrap overflow-hidden text-overflow-ellipsis">有机餐厅</span>
+</a>
+<a href="#fast-green" class="flex flex-col items-center cursor-pointer">
+<div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-1">
+<i class="ri-timer-flash-line text-primary text-xl"></i>
+</div>
+<span class="text-xs whitespace-nowrap overflow-hidden text-overflow-ellipsis">快绿通道</span>
+</a>
+<a href="#herbal-bar" class="flex flex-col items-center cursor-pointer">
+<div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-1">
+<i class="ri-cup-line text-primary text-xl"></i>
+</div>
+<span class="text-xs whitespace-nowrap overflow-hidden text-overflow-ellipsis">草本饮吧</span>
+</a>
+</div>
+</section>
+<!-- 绿色营养系统 -->
+<section class="mt-4 bg-white p-4">
+<div class="flex items-center justify-between mb-3">
+<h3 class="text-lg font-medium">智能碳食配给系统</h3>
+<div class="px-2 py-1 bg-primary/10 rounded-full text-xs text-primary">
+<span>了解详情</span>
+</div>
+</div>
+<div class="rounded-lg overflow-hidden shadow-sm bg-gradient-to-r from-primary/5 to-secondary/5 p-4">
+<div class="flex items-center mb-4">
+<div class="w-10 h-10 rounded-full bg-primary/15 flex items-center justify-center">
+<i class="ri-leaf-line text-primary"></i>
+</div>
+<div class="ml-3">
+<p class="text-sm font-medium">绿岛碳食智能系统</p>
+<p class="text-xs text-gray-500">智能计算每餐碳排放量</p>
+</div>
+</div>
+<div id="carbonChart" class="w-full h-48 mb-3"></div>
+<div class="grid grid-cols-2 gap-3">
+<div class="bg-white rounded-lg p-3 shadow-sm">
+<div class="flex items-center mb-2">
+<i class="ri-award-line text-primary mr-2"></i>
+<span class="text-sm font-medium">绿值等级权益</span>
+</div>
+<p class="text-xs text-gray-600">高绿值居民可享受更丰富的菜单选项和更大的碳排配额</p>
+</div>
+<div class="bg-white rounded-lg p-3 shadow-sm">
+<div class="flex items-center mb-2">
+<i class="ri-restaurant-line text-primary mr-2"></i>
+<span class="text-sm font-medium">特权菜单</span>
+</div>
+<p class="text-xs text-gray-600">绿值达到800+可解锁"空气净养锅"等特色菜品</p>
+</div>
+</div>
+</div>
+</section>
+<!-- 常驻餐厅 -->
+<section id="eco-canteen" class="mt-4 bg-white p-4">
+<h3 class="text-lg font-medium mb-3">常驻餐厅</h3>
+<!-- 主生态食堂 -->
+<div class="mb-5 cursor-pointer" onclick="showRestaurantDetails('main-canteen')">
+<div class="rounded-lg overflow-hidden shadow-sm">
+<img src="https://readdy.ai/api/search-image?query=Modern%2520eco-friendly%2520canteen%2520interior%2520with%2520wooden%2520tables%252C%2520plants%252C%2520natural%2520lighting%252C%2520minimalist%2520design%252C%2520people%2520eating%2520healthy%2520food%252C%2520sustainable%2520atmosphere%252C%2520professional%2520interior%2520photography&width=375&height=180&seq=1007&orientation=landscape" class="w-full h-40 object-cover" alt="主生态食堂">
+<div class="p-3">
+<div class="flex items-center justify-between">
+<h4 class="font-medium">主生态食堂</h4>
+<div class="flex items-center">
+<i class="ri-star-fill text-yellow-400 text-xs"></i>
+<span class="text-sm ml-1">4.8</span>
+</div>
+</div>
+<div class="flex items-center mt-2">
+<div class="carbon-badge mr-2">碳排低</div>
+<div class="text-xs text-gray-500">统一出餐 · 低盐脱脂</div>
+</div>
+<p class="text-xs text-gray-600 mt-2">所有餐食由绿岛碳食智能系统生成，搭配碳权分配，确保营养均衡的同时最小化环境影响。</p>
+<div class="flex items-center justify-between mt-3">
+<div class="flex items-center text-xs text-gray-500">
+<i class="ri-map-pin-line mr-1"></i>
+<span>绿岛社区中心</span>
+</div>
+<div class="flex items-center text-xs text-primary">
+<span>实时用餐人数: 86</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- 快绿通道 -->
+<div id="fast-green" class="mb-5 cursor-pointer" onclick="showRestaurantDetails('fast-green')">
+<div class="rounded-lg overflow-hidden shadow-sm">
+<img src="https://readdy.ai/api/search-image?query=Modern%2520fast%2520healthy%2520food%2520restaurant%2520interior%252C%2520green%2520theme%252C%2520eco-friendly%2520packaging%252C%2520clean%2520design%252C%2520bright%2520lighting%252C%2520people%2520ordering%2520food%252C%2520professional%2520interior%2520photography&width=375&height=180&seq=1008&orientation=landscape" class="w-full h-40 object-cover" alt="快绿通道">
+<div class="p-3">
+<div class="flex items-center justify-between">
+<h4 class="font-medium">快绿通道</h4>
+<div class="flex items-center">
+<i class="ri-star-fill text-yellow-400 text-xs"></i>
+<span class="text-sm ml-1">4.6</span>
+</div>
+</div>
+<div class="flex items-center mt-2">
+<div class="carbon-badge mr-2">绿值积分</div>
+<div class="text-xs text-gray-500">能量餐 · 快速服务</div>
+</div>
+<p class="text-xs text-gray-600 mt-2">用绿值积分兑换能量膳食，为忙碌的绿岛居民提供快速、健康、低碳的饮食选择。</p>
+<div class="flex items-center justify-between mt-3">
+<div class="flex items-center text-xs text-gray-500">
+<i class="ri-map-pin-line mr-1"></i>
+<span>绿岛B区商业街</span>
+</div>
+<div class="flex items-center text-xs text-primary">
+<span>营业时间: 07:00-21:00</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- 草本饮吧 -->
+<div id="herbal-bar" class="cursor-pointer" onclick="showRestaurantDetails('herbal-bar')">
+<div class="rounded-lg overflow-hidden shadow-sm">
+<img src="https://readdy.ai/api/search-image?query=Modern%2520herbal%2520tea%2520bar%2520with%2520plants%252C%2520wooden%2520counter%252C%2520glass%2520jars%2520with%2520herbs%252C%2520eco-friendly%2520design%252C%2520natural%2520materials%252C%2520soft%2520lighting%252C%2520professional%2520interior%2520photography&width=375&height=180&seq=1009&orientation=landscape" class="w-full h-40 object-cover" alt="草本饮吧">
+<div class="p-3">
+<div class="flex items-center justify-between">
+<h4 class="font-medium">草本饮吧</h4>
+<div class="flex items-center">
+<i class="ri-star-fill text-yellow-400 text-xs"></i>
+<span class="text-sm ml-1">4.9</span>
+</div>
+</div>
+<div class="flex items-center mt-2">
+<div class="carbon-badge mr-2">零碳排</div>
+<div class="text-xs text-gray-500">植物认同饮品</div>
+</div>
+<p class="text-xs text-gray-600 mt-2">提供"植物认同饮品"，采用社区种植的有机草本植物，零碳足迹制作工艺。</p>
+<div class="flex items-center justify-between mt-3">
+<div class="flex items-center text-xs text-gray-500">
+<i class="ri-map-pin-line mr-1"></i>
+<span>绿岛生态公园旁</span>
+</div>
+<div class="flex items-center text-xs text-primary">
+<span>特色饮品: 光合作用茶</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 特色菜品推荐 -->
+<section class="mt-4 bg-white p-4">
+<div class="flex items-center justify-between mb-3">
+<h3 class="text-lg font-medium">特色菜品推荐</h3>
+<span class="text-xs text-primary">全部 28 种</span>
+</div>
+<div class="overflow-x-auto">
+<div class="flex space-x-3 pb-2 w-max">
+<div class="w-40 rounded-lg overflow-hidden shadow-sm flex-shrink-0 cursor-pointer">
+<div class="relative">
+<img src="https://readdy.ai/api/search-image?query=Artistic%2520presentation%2520of%2520vegan%2520dish%2520with%2520colorful%2520vegetables%252C%2520edible%2520flowers%252C%2520on%2520eco-friendly%2520plate%252C%2520minimalist%2520styling%252C%2520soft%2520natural%2520lighting%252C%2520professional%2520food%2520photography&width=160&height=120&seq=1010&orientation=landscape" class="w-full h-28 object-cover" alt="空气净养锅">
+<div class="absolute top-2 right-2 bg-primary/80 text-white text-xs px-2 py-0.5 rounded-full">
+绿值 800+
+</div>
+</div>
+<div class="p-2">
+<h4 class="text-sm font-medium">空气净养锅</h4>
+<div class="flex items-center justify-between mt-1">
+<div class="carbon-badge text-[10px]">碳排 0.03kg</div>
+<span class="text-xs text-primary font-medium">78 绿值</span>
+</div>
+</div>
+</div>
+<div class="w-40 rounded-lg overflow-hidden shadow-sm flex-shrink-0 cursor-pointer">
+<img src="https://readdy.ai/api/search-image?query=Beautiful%2520plant-based%2520bowl%2520with%2520grains%252C%2520legumes%252C%2520vegetables%2520arranged%2520in%2520sections%252C%2520vibrant%2520colors%252C%2520wooden%2520bowl%252C%2520natural%2520lighting%252C%2520overhead%2520view%252C%2520professional%2520food%2520photography&width=160&height=120&seq=1011&orientation=landscape" class="w-full h-28 object-cover" alt="光合能量碗">
+<div class="p-2">
+<h4 class="text-sm font-medium">光合能量碗</h4>
+<div class="flex items-center justify-between mt-1">
+<div class="carbon-badge text-[10px]">碳排 0.05kg</div>
+<span class="text-xs text-primary font-medium">45 绿值</span>
+</div>
+</div>
+</div>
+<div class="w-40 rounded-lg overflow-hidden shadow-sm flex-shrink-0 cursor-pointer">
+<img src="https://readdy.ai/api/search-image?query=Artistic%2520herbal%2520tea%2520in%2520clear%2520glass%252C%2520vibrant%2520colors%252C%2520herbs%2520and%2520flowers%2520visible%2520in%2520liquid%252C%2520steam%2520rising%252C%2520natural%2520lighting%252C%2520minimalist%2520composition%252C%2520professional%2520beverage%2520photography&width=160&height=120&seq=1012&orientation=landscape" class="w-full h-28 object-cover" alt="森林呼吸茶">
+<div class="p-2">
+<h4 class="text-sm font-medium">森林呼吸茶</h4>
+<div class="flex items-center justify-between mt-1">
+<div class="carbon-badge text-[10px]">碳排 0.01kg</div>
+<span class="text-xs text-primary font-medium">30 绿值</span>
+</div>
+</div>
+</div>
+<div class="w-40 rounded-lg overflow-hidden shadow-sm flex-shrink-0 cursor-pointer">
+<img src="https://readdy.ai/api/search-image?query=Minimalist%2520presentation%2520of%2520plant-based%2520dessert%252C%2520geometric%2520arrangement%252C%2520natural%2520colors%252C%2520eco-friendly%2520plate%252C%2520soft%2520lighting%252C%2520artistic%2520food%2520photography&width=160&height=120&seq=1013&orientation=landscape" class="w-full h-28 object-cover" alt="光能甜点">
+<div class="p-2">
+<h4 class="text-sm font-medium">光能甜点</h4>
+<div class="flex items-center justify-between mt-1">
+<div class="carbon-badge text-[10px]">碳排 0.04kg</div>
+<span class="text-xs text-primary font-medium">55 绿值</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 绿色饮食指南 -->
+<section class="mt-4 bg-white p-4">
+<h3 class="text-lg font-medium mb-3">绿色饮食指南</h3>
+<div class="rounded-lg overflow-hidden bg-gradient-to-r from-primary/5 to-secondary/5 p-4">
+<div class="flex items-center mb-4">
+<div class="w-10 h-10 rounded-full bg-primary/15 flex items-center justify-center">
+<i class="ri-book-2-line text-primary"></i>
+</div>
+<div class="ml-3">
+<p class="text-sm font-medium">饮食制度提示</p>
+<p class="text-xs text-gray-500">绿岛居民必读</p>
+</div>
+</div>
+<div class="space-y-3">
+<div class="flex items-start">
+<i class="ri-checkbox-circle-line text-primary mt-0.5 mr-2 flex-shrink-0"></i>
+<p class="text-sm text-gray-700">居民一日三餐碳排限额约 0.2kg，超额将扣除绿值积分</p>
+</div>
+<div class="flex items-start">
+<i class="ri-checkbox-circle-line text-primary mt-0.5 mr-2 flex-shrink-0"></i>
+<p class="text-sm text-gray-700">所有进食需绑定绿值追踪腕带扫码结算，记录个人碳排数据</p>
+</div>
+<div class="flex items-start">
+<i class="ri-checkbox-circle-line text-primary mt-0.5 mr-2 flex-shrink-0"></i>
+<p class="text-sm text-gray-700">高绿值居民享有更多菜单选择权，低绿值居民限制高碳排食物</p>
+</div>
+<div class="flex items-start">
+<i class="ri-checkbox-circle-line text-primary mt-0.5 mr-2 flex-shrink-0"></i>
+<p class="text-sm text-gray-700">每周三为"零肉日"，全岛居民统一素食，增加20绿值</p>
+</div>
+</div>
+<div class="mt-4 bg-white rounded-lg p-3 shadow-sm">
+<div class="flex items-center">
+<i class="ri-alert-line text-yellow-500 mr-2"></i>
+<p class="text-sm font-medium text-gray-700">请佩戴腕带用餐</p>
+</div>
+<p class="text-xs text-gray-600 mt-1">未佩戴腕带无法进入餐厅，紧急情况请联系绿岛管理处</p>
+</div>
+</div>
+</section>
+<!-- 用户评价 -->
+<section class="mt-4 bg-white p-4 mb-4">
+<div class="flex items-center justify-between mb-3">
+<h3 class="text-lg font-medium">用户评价</h3>
+<span class="text-xs text-primary">查看全部</span>
+</div>
+<div class="space-y-4">
+<div class="p-3 rounded-lg bg-gray-50">
+<div class="flex items-center justify-between">
+<div class="flex items-center">
+<div class="w-8 h-8 rounded-full overflow-hidden">
+<img src="https://readdy.ai/api/search-image?query=Professional%2520headshot%2520of%2520young%2520Asian%2520woman%252C%2520neutral%2520expression%252C%2520clean%2520background%252C%2520studio%2520lighting&width=32&height=32&seq=1014&orientation=squarish" class="w-full h-full object-cover" alt="用户头像">
+</div>
+<div class="ml-2">
+<p class="text-sm font-medium">林雨</p>
+<div class="flex items-center mt-0.5">
+<div class="flex">
+<i class="ri-star-fill text-yellow-400 text-xs"></i>
+<i class="ri-star-fill text-yellow-400 text-xs"></i>
+<i class="ri-star-fill text-yellow-400 text-xs"></i>
+<i class="ri-star-fill text-yellow-400 text-xs"></i>
+<i class="ri-star-fill text-yellow-400 text-xs"></i>
+</div>
+<span class="text-xs text-gray-500 ml-2">2025.04.28</span>
+</div>
+</div>
+</div>
+<div class="carbon-badge">绿值 631</div>
+</div>
+<p class="text-sm text-gray-700 mt-2">空气净养锅真的很特别，第一次尝试这种分子料理风格的素食，味道出乎意料的好。最重要的是碳排量极低，不用担心超额。</p>
+</div>
+<div class="p-3 rounded-lg bg-gray-50">
+<div class="flex items-center justify-between">
+<div class="flex items-center">
+<div class="w-8 h-8 rounded-full overflow-hidden">
+<img src="https://readdy.ai/api/search-image?query=Professional%2520headshot%2520of%2520middle-aged%2520Asian%2520man%252C%2520business%2520casual%252C%2520neutral%2520expression%252C%2520clean%2520background&width=32&height=32&seq=1015&orientation=squarish" class="w-full h-full object-cover" alt="用户头像">
+</div>
+<div class="ml-2">
+<p class="text-sm font-medium">武斯简</p>
+<div class="flex items-center mt-0.5">
+<div class="flex">
+<i class="ri-star-fill text-yellow-400 text-xs"></i>
+<i class="ri-star-fill text-yellow-400 text-xs"></i>
+<i class="ri-star-fill text-yellow-400 text-xs"></i>
+<i class="ri-star-fill text-yellow-400 text-xs"></i>
+<i class="ri-star-line text-yellow-400 text-xs"></i>
+</div>
+<span class="text-xs text-gray-500 ml-2">2025.04.25</span>
+</div>
+</div>
+</div>
+<div class="carbon-badge">绿值 565</div>
+</div>
+<p class="text-sm text-gray-700 mt-2">草本饮吧的森林呼吸茶很不错，但价格偏高。希望能增加一些绿值低的居民也能享受的特色饮品。</p>
+</div>
+</div>
+<button id="bookingBtn" class="w-full mt-4 py-2.5 bg-primary text-white font-medium rounded-button flex items-center justify-center cursor-pointer">
+<i class="ri-calendar-check-line mr-2"></i>
+<span>预约用餐</span>
+</button>
+
+<div id="bookingModal" class="fixed inset-0 bg-black/50 z-50 flex items-center justify-center hidden">
+<div class="bg-white rounded-xl w-[90%] max-h-[90%] overflow-y-auto">
+<div class="p-4">
+<div class="flex items-center justify-between mb-4">
+<h3 class="text-lg font-medium">预约用餐</h3>
+<button id="closeBookingModal" class="w-8 h-8 flex items-center justify-center">
+<i class="ri-close-line text-xl"></i>
+</button>
+</div>
+
+<form id="bookingForm" class="space-y-4">
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-1">选择餐厅</label>
+<div class="relative">
+<select id="restaurant" name="restaurant" class="w-full px-3 py-2 bg-gray-50 border-none rounded text-sm appearance-none">
+<option value="main-canteen">主生态食堂</option>
+<option value="fast-green">快绿通道</option>
+<option value="herbal-bar">草本饮吧</option>
+</select>
+<div class="absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none">
+<i class="ri-arrow-down-s-line text-gray-400"></i>
+</div>
+</div>
+</div>
+
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-1">选择日期</label>
+<input type="date" id="date" name="date" class="w-full px-3 py-2 bg-gray-50 border-none rounded text-sm" min="">
+</div>
+
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-1">选择时间段</label>
+<div class="relative">
+<select id="timeSlot" name="timeSlot" class="w-full px-3 py-2 bg-gray-50 border-none rounded text-sm appearance-none">
+<option value="breakfast">早餐 (06:30-09:00)</option>
+<option value="lunch">午餐 (11:30-13:30)</option>
+<option value="dinner">晚餐 (17:30-19:30)</option>
+</select>
+<div class="absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none">
+<i class="ri-arrow-down-s-line text-gray-400"></i>
+</div>
+</div>
+</div>
+
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-1">用餐人数</label>
+<div class="relative">
+<input type="number" id="people" name="people" min="1" max="8" value="1" class="w-full px-3 py-2 bg-gray-50 border-none rounded text-sm">
+<div class="absolute right-2 top-1/2 -translate-y-1/2 flex space-x-1">
+<button type="button" class="w-6 h-6 flex items-center justify-center text-gray-500" onclick="adjustPeople(-1)">
+<i class="ri-subtract-line"></i>
+</button>
+<button type="button" class="w-6 h-6 flex items-center justify-center text-gray-500" onclick="adjustPeople(1)">
+<i class="ri-add-line"></i>
+</button>
+</div>
+</div>
+</div>
+
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-1">备注</label>
+<textarea id="notes" name="notes" rows="3" class="w-full px-3 py-2 bg-gray-50 border-none rounded text-sm resize-none" placeholder="请输入特殊需求（如过敏原等）"></textarea>
+</div>
+
+<div class="flex space-x-3 pt-4">
+<button type="button" id="cancelBooking" class="flex-1 py-2.5 bg-gray-100 text-gray-600 font-medium rounded-button">取消</button>
+<button type="submit" class="flex-1 py-2.5 bg-primary text-white font-medium rounded-button">提交预约</button>
+</div>
+</form>
+</div>
+</div>
+</div>
+
+<div id="confirmationModal" class="fixed inset-0 bg-black/50 z-50 flex items-center justify-center hidden">
+<div class="bg-white rounded-xl w-[90%] p-6 text-center">
+<div class="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
+<i class="ri-check-line text-3xl text-primary"></i>
+</div>
+<h3 class="text-lg font-medium mb-2">预约成功</h3>
+<p class="text-sm text-gray-600 mb-4">您的预约已确认</p>
+<div class="bg-gray-50 rounded-lg p-4 mb-4">
+<div class="flex items-center justify-between mb-2">
+<span class="text-sm text-gray-600">预约码</span>
+<span class="text-lg font-medium text-primary" id="bookingCode"></span>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-sm text-gray-600">绿值消耗</span>
+<span class="text-sm text-primary" id="greenPoints"></span>
+</div>
+</div>
+<button id="closeConfirmation" class="w-full py-2.5 bg-primary text-white font-medium rounded-button">确定</button>
+</div>
+</div>
+</section>
+</main>
+<!-- 底部导航栏 -->
+<footer class="fixed bottom-0 left-0 w-full bg-white border-t border-gray-200 z-50">
+<div class="grid grid-cols-3 h-14">
+<a href=""  class="flex flex-col items-center justify-center cursor-pointer text-gray-500">
+<div class="w-6 h-6 flex items-center justify-center">
+<i class="ri-home-5-line"></i>
+</div>
+<span class="text-xs mt-0.5">首页</span>
+</a>
+<a href="#" class="flex flex-col items-center justify-center cursor-pointer text-primary">
+<div class="w-6 h-6 flex items-center justify-center">
+<i class="ri-restaurant-fill"></i>
+</div>
+<span class="text-xs mt-0.5">美食</span>
+</a>
+<a href=""  class="flex flex-col items-center justify-center cursor-pointer text-gray-500">
+<div class="w-6 h-6 flex items-center justify-center">
+<i class="ri-user-line"></i>
+</div>
+<span class="text-xs mt-0.5">我的</span>
+</a>
+</div>
+</footer>
+<!-- 餐厅详情弹窗 -->
+<div id="restaurantDetails" class="fixed inset-0 bg-black/50 z-50 flex items-end justify-center hidden">
+<div class="bg-white rounded-t-xl w-full max-h-[80%] overflow-y-auto">
+<div class="p-4">
+<div class="flex items-center justify-between mb-4">
+<h3 class="text-lg font-medium" id="restaurantTitle">餐厅详情</h3>
+<button class="w-8 h-8 flex items-center justify-center" onclick="hideRestaurantDetails()">
+<i class="ri-close-line text-xl"></i>
+</button>
+</div>
+<div id="restaurantContent">
+<!-- 内容将通过 JS 动态填充 -->
+</div>
+<button class="w-full mt-4 py-2.5 bg-primary text-white font-medium rounded-button flex items-center justify-center cursor-pointer">
+<i class="ri-calendar-check-line mr-2"></i>
+<span>立即预约</span>
+</button>
+</div>
+</div>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+const bookingBtn = document.getElementById('bookingBtn');
+const bookingModal = document.getElementById('bookingModal');
+const closeBookingModal = document.getElementById('closeBookingModal');
+const cancelBooking = document.getElementById('cancelBooking');
+const bookingForm = document.getElementById('bookingForm');
+const confirmationModal = document.getElementById('confirmationModal');
+const closeConfirmation = document.getElementById('closeConfirmation');
+const dateInput = document.getElementById('date');
+
+const today = new Date();
+const formattedDate = today.toISOString().split('T')[0];
+dateInput.min = formattedDate;
+dateInput.value = formattedDate;
+
+function showBookingModal() {
+bookingModal.classList.remove('hidden');
+document.body.style.overflow = 'hidden';
+}
+
+function hideBookingModal() {
+bookingModal.classList.add('hidden');
+document.body.style.overflow = '';
+}
+
+function hideConfirmationModal() {
+confirmationModal.classList.add('hidden');
+document.body.style.overflow = '';
+}
+
+function generateBookingCode() {
+return 'BK' + Math.random().toString(36).substr(2, 6).toUpperCase();
+}
+
+function calculateGreenPoints(restaurant, people) {
+const basePoints = {
+'main-canteen': 20,
+'fast-green': 15,
+'herbal-bar': 10
+};
+return basePoints[restaurant] * people;
+}
+
+bookingBtn.addEventListener('click', showBookingModal);
+closeBookingModal.addEventListener('click', hideBookingModal);
+cancelBooking.addEventListener('click', hideBookingModal);
+closeConfirmation.addEventListener('click', hideConfirmationModal);
+
+bookingForm.addEventListener('submit', function(e) {
+e.preventDefault();
+const formData = new FormData(bookingForm);
+const restaurant = formData.get('restaurant');
+const people = parseInt(formData.get('people'));
+const bookingCode = generateBookingCode();
+const greenPoints = calculateGreenPoints(restaurant, people);
+
+document.getElementById('bookingCode').textContent = bookingCode;
+document.getElementById('greenPoints').textContent = `${greenPoints} 绿值`;
+
+hideBookingModal();
+confirmationModal.classList.remove('hidden');
+});
+
+window.adjustPeople = function(delta) {
+const peopleInput = document.getElementById('people');
+const currentValue = parseInt(peopleInput.value);
+const newValue = Math.max(1, Math.min(8, currentValue + delta));
+peopleInput.value = newValue;
+};
+// 初始化碳排图表
+const carbonChart = document.getElementById('carbonChart');
+const myChart = echarts.init(carbonChart);
+const option = {
+tooltip: {
+trigger: 'axis',
+formatter: '{b}: {c}kg'
+},
+grid: {
+left: '3%',
+right: '4%',
+bottom: '3%',
+top: '3%',
+containLabel: true
+},
+xAxis: {
+type: 'category',
+data: ['早餐', '午餐', '晚餐', '零食', '饮品'],
+axisLine: {
+lineStyle: {
+color: '#ddd'
+}
+},
+axisLabel: {
+fontSize: 10
+}
+},
+yAxis: {
+type: 'value',
+name: '碳排放量(kg)',
+nameTextStyle: {
+fontSize: 10
+},
+axisLabel: {
+fontSize: 10
+},
+splitLine: {
+lineStyle: {
+color: '#eee'
+}
+}
+},
+series: [
+{
+data: [0.05, 0.08, 0.07, 0.02, 0.01],
+type: 'bar',
+itemStyle: {
+color: {
+type: 'linear',
+x: 0,
+y: 0,
+x2: 0,
+y2: 1,
+colorStops: [
+{
+offset: 0,
+color: '#4CAF50'
+},
+{
+offset: 1,
+color: '#8BC34A'
+}
+]
+}
+}
+}
+]
+};
+myChart.setOption(option);
+// 窗口大小变化时重绘图表
+window.addEventListener('resize', function() {
+myChart.resize();
+});
+});
+// 餐厅详情弹窗
+function showRestaurantDetails(restaurantId) {
+const modal = document.getElementById('restaurantDetails');
+const title = document.getElementById('restaurantTitle');
+const content = document.getElementById('restaurantContent');
+// 根据餐厅ID设置不同内容
+if (restaurantId === 'main-canteen') {
+title.textContent = '主生态食堂';
+content.innerHTML = `
+<img src="https://readdy.ai/api/search-image?query=Modern%2520eco-friendly%2520canteen%2520interior%2520with%2520wooden%2520tables%252C%2520plants%252C%2520natural%2520lighting%252C%2520minimalist%2520design%252C%2520people%2520eating%2520healthy%2520food%252C%2520sustainable%2520atmosphere%252C%2520professional%2520interior%2520photography&width=375&height=200&seq=1016&orientation=landscape" class="w-full h-48 object-cover rounded-lg mb-3" alt="主生态食堂">
+<div class="flex items-center justify-between mb-3">
+<div class="flex items-center">
+<div class="carbon-badge mr-2">碳排低</div>
+<div class="text-xs text-gray-500">统一出餐 · 低盐脱脂</div>
+</div>
+<div class="flex items-center">
+<i class="ri-star-fill text-yellow-400 text-xs"></i>
+<span class="text-sm ml-1">4.8 (256条评价)</span>
+</div>
+</div>
+<p class="text-sm text-gray-700 mb-4">主生态食堂是绿岛社区的核心餐饮场所，所有餐食由绿岛碳食智能系统生成，搭配碳权分配，确保营养均衡的同时最小化环境影响。食堂采用零废弃原则，所有食材来源可追溯，餐具全部使用可降解材料。</p>
+<div class="bg-gray-50 p-3 rounded-lg mb-4">
+<h4 class="text-sm font-medium mb-2">今日菜单</h4>
+<div class="space-y-2">
+<div class="flex justify-between items-center">
+<span class="text-sm">光合能量碗</span>
+<span class="text-xs text-primary">45 绿值</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-sm">空气净养锅 (限绿值800+)</span>
+<span class="text-xs text-primary">78 绿值</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-sm">微生物蛋白质饼</span>
+<span class="text-xs text-primary">35 绿值</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-sm">基础营养餐</span>
+<span class="text-xs text-primary">20 绿值</span>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between text-xs text-gray-500">
+<div>
+<i class="ri-map-pin-line mr-1"></i>
+<span>绿岛社区中心</span>
+</div>
+<div>
+<i class="ri-time-line mr-1"></i>
+<span>营业时间: 06:30-21:00</span>
+</div>
+</div>
+`;
+} else if (restaurantId === 'fast-green') {
+title.textContent = '快绿通道';
+content.innerHTML = `
+<img src="https://readdy.ai/api/search-image?query=Modern%2520fast%2520healthy%2520food%2520restaurant%2520interior%252C%2520green%2520theme%252C%2520eco-friendly%2520packaging%252C%2520clean%2520design%252C%2520bright%2520lighting%252C%2520people%2520ordering%2520food%252C%2520professional%2520interior%2520photography&width=375&height=200&seq=1017&orientation=landscape" class="w-full h-48 object-cover rounded-lg mb-3" alt="快绿通道">
+<div class="flex items-center justify-between mb-3">
+<div class="flex items-center">
+<div class="carbon-badge mr-2">绿值积分</div>
+<div class="text-xs text-gray-500">能量餐 · 快速服务</div>
+</div>
+<div class="flex items-center">
+<i class="ri-star-fill text-yellow-400 text-xs"></i>
+<span class="text-sm ml-1">4.6 (189条评价)</span>
+</div>
+</div>
+<p class="text-sm text-gray-700 mb-4">快绿通道为忙碌的绿岛居民提供快速、健康、低碳的饮食选择。用绿值积分兑换能量膳食，所有食品包装采用可降解材料，食物残渣全部回收用于社区堆肥。</p>
+<div class="bg-gray-50 p-3 rounded-lg mb-4">
+<h4 class="text-sm font-medium mb-2">热门能量餐</h4>
+<div class="space-y-2">
+<div class="flex justify-between items-center">
+<span class="text-sm">绿能速食盒</span>
+<span class="text-xs text-primary">40 绿值</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-sm">藻类蛋白棒</span>
+<span class="text-xs text-primary">25 绿值</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-sm">光合作用沙拉</span>
+<span class="text-xs text-primary">35 绿值</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-sm">能量果昔</span>
+<span class="text-xs text-primary">20 绿值</span>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between text-xs text-gray-500">
+<div>
+<i class="ri-map-pin-line mr-1"></i>
+<span>绿岛B区商业街</span>
+</div>
+<div>
+<i class="ri-time-line mr-1"></i>
+<span>营业时间: 07:00-21:00</span>
+</div>
+</div>
+`;
+} else if (restaurantId === 'herbal-bar') {
+title.textContent = '草本饮吧';
+content.innerHTML = `
+<img src="https://readdy.ai/api/search-image?query=Modern%2520herbal%2520tea%2520bar%2520with%2520plants%252C%2520wooden%2520counter%252C%2520glass%2520jars%2520with%2520herbs%252C%2520eco-friendly%2520design%252C%2520natural%2520materials%252C%2520soft%2520lighting%252C%2520professional%2520interior%2520photography&width=375&height=200&seq=1018&orientation=landscape" class="w-full h-48 object-cover rounded-lg mb-3" alt="草本饮吧">
+<div class="flex items-center justify-between mb-3">
+<div class="flex items-center">
+<div class="carbon-badge mr-2">零碳排</div>
+<div class="text-xs text-gray-500">植物认同饮品</div>
+</div>
+<div class="flex items-center">
+<i class="ri-star-fill text-yellow-400 text-xs"></i>
+<span class="text-sm ml-1">4.9 (217条评价)</span>
+</div>
+</div>
+<p class="text-sm text-gray-700 mb-4">草本饮吧提供"植物认同饮品"，采用社区种植的有机草本植物，零碳足迹制作工艺。每一款饮品都经过碳排放计算，确保最小环境影响。</p>
+<div class="bg-gray-50 p-3 rounded-lg mb-4">
+<h4 class="text-sm font-medium mb-2">特色饮品</h4>
+<div class="space-y-2">
+<div class="flex justify-between items-center">
+<span class="text-sm">森林呼吸茶</span>
+<span class="text-xs text-primary">30 绿值</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-sm">光合作用茶</span>
+<span class="text-xs text-primary">35 绿值</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-sm">植物共生饮</span>
+<span class="text-xs text-primary">40 绿值</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-sm">草本净化水</span>
+<span class="text-xs text-primary">15 绿值</span>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between text-xs text-gray-500">
+<div>
+<i class="ri-map-pin-line mr-1"></i>
+<span>绿岛生态公园旁</span>
+</div>
+<div>
+<i class="ri-time-line mr-1"></i>
+<span>营业时间: 08:00-20:00</span>
+</div>
+</div>
+`;
+}
+modal.classList.remove('hidden');
+document.body.style.overflow = 'hidden';
+}
+function hideRestaurantDetails() {
+const modal = document.getElementById('restaurantDetails');
+modal.classList.add('hidden');
+document.body.style.overflow = '';
+}
+</script>
+</body>
+</html>

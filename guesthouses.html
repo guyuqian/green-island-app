@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>绿岛民宿</title>
+<script src="https://cdn.tailwindcss.com/3.4.16"></script>
+<script>tailwind.config={theme:{extend:{colors:{primary:'#4CAF50',secondary:'#8BC34A'},borderRadius:{'none':'0px','sm':'4px',DEFAULT:'8px','md':'12px','lg':'16px','xl':'20px','2xl':'24px','3xl':'32px','full':'9999px','button':'8px'}}}}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+<style>
+:where([class^="ri-"])::before { content: "\f3c2"; }
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+-webkit-appearance: none;
+margin: 0;
+}
+.filter-active {
+background-color: rgba(76, 175, 80, 0.1);
+color: #4CAF50;
+font-weight: 500;
+}
+.eco-badge {
+background-color: rgba(76, 175, 80, 0.1);
+color: #4CAF50;
+padding: 2px 6px;
+border-radius: 4px;
+font-size: 10px;
+white-space: nowrap;
+}
+</style>
+</head>
+<body class="bg-gray-50 font-sans">
+<!-- 顶部导航栏 -->
+<header class="fixed top-0 left-0 w-full bg-white shadow-sm z-50">
+<div class="flex items-center justify-between px-4 py-3">
+<a href=""  class="w-8 h-8 flex items-center justify-center">
+<i class="ri-arrow-left-s-line text-xl"></i>
+</a>
+<h1 class="text-lg font-medium text-primary flex-1 text-center">绿岛民宿</h1>
+<div class="w-8 h-8 flex items-center justify-center">
+<i class="ri-heart-line text-xl"></i>
+</div>
+</div>
+</header>
+<!-- 搜索筛选区 -->
+<section class="pt-14 bg-white pb-2 shadow-sm">
+<div class="px-4 py-3">
+<div class="relative">
+<input type="text" placeholder="搜索民宿名称、特色、位置" class="w-full py-2 px-10 rounded-full border border-gray-200 text-sm focus:outline-none focus:ring-1 focus:ring-primary bg-gray-50">
+<span class="absolute left-3.5 top-1/2 transform -translate-y-1/2 w-4 h-4 flex items-center justify-center text-gray-400">
+<i class="ri-search-line"></i>
+</span>
+<span class="absolute right-3.5 top-1/2 transform -translate-y-1/2 w-4 h-4 flex items-center justify-center text-gray-400">
+<i class="ri-equalizer-line"></i>
+</span>
+</div>
+</div>
+<!-- 筛选选项 -->
+<div class="overflow-x-auto px-4 py-2">
+<div class="flex space-x-2 min-w-max">
+<button class="py-1 px-3 rounded-full text-xs filter-active">
+推荐排序
+</button>
+<button class="py-1 px-3 rounded-full text-xs text-gray-600 bg-gray-100">
+价格 <i class="ri-arrow-up-down-line align-text-bottom"></i>
+</button>
+<button class="py-1 px-3 rounded-full text-xs text-gray-600 bg-gray-100">
+评分 <i class="ri-arrow-down-line align-text-bottom"></i>
+</button>
+<button class="py-1 px-3 rounded-full text-xs text-gray-600 bg-gray-100">
+近海区域
+</button>
+<button class="py-1 px-3 rounded-full text-xs text-gray-600 bg-gray-100">
+山景区域
+</button>
+<button class="py-1 px-3 rounded-full text-xs text-gray-600 bg-gray-100">
+零碳建筑
+</button>
+<button class="py-1 px-3 rounded-full text-xs text-gray-600 bg-gray-100">
+太阳能供电
+</button>
+</div>
+</div>
+</section>
+<!-- 民宿列表区 -->
+<main class="pb-20">
+<!-- 民宿项 1 -->
+<div class="bg-white mt-3 rounded-lg overflow-hidden shadow-sm cursor-pointer">
+<div class="relative">
+<img src="https://readdy.ai/api/search-image?query=Modern%2520eco-friendly%2520container%2520house%2520exterior%2520with%2520mint%2520green%2520painted%2520walls%252C%2520dark%2520forest%2520green%2520painted%2520wooden%2520deck%2520and%2520trim%252C%2520large%2520windows%252C%2520surrounded%2520by%2520lush%2520green%2520plants%2520and%2520trees%252C%2520sustainable%2520architecture%252C%2520solar%2520panels%2520on%2520roof%252C%2520minimalist%2520design%252C%2520natural%2520setting%252C%2520bright%2520daylight%252C%2520professional%2520architectural%2520photography&width=375&height=250&seq=1001&orientation=landscape" class="w-full h-52 object-cover object-top" alt="海景集装箱民宿">
+<div class="absolute top-3 left-3 flex space-x-1">
+<span class="eco-badge flex items-center">
+<i class="ri-leaf-fill mr-0.5 text-xs"></i> 零碳建筑
+</span>
+<span class="eco-badge flex items-center">
+<i class="ri-sun-fill mr-0.5 text-xs"></i> 太阳能
+</span>
+</div>
+</div>
+<div class="p-3">
+<div class="flex justify-between items-start">
+<h3 class="text-base font-medium">海景集装箱花园民宿</h3>
+<div class="flex items-center">
+<span class="text-sm font-medium text-primary">4.9</span>
+<span class="text-xs text-gray-500 ml-1">(128)</span>
+</div>
+</div>
+<div class="flex items-center mt-1 text-xs text-gray-500">
+<i class="ri-map-pin-line mr-1"></i>
+<span>绿岛东海岸 · 距海滩步行 5 分钟</span>
+</div>
+<div class="flex items-center justify-between mt-2">
+<div class="flex flex-wrap gap-1">
+<span class="text-xs px-1.5 py-0.5 bg-gray-100 rounded-sm">全景海景</span>
+<span class="text-xs px-1.5 py-0.5 bg-gray-100 rounded-sm">独立花园</span>
+<span class="text-xs px-1.5 py-0.5 bg-gray-100 rounded-sm">雨水回收</span>
+</div>
+<div class="text-right">
+<span class="text-lg font-medium text-primary">¥688</span>
+<span class="text-xs text-gray-500">/晚</span>
+</div>
+</div>
+</div>
+</div>
+<!-- 民宿项 2 -->
+<div class="bg-white mt-3 rounded-lg overflow-hidden shadow-sm cursor-pointer">
+<div class="relative">
+<img src="https://readdy.ai/api/search-image?query=Eco-friendly%2520treehouse%2520accommodation%2520with%2520light%2520sage%2520green%2520exterior%252C%2520dark%2520forest%2520green%2520painted%2520wooden%2520structure%2520and%2520balcony%252C%2520surrounded%2520by%2520lush%2520forest%252C%2520sustainable%2520design%252C%2520large%2520windows%252C%2520nestled%2520in%2520trees%252C%2520bright%2520daylight%252C%2520no%2520people%252C%2520professional%2520architectural%2520photography&width=375&height=250&seq=1002&orientation=landscape" class="w-full h-52 object-cover object-top" alt="森林树屋民宿">
+<div class="absolute top-3 left-3 flex space-x-1">
+<span class="eco-badge flex items-center">
+<i class="ri-recycle-fill mr-0.5 text-xs"></i> 循环材料
+</span>
+<span class="eco-badge flex items-center">
+<i class="ri-water-flash-fill mr-0.5 text-xs"></i> 雨水回收
+</span>
+</div>
+</div>
+<div class="p-3">
+<div class="flex justify-between items-start">
+<h3 class="text-base font-medium">森林树屋生态民宿</h3>
+<div class="flex items-center">
+<span class="text-sm font-medium text-primary">4.8</span>
+<span class="text-xs text-gray-500 ml-1">(96)</span>
+</div>
+</div>
+<div class="flex items-center mt-1 text-xs text-gray-500">
+<i class="ri-map-pin-line mr-1"></i>
+<span>绿岛山地森林区 · 距观景台 10 分钟</span>
+</div>
+<div class="flex items-center justify-between mt-2">
+<div class="flex flex-wrap gap-1">
+<span class="text-xs px-1.5 py-0.5 bg-gray-100 rounded-sm">森林景观</span>
+<span class="text-xs px-1.5 py-0.5 bg-gray-100 rounded-sm">观星平台</span>
+<span class="text-xs px-1.5 py-0.5 bg-gray-100 rounded-sm">有机餐厅</span>
+</div>
+<div class="text-right">
+<span class="text-lg font-medium text-primary">¥788</span>
+<span class="text-xs text-gray-500">/晚</span>
+</div>
+</div>
+</div>
+</div>
+<!-- 民宿项 3 -->
+<div class="bg-white mt-3 rounded-lg overflow-hidden shadow-sm cursor-pointer">
+<div class="relative">
+<img src="https://readdy.ai/api/search-image?query=Modern%2520zen%2520house%2520exterior%2520with%2520vibrant%2520mint%2520green%2520painted%2520walls%2520and%2520dark%2520forest%2520green%2520painted%2520bamboo%2520elements%252C%2520sustainable%2520architecture%252C%2520large%2520windows%252C%2520living%2520green%2520roof%252C%2520surrounded%2520by%2520peaceful%2520zen%2520garden%2520with%2520water%2520feature%252C%2520minimalist%2520design%252C%2520bright%2520daylight%252C%2520professional%2520architectural%2520photography&width=375&height=250&seq=1003&orientation=landscape" class="w-full h-52 object-cover object-top" alt="竹屋禅意民宿">
+<div class="absolute top-3 left-3 flex space-x-1">
+<span class="eco-badge flex items-center">
+<i class="ri-plant-fill mr-0.5 text-xs"></i> 竹材建筑
+</span>
+<span class="eco-badge flex items-center">
+<i class="ri-sun-fill mr-0.5 text-xs"></i> 太阳能
+</span>
+</div>
+</div>
+<div class="p-3">
+<div class="flex justify-between items-start">
+<h3 class="text-base font-medium">竹屋禅意生态民宿</h3>
+<div class="flex items-center">
+<span class="text-sm font-medium text-primary">4.7</span>
+<span class="text-xs text-gray-500 ml-1">(83)</span>
+</div>
+</div>
+<div class="flex items-center mt-1 text-xs text-gray-500">
+<i class="ri-map-pin-line mr-1"></i>
+<span>绿岛中心区 · 距竹林步道 3 分钟</span>
+</div>
+<div class="flex items-center justify-between mt-2">
+<div class="flex flex-wrap gap-1">
+<span class="text-xs px-1.5 py-0.5 bg-gray-100 rounded-sm">禅意设计</span>
+<span class="text-xs px-1.5 py-0.5 bg-gray-100 rounded-sm">茶道体验</span>
+<span class="text-xs px-1.5 py-0.5 bg-gray-100 rounded-sm">有机早餐</span>
+</div>
+<div class="text-right">
+<span class="text-lg font-medium text-primary">¥598</span>
+<span class="text-xs text-gray-500">/晚</span>
+</div>
+</div>
+</div>
+</div>
+<!-- 民宿项 4 -->
+<div class="bg-white mt-3 rounded-lg overflow-hidden shadow-sm cursor-pointer">
+<div class="relative">
+<img src="https://readdy.ai/api/search-image?query=Modern%2520tiny%2520house%2520with%2520soft%2520mint%2520green%2520exterior%2520walls%2520and%2520dark%2520forest%2520green%2520painted%2520deck%2520and%2520trim%252C%2520large%2520windows%252C%2520green%2520roof%252C%2520solar%2520panels%252C%2520surrounded%2520by%2520meadow%2520with%2520wildflowers%252C%2520sustainable%2520design%252C%2520bright%2520daylight%252C%2520professional%2520architectural%2520photography&width=375&height=250&seq=1004&orientation=landscape" class="w-full h-52 object-cover object-top" alt="微型生态小屋">
+<div class="absolute top-3 left-3 flex space-x-1">
+<span class="eco-badge flex items-center">
+<i class="ri-leaf-fill mr-0.5 text-xs"></i> 零碳建筑
+</span>
+<span class="eco-badge flex items-center">
+<i class="ri-battery-charge-fill mr-0.5 text-xs"></i> 储能系统
+</span>
+</div>
+</div>
+<div class="p-3">
+<div class="flex justify-between items-start">
+<h3 class="text-base font-medium">微型生态小屋</h3>
+<div class="flex items-center">
+<span class="text-sm font-medium text-primary">4.9</span>
+<span class="text-xs text-gray-500 ml-1">(112)</span>
+</div>
+</div>
+<div class="flex items-center mt-1 text-xs text-gray-500">
+<i class="ri-map-pin-line mr-1"></i>
+<span>绿岛草原区 · 距观景台 8 分钟</span>
+</div>
+<div class="flex items-center justify-between mt-2">
+<div class="flex flex-wrap gap-1">
+<span class="text-xs px-1.5 py-0.5 bg-gray-100 rounded-sm">草原景观</span>
+<span class="text-xs px-1.5 py-0.5 bg-gray-100 rounded-sm">极简生活</span>
+<span class="text-xs px-1.5 py-0.5 bg-gray-100 rounded-sm">自种蔬菜</span>
+</div>
+<div class="text-right">
+<span class="text-lg font-medium text-primary">¥498</span>
+<span class="text-xs text-gray-500">/晚</span>
+</div>
+</div>
+</div>
+</div>
+<!-- 民宿项 5 -->
+<div class="bg-white mt-3 rounded-lg overflow-hidden shadow-sm cursor-pointer mb-3">
+<div class="relative">
+<img src="https://readdy.ai/api/search-image?query=Luxury%2520eco-friendly%2520villa%2520with%2520light%2520sage%2520green%2520exterior%2520walls%2520and%2520dark%2520forest%2520green%2520painted%2520wooden%2520elements%252C%2520infinity%2520pool%252C%2520ocean%2520view%252C%2520sustainable%2520architecture%252C%2520green%2520roof%252C%2520solar%2520panels%252C%2520large%2520windows%252C%2520outdoor%2520terrace%252C%2520bright%2520daylight%252C%2520professional%2520architectural%2520photography&width=375&height=250&seq=1005&orientation=landscape" class="w-full h-52 object-cover object-top" alt="海景生态别墅">
+<div class="absolute top-3 left-3 flex space-x-1">
+<span class="eco-badge flex items-center">
+<i class="ri-sun-fill mr-0.5 text-xs"></i> 太阳能
+</span>
+<span class="eco-badge flex items-center">
+<i class="ri-water-flash-fill mr-0.5 text-xs"></i> 海水淡化
+</span>
+</div>
+</div>
+<div class="p-3">
+<div class="flex justify-between items-start">
+<h3 class="text-base font-medium">海景生态豪华别墅</h3>
+<div class="flex items-center">
+<span class="text-sm font-medium text-primary">5.0</span>
+<span class="text-xs text-gray-500 ml-1">(76)</span>
+</div>
+</div>
+<div class="flex items-center mt-1 text-xs text-gray-500">
+<i class="ri-map-pin-line mr-1"></i>
+<span>绿岛东海岸 · 私人海滩</span>
+</div>
+<div class="flex items-center justify-between mt-2">
+<div class="flex flex-wrap gap-1">
+<span class="text-xs px-1.5 py-0.5 bg-gray-100 rounded-sm">无边泳池</span>
+<span class="text-xs px-1.5 py-0.5 bg-gray-100 rounded-sm">私人海滩</span>
+<span class="text-xs px-1.5 py-0.5 bg-gray-100 rounded-sm">有机餐厅</span>
+</div>
+<div class="text-right">
+<span class="text-lg font-medium text-primary">¥1,688</span>
+<span class="text-xs text-gray-500">/晚</span>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- 底部导航栏 -->
+<footer class="fixed bottom-0 left-0 w-full bg-white border-t border-gray-200 z-50">
+<div class="grid grid-cols-4 h-14">
+<a href=""  class="flex flex-col items-center justify-center cursor-pointer text-gray-500">
+<div class="w-6 h-6 flex items-center justify-center">
+<i class="ri-home-5-line"></i>
+</div>
+<span class="text-xs mt-0.5">首页</span>
+</a>
+<a href=""  class="flex flex-col items-center justify-center cursor-pointer text-gray-500">
+<div class="w-6 h-6 flex items-center justify-center">
+<i class="ri-qr-code-line"></i>
+</div>
+<span class="text-xs mt-0.5">园区码</span>
+</a>
+<a href="#" class="flex flex-col items-center justify-center cursor-pointer text-primary">
+<div class="w-6 h-6 flex items-center justify-center">
+<i class="ri-home-4-fill"></i>
+</div>
+<span class="text-xs mt-0.5">绿岛民宿</span>
+</a>
+<a href=""  class="flex flex-col items-center justify-center cursor-pointer text-gray-500">
+<div class="w-6 h-6 flex items-center justify-center">
+<i class="ri-user-line"></i>
+</div>
+<span class="text-xs mt-0.5">我的</span>
+</a>
+</div>
+</footer>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+// 筛选按钮点击效果
+const filterButtons = document.querySelectorAll('.rounded-full.text-xs');
+filterButtons.forEach(button => {
+button.addEventListener('click', function() {
+// 如果是排序按钮，只在同组中切换
+if (this.textContent.includes('排序') || this.textContent.includes('价格') || this.textContent.includes('评分')) {
+const sortButtons = Array.from(filterButtons).filter(btn =>
+btn.textContent.includes('排序') || btn.textContent.includes('价格') || btn.textContent.includes('评分')
+);
+sortButtons.forEach(btn => {
+btn.classList.remove('filter-active');
+btn.classList.add('bg-gray-100', 'text-gray-600');
+});
+} else {
+// 其他筛选按钮可以多选
+this.classList.toggle('filter-active');
+this.classList.toggle('bg-gray-100');
+this.classList.toggle('text-gray-600');
+return;
+}
+this.classList.add('filter-active');
+this.classList.remove('bg-gray-100', 'text-gray-600');
+});
+});
+// 民宿项点击效果
+const homestayItems = document.querySelectorAll('.bg-white.mt-3');
+homestayItems.forEach(item => {
+item.addEventListener('click', function() {
+// 这里可以添加跳转到详情页的逻辑
+this.style.opacity = '0.8';
+setTimeout(() => {
+this.style.opacity = '1';
+}, 200);
+});
+});
+// 收藏按钮点击效果
+const favoriteButton = document.querySelector('header .ri-heart-line');
+favoriteButton.addEventListener('click', function() {
+this.classList.toggle('ri-heart-line');
+this.classList.toggle('ri-heart-fill');
+this.classList.toggle('text-primary');
+});
+});
+</script>
+</body>
+</html>

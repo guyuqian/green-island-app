@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>绿岛 Green Island - 登录</title>
+<script src="https://cdn.tailwindcss.com/3.4.16"></script>
+<script>tailwind.config={theme:{extend:{colors:{primary:'#7BC67B',secondary:'#F5F5F5'},borderRadius:{'none':'0px','sm':'4px',DEFAULT:'8px','md':'12px','lg':'16px','xl':'20px','2xl':'24px','3xl':'32px','full':'9999px','button':'8px'}}}}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+<style>
+:where([class^="ri-"])::before { content: "\f3c2"; }
+body {
+font-family: 'PingFang SC', 'Helvetica Neue', Arial, sans-serif;
+background: url('https://static.readdy.ai/image/8a17cb5c2119510729cbd5c13557ee5c/289fafb35fa0670134790cd6291dabd8.jpeg') center/cover no-repeat fixed;
+position: relative;
+}
+body::before {
+content: '';
+position: absolute;
+top: 0;
+left: 0;
+right: 0;
+bottom: 0;
+background: rgba(255, 255, 255, 0.85);
+z-index: -1;
+}
+</style>
+</head>
+<body class="bg-white min-h-screen flex flex-col items-center justify-between pt-16 pb-8">
+<div class="w-full max-w-[375px] px-6 flex flex-col items-center">
+<!-- Logo 区域 -->
+<div class="mb-16 text-center">
+<h1 class="font-['Pacifico'] text-4xl text-primary">绿岛 Green Island</h1>
+</div>
+<!-- 登录选项区域 -->
+<div class="w-full bg-white rounded-lg shadow-md p-6 mb-12">
+<h2 class="text-xl font-medium text-[#4B944B] mb-8 text-center">欢迎登录</h2>
+<!-- 微信登录按钮 -->
+<a href=""  class="w-full bg-primary text-white py-3 flex items-center justify-center rounded-button mb-4 cursor-pointer no-underline">
+<div class="w-6 h-6 flex items-center justify-center mr-2">
+<i class="ri-wechat-fill ri-lg"></i>
+</div>
+<span>微信一键登录</span>
+</a>
+<!-- 手机号登录按钮 -->
+<button class="w-full bg-white text-primary border border-primary py-3 flex items-center justify-center rounded-button cursor-pointer">
+<div class="w-6 h-6 flex items-center justify-center mr-2">
+<i class="ri-smartphone-line ri-lg"></i>
+</div>
+<span>手机号一键登录</span>
+</button>
+</div>
+<!-- 其他登录选项 -->
+<div class="w-full mb-8">
+<div class="flex items-center justify-center mb-6">
+<div class="h-px bg-gray-200 flex-grow"></div>
+<span class="px-4 text-sm text-gray-400">其他登录方式</span>
+<div class="h-px bg-gray-200 flex-grow"></div>
+</div>
+<div class="flex justify-center space-x-8">
+<div id="qqLoginBtn" class="w-10 h-10 flex items-center justify-center rounded-full border border-gray-200 cursor-pointer">
+<i class="ri-qq-fill ri-lg text-[#2196F3]"></i>
+</div>
+<div id="weiboLoginBtn" class="w-10 h-10 flex items-center justify-center rounded-full border border-gray-200 cursor-pointer">
+<i class="ri-weibo-fill ri-lg text-[#E91E63]"></i>
+</div>
+<div id="alipayLoginBtn" class="w-10 h-10 flex items-center justify-center rounded-full border border-gray-200 cursor-pointer">
+<i class="ri-alipay-fill ri-lg text-[#1976D2]"></i>
+</div>
+</div>
+</div>
+</div>
+<!-- 页面底部 -->
+<div class="w-full text-center text-xs text-gray-400 px-6">
+<p class="mb-2">登录即表示您同意</p>
+<p>
+<a href=""  class="text-primary">《用户协议》</a>
+和
+<a href=""  class="text-primary">《隐私政策》</a>
+</p>
+</div>
+<div id="weiboLoginModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+<div class="bg-white w-[320px] rounded-lg p-6 relative">
+<button id="closeWeiboModal" class="absolute right-4 top-4">
+<i class="ri-close-line ri-lg text-gray-400"></i>
+</button>
+<div class="text-center">
+<h3 class="text-lg font-medium mb-6">微博扫码登录</h3>
+<div class="w-48 h-48 mx-auto mb-4 bg-[#F5F5F5] rounded-lg flex items-center justify-center overflow-hidden">
+<img src="https://readdy.ai/api/search-image?query=QR%20code%2C%20minimalist%20design%2C%20red%20color%20scheme%2C%20centered%20composition%2C%20clean%20and%20modern%20look%2C%20Weibo%20logo%20in%20the%20center%2C%20high%20detail%20quality%2C%20isolated%20on%20white%20background&width=192&height=192&seq=2&orientation=squarish" alt="Weibo Login QR Code" class="w-full h-full object-cover">
+</div>
+<p class="text-sm text-gray-500">请使用微博扫描二维码登录</p>
+</div>
+</div>
+</div>
+<div id="qqLoginModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+<div class="bg-white w-[320px] rounded-lg p-6 relative">
+<button id="closeQQModal" class="absolute right-4 top-4">
+<i class="ri-close-line ri-lg text-gray-400"></i>
+</button>
+<div class="text-center">
+<h3 class="text-lg font-medium mb-6">QQ扫码登录</h3>
+<div class="w-48 h-48 mx-auto mb-4 bg-[#F5F5F5] rounded-lg flex items-center justify-center overflow-hidden">
+<img src="https://readdy.ai/api/search-image?query=QR%20code%2C%20minimalist%20design%2C%20blue%20color%20scheme%2C%20centered%20composition%2C%20clean%20and%20modern%20look%2C%20QQ%20logo%20in%20the%20center%2C%20high%20detail%20quality%2C%20isolated%20on%20white%20background&width=192&height=192&seq=1&orientation=squarish" alt="QQ Login QR Code" class="w-full h-full object-cover">
+</div>
+<p class="text-sm text-gray-500">请使用QQ扫描二维码登录</p>
+</div>
+</div>
+</div>
+<div id="alipayLoginModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+<div class="bg-white w-[320px] rounded-lg p-6 relative">
+<button id="closeAlipayModal" class="absolute right-4 top-4">
+<i class="ri-close-line ri-lg text-gray-400"></i>
+</button>
+<div class="text-center">
+<h3 class="text-lg font-medium mb-6">支付宝扫码登录</h3>
+<div class="w-48 h-48 mx-auto mb-4 bg-[#F5F5F5] rounded-lg flex items-center justify-center overflow-hidden">
+<img src="https://readdy.ai/api/search-image?query=QR%20code%2C%20minimalist%20design%2C%20blue%20color%20scheme%2C%20centered%20composition%2C%20clean%20and%20modern%20look%2C%20Alipay%20logo%20in%20the%20center%2C%20high%20detail%20quality%2C%20isolated%20on%20white%20background&width=192&height=192&seq=3&orientation=squarish" alt="Alipay Login QR Code" class="w-full h-full object-cover">
+</div>
+<p class="text-sm text-gray-500">请使用支付宝扫描二维码登录</p>
+</div>
+</div>
+</div>
+<div id="phoneLoginModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+<div class="bg-white w-[320px] rounded-lg p-6 relative">
+<button id="closeModal" class="absolute right-4 top-4">
+<i class="ri-close-line ri-lg text-gray-400"></i>
+</button>
+<h3 class="text-lg font-medium text-center mb-6">手机号登录</h3>
+<form id="phoneLoginForm" class="space-y-4">
+<div class="relative">
+<input type="tel" id="phoneInput" maxlength="11" class="w-full px-4 py-3 border rounded-button focus:outline-none focus:border-primary" placeholder="请输入手机号">
+</div>
+<div class="relative">
+<input type="text" id="codeInput" maxlength="6" class="w-full px-4 py-3 border rounded-button focus:outline-none focus:border-primary" placeholder="请输入验证码">
+<button type="button" id="getCodeBtn" disabled class="absolute right-2 top-1/2 -translate-y-1/2 px-3 py-1.5 text-sm text-primary text-gray-400">
+获取验证码
+</button>
+</div>
+<a href=""  id="loginSubmitBtn" class="w-full bg-primary text-white py-3 rounded-button flex items-center justify-center no-underline cursor-pointer">
+登录
+</a>
+</form>
+</div>
+</div>
+<div id="agreementModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+<div class="bg-white w-[320px] rounded-lg p-6 relative">
+<div class="text-center">
+<h3 class="text-lg font-medium text-primary mb-4">用户协议及隐私政策</h3>
+<p class="text-sm text-[#4B944B] mb-6">为了更好地保障您的合法权益，请您阅读并同意以下协议</p>
+<div class="text-left mb-6">
+<a href="#" class="text-primary hover:underline">《用户协议》</a>、
+<a href="#" class="text-primary hover:underline">《隐私政策》</a>、
+<a href="#" class="text-primary hover:underline">《园区规则》</a>
+</div>
+<div class="flex space-x-4">
+<button id="disagreeBtn" class="flex-1 py-2 border border-primary rounded-button text-primary hover:bg-primary hover:bg-opacity-10">拒绝</button>
+<button id="agreeBtn" class="flex-1 py-2 bg-primary text-white rounded-button hover:bg-opacity-90">同意</button>
+</div>
+</div>
+</div>
+</div>
+<div id="nameInputModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+<div class="bg-white w-[320px] rounded-lg p-6 relative">
+<div class="text-center">
+<h3 class="text-lg font-medium mb-6">请输入您的姓名</h3>
+<form id="nameForm" class="space-y-4">
+<input type="text" id="nameInput" class="w-full px-4 py-3 border rounded-button focus:outline-none focus:border-primary" placeholder="请输入您的姓名" maxlength="20">
+<button type="submit" class="w-full bg-primary text-white py-3 rounded-button">确认</button>
+</form>
+</div>
+</div>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+const nameModal = document.getElementById('nameInputModal');
+const nameForm = document.getElementById('nameForm');
+const nameInput = document.getElementById('nameInput');
+const phoneModal = document.getElementById('phoneLoginModal');
+const alipayModal = document.getElementById('alipayLoginModal');
+const weiboModal = document.getElementById('weiboLoginModal');
+const phoneBtn = document.querySelector('.border-primary');
+const alipayBtn = document.getElementById('alipayLoginBtn');
+const weiboBtn = document.getElementById('weiboLoginBtn');
+const closeAlipayBtn = document.getElementById('closeAlipayModal');
+const closeWeiboBtn = document.getElementById('closeWeiboModal');
+const closeBtn = document.getElementById('closeModal');
+const form = document.getElementById('phoneLoginForm');
+const phoneInput = document.getElementById('phoneInput');
+const codeInput = document.getElementById('codeInput');
+const getCodeBtn = document.getElementById('getCodeBtn');
+let countdown = 60;
+let timer = null;
+let lastPhone = '';
+function showPhoneModal() {
+phoneModal.classList.remove('hidden');
+phoneModal.classList.add('flex');
+}
+function hidePhoneModal() {
+phoneModal.classList.add('hidden');
+phoneModal.classList.remove('flex');
+form.reset();
+resetGetCodeBtn();
+}
+function showAlipayModal() {
+alipayModal.classList.remove('hidden');
+alipayModal.classList.add('flex');
+}
+function hideAlipayModal() {
+alipayModal.classList.add('hidden');
+alipayModal.classList.remove('flex');
+}
+function startCountdown() {
+getCodeBtn.disabled = true;
+getCodeBtn.classList.add('text-gray-400');
+lastPhone = phoneInput.value.trim();
+timer = setInterval(() => {
+getCodeBtn.textContent = `${countdown}秒后重试`;
+countdown--;
+if (countdown < 0) {
+resetGetCodeBtn();
+}
+}, 1000);
+}
+function resetGetCodeBtn() {
+clearInterval(timer);
+countdown = 60;
+getCodeBtn.disabled = false;
+getCodeBtn.classList.remove('text-gray-400');
+getCodeBtn.textContent = '获取验证码';
+}
+function validatePhone(phone) {
+return /^1[3-9]\d{9}$/.test(phone);
+}
+phoneBtn.addEventListener('click', (e) => {
+e.preventDefault();
+showAgreementModal();
+});
+closeBtn.addEventListener('click', hidePhoneModal);
+phoneModal.addEventListener('click', (e) => {
+if (e.target === phoneModal) hidePhoneModal();
+});
+alipayBtn.addEventListener('click', showAlipayModal);
+closeAlipayBtn.addEventListener('click', hideAlipayModal);
+alipayModal.addEventListener('click', (e) => {
+if (e.target === alipayModal) hideAlipayModal();
+});
+function showQQModal() {
+qqModal.classList.remove('hidden');
+qqModal.classList.add('flex');
+}
+function hideQQModal() {
+qqModal.classList.add('hidden');
+qqModal.classList.remove('flex');
+}
+function showWeiboModal() {
+weiboModal.classList.remove('hidden');
+weiboModal.classList.add('flex');
+}
+function hideWeiboModal() {
+weiboModal.classList.add('hidden');
+weiboModal.classList.remove('flex');
+}
+const qqModal = document.getElementById('qqLoginModal');
+const qqBtn = document.getElementById('qqLoginBtn');
+const closeQQBtn = document.getElementById('closeQQModal');
+qqBtn.addEventListener('click', showQQModal);
+closeQQBtn.addEventListener('click', hideQQModal);
+qqModal.addEventListener('click', (e) => {
+if (e.target === qqModal) hideQQModal();
+});
+weiboBtn.addEventListener('click', showWeiboModal);
+closeWeiboBtn.addEventListener('click', hideWeiboModal);
+weiboModal.addEventListener('click', (e) => {
+if (e.target === weiboModal) hideWeiboModal();
+});
+phoneInput.addEventListener('input', () => {
+if (validatePhone(phoneInput.value.trim())) {
+getCodeBtn.disabled = false;
+getCodeBtn.classList.remove('text-gray-400');
+} else {
+getCodeBtn.disabled = true;
+getCodeBtn.classList.add('text-gray-400');
+}
+});
+getCodeBtn.addEventListener('click', () => {
+const phone = phoneInput.value.trim();
+if (!validatePhone(phone)) {
+const toast = document.createElement('div');
+toast.className = 'fixed top-4 left-1/2 -translate-x-1/2 bg-black bg-opacity-70 text-white px-4 py-2 rounded-lg text-sm';
+toast.textContent = '请输入正确的手机号';
+document.body.appendChild(toast);
+setTimeout(() => toast.remove(), 2000);
+return;
+}
+startCountdown();
+setTimeout(() => {
+const verificationCode = Math.floor(100000 + Math.random() * 900000).toString();
+codeInput.value = verificationCode;
+const toast = document.createElement('div');
+toast.className = 'fixed top-4 left-1/2 -translate-x-1/2 bg-black bg-opacity-70 text-white px-4 py-2 rounded-lg text-sm';
+toast.textContent = '验证码已发送';
+document.body.appendChild(toast);
+setTimeout(() => toast.remove(), 2000);
+}, 1000);
+});
+form.addEventListener('submit', (e) => {
+e.preventDefault();
+const phone = phoneInput.value.trim();
+const code = codeInput.value.trim();
+if (!validatePhone(phone)) {
+return;
+}
+if (!/^\d{6}$/.test(code)) {
+const toast = document.createElement('div');
+toast.className = 'fixed top-4 left-1/2 -translate-x-1/2 bg-black bg-opacity-70 text-white px-4 py-2 rounded-lg text-sm';
+toast.textContent = '请输入6位验证码';
+document.body.appendChild(toast);
+setTimeout(() => toast.remove(), 2000);
+return;
+}
+document.getElementById('loginSubmitBtn').click();
+});
+function showAgreementModal() {
+const agreementModal = document.getElementById('agreementModal');
+agreementModal.classList.remove('hidden');
+agreementModal.classList.add('flex');
+}
+function hideAgreementModal() {
+const agreementModal = document.getElementById('agreementModal');
+agreementModal.classList.add('hidden');
+agreementModal.classList.remove('flex');
+}
+function showNameModal() {
+nameModal.classList.remove('hidden');
+nameModal.classList.add('flex');
+}
+function hideNameModal() {
+nameModal.classList.add('hidden');
+nameModal.classList.remove('flex');
+}
+nameModal.addEventListener('click', (e) => {
+if (e.target === nameModal) {
+hideNameModal();
+}
+});
+nameForm.addEventListener('submit', (e) => {
+e.preventDefault();
+const name = nameInput.value.trim();
+if (!name) {
+const toast = document.createElement('div');
+toast.className = 'fixed top-4 left-1/2 -translate-x-1/2 bg-black bg-opacity-70 text-white px-4 py-2 rounded-lg text-sm';
+toast.textContent = '请输入您的姓名';
+document.body.appendChild(toast);
+setTimeout(() => toast.remove(), 2000);
+return;
+}
+localStorage.setItem('userName', name);
+hideNameModal();
+window.location.href = '

@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>绿岛房产列表</title>
+<script src="https://cdn.tailwindcss.com/3.4.16"></script>
+<script>tailwind.config={theme:{extend:{colors:{primary:'#4CAF50',secondary:'#8BC34A'},borderRadius:{'none':'0px','sm':'4px',DEFAULT:'8px','md':'12px','lg':'16px','xl':'20px','2xl':'24px','3xl':'32px','full':'9999px','button':'8px'}}}}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+<style>
+:where([class^="ri-"])::before { content: "\f3c2"; }
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+-webkit-appearance: none;
+margin: 0;
+}
+.range-slider::-webkit-slider-thumb {
+-webkit-appearance: none;
+appearance: none;
+width: 20px;
+height: 20px;
+border-radius: 50%;
+background: #4CAF50;
+cursor: pointer;
+border: 2px solid white;
+box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+.range-slider::-moz-range-thumb {
+width: 20px;
+height: 20px;
+border-radius: 50%;
+background: #4CAF50;
+cursor: pointer;
+border: 2px solid white;
+box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+</style>
+</head>
+<body class="bg-gray-50 font-sans">
+<!-- 顶部导航栏 -->
+<header class="fixed top-0 left-0 w-full bg-white shadow-sm z-50">
+<div class="flex items-center justify-between px-4 py-3">
+<a href=""  class="w-8 h-8 flex items-center justify-center">
+<i class="ri-arrow-left-line text-xl text-gray-700"></i>
+</a>
+<div class="flex-1 text-center">
+<h1 class="text-lg font-medium text-gray-800">绿岛房产</h1>
+</div>
+<div class="w-8 h-8 flex items-center justify-center" id="shareBtn">
+<i class="ri-share-line text-xl text-gray-700"></i>
+</div>
+
+<!-- Share Modal -->
+<div id="shareModal" class="fixed inset-0 bg-black/50 z-[60] hidden">
+<div class="absolute bottom-0 left-0 right-0 bg-white rounded-t-xl">
+<div class="p-4">
+<div class="flex justify-between items-center mb-4">
+<h3 class="text-lg font-medium">分享</h3>
+<button id="closeShare" class="w-8 h-8 flex items-center justify-center">
+<i class="ri-close-line text-xl"></i>
+</button>
+</div>
+<div class="grid grid-cols-4 gap-4 mb-6">
+<button class="flex flex-col items-center">
+<div class="w-12 h-12 rounded-full bg-[#07C160] flex items-center justify-center text-white mb-1">
+<i class="ri-wechat-fill text-2xl"></i>
+</div>
+<span class="text-xs">微信</span>
+</button>
+<button class="flex flex-col items-center">
+<div class="w-12 h-12 rounded-full bg-[#1296DB] flex items-center justify-center text-white mb-1">
+<i class="ri-moments-line text-2xl"></i>
+</div>
+<span class="text-xs">朋友圈</span>
+</button>
+<button class="flex flex-col items-center">
+<div class="w-12 h-12 rounded-full bg-[#1296DB] flex items-center justify-center text-white mb-1">
+<i class="ri-qq-fill text-2xl"></i>
+</div>
+<span class="text-xs">QQ</span>
+</button>
+<button class="flex flex-col items-center">
+<div class="w-12 h-12 rounded-full bg-[#1296DB] flex items-center justify-center text-white mb-1">
+<i class="ri-weibo-fill text-2xl"></i>
+</div>
+<span class="text-xs">微博</span>
+</button>
+</div>
+<div class="flex gap-4">
+<button class="flex-1 py-3 border border-gray-200 rounded-lg !rounded-button text-base" id="copyLink">复制链接</button>
+<button class="flex-1 py-3 bg-primary text-white rounded-lg !rounded-button text-base">生成海报</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</header>
+<!-- 搜索筛选区 -->
+<section class="pt-14 bg-white shadow-sm">
+<!-- 搜索框 -->
+<div class="px-4 py-3">
+<div class="relative">
+<input type="text" placeholder="搜索房源、小区名称" class="w-full py-2 px-10 rounded-full border border-gray-200 text-sm focus:outline-none focus:ring-1 focus:ring-primary bg-gray-50">
+<span class="absolute left-3.5 top-1/2 transform -translate-y-1/2 w-4 h-4 flex items-center justify-center text-gray-400">
+<i class="ri-search-line"></i>
+</span>
+<span class="absolute right-3.5 top-1/2 transform -translate-y-1/2 text-sm text-primary">
+搜索
+</span>
+</div>
+</div>
+<!-- 筛选标签 -->
+<div class="px-4 pb-2 flex overflow-x-auto whitespace-nowrap gap-2 hide-scrollbar">
+<button class="px-3 py-1.5 bg-primary/10 text-primary text-sm rounded-full !rounded-button flex items-center">
+<i class="ri-filter-3-line mr-1"></i>
+筛选
+</button>
+<button class="px-3 py-1.5 bg-gray-100 text-gray-700 text-sm rounded-full !rounded-button">
+价格区间
+</button>
+<button class="px-3 py-1.5 bg-gray-100 text-gray-700 text-sm rounded-full !rounded-button">
+户型
+</button>
+<button class="px-3 py-1.5 bg-gray-100 text-gray-700 text-sm rounded-full !rounded-button">
+面积
+</button>
+<button class="px-3 py-1.5 bg-gray-100 text-gray-700 text-sm rounded-full !rounded-button">
+朝向
+</button>
+<button class="px-3 py-1.5 bg-gray-100 text-gray-700 text-sm rounded-full !rounded-button">
+装修
+</button>
+<button class="px-3 py-1.5 bg-gray-100 text-gray-700 text-sm rounded-full !rounded-button">
+楼层
+</button>
+</div>
+<!-- 排序选项 -->
+<div class="flex border-t border-gray-100">
+<button class="flex-1 py-3 text-sm text-center flex items-center justify-center" id="sortDefault">
+<span>默认排序</span>
+<i class="ri-arrow-down-s-line ml-1"></i>
+</button>
+<button class="flex-1 py-3 text-sm text-center flex items-center justify-center" id="sortPrice">
+<span>价格</span>
+<i class="ri-arrow-up-down-line ml-1"></i>
+</button>
+<button class="flex-1 py-3 text-sm text-center flex items-center justify-center" id="sortArea">
+<span>面积</span>
+<i class="ri-arrow-up-down-line ml-1"></i>
+</button>
+<button class="flex-1 py-3 text-sm text-center flex items-center justify-center" id="sortNew">
+<span>最新发布</span>
+<i class="ri-arrow-down-s-line ml-1"></i>
+</button>
+</div>
+</section>
+<!-- 筛选面板 (默认隐藏) -->
+<div id="filterPanel" class="fixed inset-0 bg-black/50 z-50 hidden">
+<div class="absolute bottom-0 left-0 right-0 bg-white rounded-t-xl max-h-[90vh] overflow-y-auto">
+<div class="p-4">
+<div class="flex justify-between items-center mb-4">
+<h3 class="text-lg font-medium">筛选条件</h3>
+<button id="closeFilter" class="w-8 h-8 flex items-center justify-center">
+<i class="ri-close-line text-xl"></i>
+</button>
+</div>
+<!-- 价格区间 -->
+<div class="mb-6">
+<h4 class="text-base font-medium mb-3">价格区间</h4>
+<div class="flex items-center justify-between mb-3">
+<div class="flex-1">
+<input type="number" placeholder="最低价" class="w-full py-2 px-3 rounded border border-gray-200 text-sm">
+</div>
+<span class="mx-2 text-gray-400">-</span>
+<div class="flex-1">
+<input type="number" placeholder="最高价" class="w-full py-2 px-3 rounded border border-gray-200 text-sm">
+</div>
+<span class="ml-2 text-gray-500 whitespace-nowrap">万元</span>
+</div>
+<input type="range" min="0" max="2000" value="500" class="range-slider w-full h-2 bg-gray-200 rounded-full appearance-none cursor-pointer">
+<div class="flex justify-between text-xs text-gray-500 mt-1">
+<span>0万</span>
+<span>500万</span>
+<span>1000万</span>
+<span>1500万</span>
+<span>2000万+</span>
+</div>
+</div>
+<!-- 户型 -->
+<div class="mb-6">
+<h4 class="text-base font-medium mb-3">户型</h4>
+<div class="flex flex-wrap gap-3">
+<button class="px-4 py-2 border border-gray-200 rounded-full !rounded-button text-sm">一室</button>
+<button class="px-4 py-2 border border-gray-200 rounded-full !rounded-button text-sm">二室</button>
+<button class="px-4 py-2 border border-gray-200 rounded-full !rounded-button text-sm">三室</button>
+<button class="px-4 py-2 border border-gray-200 rounded-full !rounded-button text-sm">四室</button>
+<button class="px-4 py-2 border border-gray-200 rounded-full !rounded-button text-sm">五室及以上</button>
+</div>
+</div>
+<!-- 面积 -->
+<div class="mb-6">
+<h4 class="text-base font-medium mb-3">面积</h4>
+<div class="flex flex-wrap gap-3">
+<button class="px-4 py-2 border border-gray-200 rounded-full !rounded-button text-sm">50㎡以下</button>
+<button class="px-4 py-2 border border-gray-200 rounded-full !rounded-button text-sm">50-70㎡</button>
+<button class="px-4 py-2 border border-gray-200 rounded-full !rounded-button text-sm">70-90㎡</button>
+<button class="px-4 py-2 border border-gray-200 rounded-full !rounded-button text-sm">90-110㎡</button>
+<button class="px-4 py-2 border border-gray-200 rounded-full !rounded-button text-sm">110-130㎡</button>
+<button class="px-4 py-2 border border-gray-200 rounded-full !rounded-button text-sm">130㎡以上</button>
+</div>
+</div>
+<!-- 更多筛选条件 -->
+<div class="mb-6">
+<h4 class="text-base font-medium mb-3">朝向</h4>
+<div class="flex flex-wrap gap-3">
+<button class="px-4 py-2 border border-gray-200 rounded-full !rounded-button text-sm">东</button>
+<button class="px-4 py-2 border border-gray-200 rounded-full !rounded-button text-sm">南</button>
+<button class="px-4 py-2 border border-gray-200 rounded-full !rounded-button text-sm">西</button>
+<button class="px-4 py-2 border border-gray-200 rounded-full !rounded-button text-sm">北</button>
+<button class="px-4 py-2 border border-gray-200 rounded-full !rounded-button text-sm">东南</button>
+<button class="px-4 py-2 border border-gray-200 rounded-full !rounded-button text-sm">西南</button>
+</div>
+</div>
+<div class="mb-6">
+<h4 class="text-base font-medium mb-3">装修</h4>
+<div class="flex flex-wrap gap-3">
+<button class="px-4 py-2 border border-gray-200 rounded-full !rounded-button text-sm">毛坯</button>
+<button class="px-4 py-2 border border-gray-200 rounded-full !rounded-button text-sm">简装</button>
+<button class="px-4 py-2 border border-gray-200 rounded-full !rounded-button text-sm">精装</button>
+<button class="px-4 py-2 border border-gray-200 rounded-full !rounded-button text-sm">豪装</button>
+</div>
+</div>
+<div class="mb-6">
+<h4 class="text-base font-medium mb-3">特色标签</h4>
+<div class="flex flex-wrap gap-3">
+<button class="px-4 py-2 border border-gray-200 rounded-full !rounded-button text-sm">近地铁</button>
+<button class="px-4 py-2 border border-gray-200 rounded-full !rounded-button text-sm">学区房</button>
+<button class="px-4 py-2 border border-gray-200 rounded-full !rounded-button text-sm">南北通透</button>
+<button class="px-4 py-2 border border-gray-200 rounded-full !rounded-button text-sm">电梯房</button>
+<button class="px-4 py-2 border border-gray-200 rounded-full !rounded-button text-sm">绿色建筑</button>
+<button class="px-4 py-2 border border-gray-200 rounded-full !rounded-button text-sm">零碳小区</button>
+<button class="px-4 py-2 border border-gray-200 rounded-full !rounded-button text-sm">智能家居</button>
+<button class="px-4 py-2 border border-gray-200 rounded-full !rounded-button text-sm">太阳能</button>
+</div>
+</div>
+<!-- 按钮区 -->
+<div class="flex gap-4 mt-6">
+<button class="flex-1 py-3 border border-gray-200 rounded-lg !rounded-button text-base">重置</button>
+<button class="flex-1 py-3 bg-primary text-white rounded-lg !rounded-button text-base">确定</button>
+</div>
+</div>
+</div>
+</div>
+<!-- 房产列表 -->
+<main class="pb-16">
+<div class="bg-white">
+<!-- 绿色生态房产推荐 -->
+<div class="p-4 bg-primary/5 border-b border-primary/10">
+<div class="flex items-center mb-2">
+<div class="w-4 h-4 flex items-center justify-center mr-1 text-primary">
+<i class="ri-plant-line"></i>
+</div>
+<h3 class="text-base font-medium text-primary">绿色生态房产推荐</h3>
+</div>
+<p class="text-xs text-gray-600">符合绿岛环保标准，享受绿值加成和能源配给优先权</p>
+</div>
+<!-- 房产列表项 -->
+<div class="divide-y divide-gray-100">
+<!-- 房产项 1 -->
+<div class="p-4">
+<div class="flex">
+<div class="relative w-32 h-24 rounded-lg overflow-hidden">
+<img src="https://readdy.ai/api/search-image?query=Modern%2520apartment%2520building%2520exterior%2520painted%2520in%2520elegant%2520sage%2520green%2520color%252C%2520minimalist%2520architecture%252C%2520large%2520windows%252C%2520clean%2520lines%252C%2520surrounded%2520by%2520green%2520landscaping%252C%2520professional%2520architectural%2520photography%252C%2520muted%2520green%2520tones%252C%2520eco-friendly%2520appearance&width=128&height=96&seq=301&orientation=landscape" class="w-full h-full object-cover" alt="绿色公寓">
+<div class="absolute top-0 left-0 bg-primary/80 text-white text-xs px-1.5 py-0.5">
+零碳小区
+</div>
+<button class="absolute bottom-1 right-1 w-7 h-7 bg-white/80 rounded-full flex items-center justify-center text-gray-500 hover:text-primary">
+<i class="ri-heart-line"></i>
+</button>
+</div>
+<div class="flex-1 ml-3">
+<h3 class="text-base font-medium line-clamp-1">绿岛花园 · 光合公寓</h3>
+<div class="flex items-center mt-1 text-xs text-gray-500">
+<span>3室2厅 | 89㎡ | 南北通透</span>
+</div>
+<div class="flex flex-wrap gap-1 mt-2">
+<span class="px-1.5 py-0.5 bg-primary/10 text-primary text-xs rounded">绿色建筑</span>
+<span class="px-1.5 py-0.5 bg-gray-100 text-gray-600 text-xs rounded">太阳能</span>
+<span class="px-1.5 py-0.5 bg-gray-100 text-gray-600 text-xs rounded">智能家居</span>
+</div>
+<div class="flex justify-between items-center mt-2">
+<div class="text-primary font-medium">
+<span class="text-lg">128</span>
+<span class="text-sm">万元</span>
+</div>
+<div class="text-xs text-gray-500">
+约14382元/㎡
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- 房产项 2 -->
+<div class="p-4">
+<div class="flex">
+<div class="relative w-32 h-24 rounded-lg overflow-hidden">
+<img src="https://readdy.ai/api/search-image?query=Modern%2520container%2520home%2520painted%2520in%2520forest%2520green%252C%2520contemporary%2520design%252C%2520large%2520windows%252C%2520wooden%2520accents%252C%2520surrounded%2520by%2520lush%2520greenery%252C%2520professional%2520architectural%2520photography%252C%2520monochromatic%2520green%2520exterior%252C%2520eco-friendly%2520appearance&width=128&height=96&seq=302&orientation=landscape" class="w-full h-full object-cover" alt="集装箱住宅">
+<div class="absolute top-0 left-0 bg-primary/80 text-white text-xs px-1.5 py-0.5">
+绿舱住宅
+</div>
+<button class="absolute bottom-1 right-1 w-7 h-7 bg-white/80 rounded-full flex items-center justify-center text-gray-500 hover:text-primary">
+<i class="ri-heart-line"></i>
+</button>
+</div>
+<div class="flex-1 ml-3">
+<h3 class="text-base font-medium line-clamp-1">绿岛集装箱生活区 · 单元E</h3>
+<div class="flex items-center mt-1 text-xs text-gray-500">
+<span>1室1厅 | 42㎡ | 南向</span>
+</div>
+<div class="flex flex-wrap gap-1 mt-2">
+<span class="px-1.5 py-0.5 bg-primary/10 text-primary text-xs rounded">环保材质</span>
+<span class="px-1.5 py-0.5 bg-gray-100 text-gray-600 text-xs rounded">雨水回收</span>
+<span class="px-1.5 py-0.5 bg-gray-100 text-gray-600 text-xs rounded">可移动</span>
+</div>
+<div class="flex justify-between items-center mt-2">
+<div class="text-primary font-medium">
+<span class="text-lg">56</span>
+<span class="text-sm">万元</span>
+</div>
+<div class="text-xs text-gray-500">
+约13333元/㎡
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- 房产项 3 -->
+<div class="p-4">
+<div class="flex">
+<div class="relative w-32 h-24 rounded-lg overflow-hidden">
+<img src="https://readdy.ai/api/search-image?query=Modern%2520duplex%2520apartment%2520interior%2520with%2520mint%2520green%2520walls%252C%2520contemporary%2520design%252C%2520living%2520room%2520with%2520green%2520accents%252C%2520natural%2520materials%252C%2520large%2520windows%252C%2520professional%2520interior%2520photography%252C%2520green%2520color%2520scheme%252C%2520eco-friendly%2520appearance&width=128&height=96&seq=303&orientation=landscape" class="w-full h-full object-cover" alt="环保复式">
+<div class="absolute top-0 left-0 bg-primary/80 text-white text-xs px-1.5 py-0.5">
+环保复式
+</div>
+<button class="absolute bottom-1 right-1 w-7 h-7 bg-white/80 rounded-full flex items-center justify-center text-gray-500 hover:text-primary">
+<i class="ri-heart-line"></i>
+</button>
+</div>
+<div class="flex-1 ml-3">
+<h3 class="text-base font-medium line-clamp-1">绿岛森林公馆 · 复式B户型</h3>
+<div class="flex items-center mt-1 text-xs text-gray-500">
+<span>4室2厅 | 143㎡ | 南北通透</span>
+</div>
+<div class="flex flex-wrap gap-1 mt-2">
+<span class="px-1.5 py-0.5 bg-primary/10 text-primary text-xs rounded">垂直绿化</span>
+<span class="px-1.5 py-0.5 bg-gray-100 text-gray-600 text-xs rounded">空气净化</span>
+<span class="px-1.5 py-0.5 bg-gray-100 text-gray-600 text-xs rounded">智能家居</span>
+</div>
+<div class="flex justify-between items-center mt-2">
+<div class="text-primary font-medium">
+<span class="text-lg">235</span>
+<span class="text-sm">万元</span>
+</div>
+<div class="text-xs text-gray-500">
+约16433元/㎡
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- 房产项 4 -->
+<div class="p-4">
+<div class="flex">
+<div class="relative w-32 h-24 rounded-lg overflow-hidden">
+<img src="https://readdy.ai/api/search-image?query=Modern%2520villa%2520exterior%2520in%2520olive%2520green%2520color%252C%2520contemporary%2520architecture%252C%2520large%2520windows%252C%2520wooden%2520elements%252C%2520surrounded%2520by%2520green%2520gardens%252C%2520professional%2520architectural%2520photography%252C%2520green%2520monochromatic%2520design%252C%2520eco-friendly%2520appearance&width=128&height=96&seq=304&orientation=landscape" class="w-full h-full object-cover" alt="同构别墅">
+<div class="absolute top-0 left-0 bg-primary/80 text-white text-xs px-1.5 py-0.5">
+同构别墅
+</div>
+<button class="absolute bottom-1 right-1 w-7 h-7 bg-white/80 rounded-full flex items-center justify-center text-gray-500 hover:text-primary">
+<i class="ri-heart-line"></i>
+</button>
+</div>
+<div class="flex-1 ml-3">
+<h3 class="text-base font-medium line-clamp-1">绿岛同构别墅 · 标准户型</h3>
+<div class="flex items-center mt-1 text-xs text-gray-500">
+<span>5室3厅 | 258㎡ | 独栋</span>
+</div>
+<div class="flex flex-wrap gap-1 mt-2">
+<span class="px-1.5 py-0.5 bg-primary/10 text-primary text-xs rounded">零碳建筑</span>
+<span class="px-1.5 py-0.5 bg-gray-100 text-gray-600 text-xs rounded">地热系统</span>
+<span class="px-1.5 py-0.5 bg-gray-100 text-gray-600 text-xs rounded">绿值优先</span>
+</div>
+<div class="flex justify-between items-center mt-2">
+<div class="text-primary font-medium">
+<span class="text-lg">580</span>
+<span class="text-sm">万元</span>
+</div>
+<div class="text-xs text-gray-500">
+约22480元/㎡
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- 房产项 5 -->
+<div class="p-4">
+<div class="flex">
+<div class="relative w-32 h-24 rounded-lg overflow-hidden">
+<img src="https://readdy.ai/api/search-image?query=Modern%2520apartment%2520interior%2520with%2520seafoam%2520green%2520walls%252C%2520contemporary%2520design%252C%2520living%2520room%2520with%2520green%2520furniture%2520accents%252C%2520natural%2520materials%252C%2520large%2520windows%252C%2520professional%2520interior%2520photography%252C%2520green%2520color%2520palette%252C%2520eco-friendly%2520appearance&width=128&height=96&seq=305&orientation=landscape" class="w-full h-full object-cover" alt="绿色公寓">
+<div class="absolute top-0 left-0 bg-primary/80 text-white text-xs px-1.5 py-0.5">
+光合公寓
+</div>
+<button class="absolute bottom-1 right-1 w-7 h-7 bg-white/80 rounded-full flex items-center justify-center text-gray-500 hover:text-primary">
+<i class="ri-heart-line"></i>
+</button>
+</div>
+<div class="flex-1 ml-3">
+<h3 class="text-base font-medium line-clamp-1">绿岛光合公寓 · 标准A户型</h3>
+<div class="flex items-center mt-1 text-xs text-gray-500">
+<span>2室1厅 | 76㎡ | 南向</span>
+</div>
+<div class="flex flex-wrap gap-1 mt-2">
+<span class="px-1.5 py-0.5 bg-primary/10 text-primary text-xs rounded">光伏一体</span>
+<span class="px-1.5 py-0.5 bg-gray-100 text-gray-600 text-xs rounded">节能设计</span>
+<span class="px-1.5 py-0.5 bg-gray-100 text-gray-600 text-xs rounded">近公园</span>
+</div>
+<div class="flex justify-between items-center mt-2">
+<div class="text-primary font-medium">
+<span class="text-lg">108</span>
+<span class="text-sm">万元</span>
+</div>
+<div class="text-xs text-gray-500">
+约14210元/㎡
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- 房产项 6 -->
+<div class="p-4">
+<div class="flex">
+<div class="relative w-32 h-24 rounded-lg overflow-hidden">
+<img src="https://readdy.ai/api/search-image?query=Modern%2520small%2520house%2520exterior%2520in%2520emerald%2520green%2520color%252C%2520contemporary%2520design%252C%2520large%2520windows%252C%2520wooden%2520elements%252C%2520surrounded%2520by%2520green%2520gardens%252C%2520professional%2520architectural%2520photography%252C%2520green%2520monochromatic%2520exterior%252C%2520eco-friendly%2520appearance&width=128&height=96&seq=306&orientation=landscape" class="w-full h-full object-cover" alt="小型生态屋">
+<div class="absolute top-0 left-0 bg-primary/80 text-white text-xs px-1.5 py-0.5">
+生态小屋
+</div>
+<button class="absolute bottom-1 right-1 w-7 h-7 bg-white/80 rounded-full flex items-center justify-center text-gray-500 hover:text-primary">
+<i class="ri-heart-line"></i>
+</button>
+</div>
+<div class="flex-1 ml-3">
+<h3 class="text-base font-medium line-clamp-1">绿岛微型生态屋 · 单元C</h3>
+<div class="flex items-center mt-1 text-xs text-gray-500">
+<span>1室1厅 | 35㎡ | 东南向</span>
+</div>
+<div class="flex flex-wrap gap-1 mt-2">
+<span class="px-1.5 py-0.5 bg-primary/10 text-primary text-xs rounded">迷你住宅</span>
+<span class="px-1.5 py-0.5 bg-gray-100 text-gray-600 text-xs rounded">全屋智能</span>
+<span class="px-1.5 py-0.5 bg-gray-100 text-gray-600 text-xs rounded">低碳认证</span>
+</div>
+<div class="flex justify-between items-center mt-2">
+<div class="text-primary font-medium">
+<span class="text-lg">42</span>
+<span class="text-sm">万元</span>
+</div>
+<div class="text-xs text-gray-500">
+约12000元/㎡
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- 加载更多 -->
+<div class="p-4 text-center">
+<button class="text-primary text-sm flex items-center justify-center mx-auto">
+<span>加载更多</span>
+<i class="ri-arrow-down-s-line ml-1"></i>
+</button>
+</div>
+</div>
+</main>
+<!-- 绿岛房产政策提示 -->
+<div class="fixed bottom-16 left-4 right-4 bg-white rounded-lg shadow-lg p-4 z-40 hidden" id="policyTip">
+<div class="flex items-start">
+<div class="w-8 h-8 flex items-center justify-center bg-primary/10 rounded-full text-primary">
+<i class="ri-information-line"></i>
+</div>
+<div class="ml-3 flex-1">
+<h4 class="text-sm font-medium">绿岛房产政策提示</h4>
+<p class="text-xs text-gray-600 mt-1">绿岛房产属绿岛协议制产权，受年度环保贡献分等级审查。绿值不足可能限制水电流量额度。</p>
+</div>
+<button class="w-6 h-6 flex items-center justify-center text-gray-400" id="closeTip">
+<i class="ri-close-line"></i>
+</button>
+</div>
+</div>
+<!-- 底部导航栏 -->
+<footer class="fixed bottom-0 left-0 w-full bg-white border-t border-gray-200 z-50">
+<div class="grid grid-cols-4 h-14">
+<a href=""  class="flex flex-col items-center justify-center cursor-pointer text-gray-500">
+<div class="w-6 h-6 flex items-center justify-center">
+<i class="ri-home-5-line"></i>
+</div>
+<span class="text-xs mt-0.5">首页</span>
+</a>
+<a href="#" class="flex flex-col items-center justify-center cursor-pointer text-primary">
+<div class="w-6 h-6 flex items-center justify-center">
+<i class="ri-home-4-fill"></i>
+</div>
+<span class="text-xs mt-0.5">房产</span>
+</a>
+<a href="#" class="flex flex-col items-center justify-center cursor-pointer text-gray-500">
+<div class="w-6 h-6 flex items-center justify-center">
+<i class="ri-heart-line"></i>
+</div>
+<span class="text-xs mt-0.5">收藏</span>
+</a>
+<a href=""  class="flex flex-col items-center justify-center cursor-pointer text-gray-500">
+<div class="w-6 h-6 flex items-center justify-center">
+<i class="ri-user-line"></i>
+</div>
+<span class="text-xs mt-0.5">我的</span>
+</a>
+</div>
+</footer>
+<!-- 悬浮按钮 - 申请看房 -->
+<div class="fixed right-4 bottom-20 z-40">
+<button class="w-12 h-12 bg-primary rounded-full flex items-center justify-center shadow-lg text-white">
+<i class="ri-home-smile-fill ri-lg"></i>
+</button>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+// 显示筛选面板
+const filterBtn = document.querySelector('button:has(.ri-filter-3-line)');
+const filterPanel = document.getElementById('filterPanel');
+const closeFilter = document.getElementById('closeFilter');
+filterBtn.addEventListener('click', function() {
+filterPanel.classList.remove('hidden');
+document.body.style.overflow = 'hidden';
+});
+closeFilter.addEventListener('click', function() {
+filterPanel.classList.add('hidden');
+document.body.style.overflow = '';
+});
+// 排序按钮点击效果
+const sortBtns = document.querySelectorAll('#sortDefault, #sortPrice, #sortArea, #sortNew');
+sortBtns.forEach(btn => {
+btn.addEventListener('click', function() {
+sortBtns.forEach(b => b.classList.remove('text-primary'));
+this.classList.add('text-primary');
+});
+});
+// 筛选条件选择效果
+const filterOptions = document.querySelectorAll('.px-4.py-2.border');
+filterOptions.forEach(option => {
+option.addEventListener('click', function() {
+this.classList.toggle('border-primary');
+this.classList.toggle('text-primary');
+this.classList.toggle('bg-primary/5');
+});
+});
+// 收藏功能
+const heartBtns = document.querySelectorAll('.ri-heart-line');
+heartBtns.forEach(btn => {
+btn.addEventListener('click', function(e) {
+e.preventDefault();
+e.stopPropagation();
+if (this.classList.contains('ri-heart-line')) {
+this.classList.remove('ri-heart-line');
+this.classList.add('ri-heart-fill');
+this.classList.add('text-primary');
+} else {
+this.classList.add('ri-heart-line');
+this.classList.remove('ri-heart-fill');
+this.classList.remove('text-primary');
+}
+});
+});
+// 显示政策提示
+const policyTip = document.getElementById('policyTip');
+const closeTip = document.getElementById('closeTip');
+setTimeout(() => {
+policyTip.classList.remove('hidden');
+}, 2000);
+closeTip.addEventListener('click', function() {
+policyTip.classList.add('hidden');
+});
+// 房产项点击跳转
+const houseItems = document.querySelectorAll('.flex:has(.relative.w-32)');
+houseItems.forEach(item => {
+item.addEventListener('click', function() {
+// 这里可以跳转到详情页
+console.log('跳转到房产详情页');
+});
+});
+});
+</script>
+</body>
+</html>

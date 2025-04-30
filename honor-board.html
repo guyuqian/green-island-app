@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>绿，是你身体之外的诚实</title>
+<script src="https://cdn.tailwindcss.com/3.4.16"></script>
+<script>tailwind.config={theme:{extend:{colors:{primary:'#4CAF50',secondary:'#8BC34A'},borderRadius:{'none':'0px','sm':'4px',DEFAULT:'8px','md':'12px','lg':'16px','xl':'20px','2xl':'24px','3xl':'32px','full':'9999px','button':'8px'}}}}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+<style>
+:where([class^="ri-"])::before { content: "\f3c2"; }
+@font-face {
+font-family: 'Mono';
+src: url('https://fonts.googleapis.com/css2?family=Space+Mono&display=swap');
+}
+.fade-in {
+animation: fadeIn 1.5s ease-in;
+}
+@keyframes fadeIn {
+0% { opacity: 0; }
+100% { opacity: 1; }
+}
+@keyframes spin-slow {
+from {
+transform: rotate(0deg);
+}
+to {
+transform: rotate(360deg);
+}
+}
+.animate-spin-slow {
+animation: spin-slow 20s linear infinite;
+}
+</style>
+</head>
+<body class="bg-white font-sans">
+<!-- 顶部导航栏 -->
+<header class="fixed top-0 left-0 w-full bg-white shadow-sm z-50">
+<div class="flex items-center px-4 py-3">
+<a href=""  class="w-8 h-8 flex items-center justify-center cursor-pointer">
+<i class="ri-arrow-left-s-line text-xl text-gray-700"></i>
+</a>
+<h1 class="flex-1 text-center font-['Noto_Serif_SC'] text-lg font-medium text-primary">绿岛社区居民荣誉榜</h1>
+<div class="w-8 h-8"></div>
+</div>
+</header>
+<!-- 主内容区域 -->
+<main class="pt-14 pb-16 px-4">
+<div class="mt-4 mb-8 relative">
+<div class="absolute -top-3 left-1/2 transform -translate-x-1/2">
+<i class="ri-award-fill text-[#FFD700] text-4xl"></i>
+</div>
+<div class="pt-6 pb-4 px-6 bg-gradient-to-b from-[#FFFAF0] to-white rounded-lg border border-[#FFE4B5] shadow-sm">
+<h2 class="text-center font-['Noto_Serif_SC'] text-xl font-semibold bg-gradient-to-r from-[#B8860B] via-[#DAA520] to-[#B8860B] bg-clip-text text-transparent">本月模范居民榜</h2>
+<div class="flex items-center justify-center gap-1 mt-2">
+<i class="ri-star-fill text-[#FFD700] text-xs"></i>
+<i class="ri-star-fill text-[#FFD700] text-sm"></i>
+<i class="ri-star-fill text-[#FFD700] text-base"></i>
+<i class="ri-star-fill text-[#FFD700] text-sm"></i>
+<i class="ri-star-fill text-[#FFD700] text-xs"></i>
+</div>
+<p class="text-center text-xs text-gray-500 mt-2">2025年04月榜单</p>
+</div>
+</div>
+<!-- 榜单主体 -->
+<div class="bg-white rounded-lg border border-gray-100 overflow-hidden font-['Mono'] mb-6">
+<!-- 第一名 -->
+<div class="p-4 border-b border-gray-100">
+<div class="flex items-start">
+<div class="w-6 h-6 rounded-full bg-[#FFD700] flex items-center justify-center text-white text-sm font-medium mr-2">1</div>
+<div class="flex items-start flex-1">
+<div class="relative w-16 h-16 mr-3 flex-shrink-0">
+<div class="absolute inset-0 w-[140%] h-[140%] -left-[20%] -top-[20%] animate-spin-slow">
+<i class="ri-leaf-fill text-primary/30 absolute top-0 left-1/2 -translate-x-1/2 transform rotate-0 text-2xl"></i>
+<i class="ri-leaf-fill text-primary/30 absolute top-1/4 right-0 transform rotate-45 text-2xl"></i>
+<i class="ri-leaf-fill text-primary/30 absolute bottom-0 left-1/2 -translate-x-1/2 transform rotate-180 text-2xl"></i>
+<i class="ri-leaf-fill text-primary/30 absolute top-1/4 left-0 transform -rotate-45 text-2xl"></i>
+</div>
+<div class="absolute inset-0 w-[120%] h-[120%] -left-[10%] -top-[10%]">
+<i class="ri-leaf-fill text-primary/50 absolute top-0 left-1/2 -translate-x-1/2 transform rotate-0 text-xl"></i>
+<i class="ri-leaf-fill text-primary/50 absolute top-1/4 right-0 transform rotate-45 text-xl"></i>
+<i class="ri-leaf-fill text-primary/50 absolute bottom-0 left-1/2 -translate-x-1/2 transform rotate-180 text-xl"></i>
+<i class="ri-leaf-fill text-primary/50 absolute top-1/4 left-0 transform -rotate-45 text-xl"></i>
+</div>
+<div class="w-16 h-16 rounded-full overflow-hidden relative z-10">
+<img src="https://readdy.ai/api/search-image?query=portrait%20of%20a%20middle-aged%20Asian%20woman%20with%20a%20calm%20expression%2C%20wearing%20simple%20green%20clothing%2C%20minimalist%20style%2C%20clean%20background%2C%20centered%20composition%2C%20professional%20headshot&width=200&height=200&seq=1&orientation=squarish" alt="姬女士" class="w-full h-full object-cover">
+</div>
+</div>
+<div class="flex-1">
+<h3 class="font-medium">姬女士<span class="text-primary">（静态贡献优异）</span></h3>
+<p class="text-xs text-gray-500 mt-1">ID: GR-2025-0401</p>
+<p class="text-xs text-gray-500">年龄: 45岁 | 职业: 远程数据分析师</p>
+<div class="flex items-center mt-1">
+<span class="text-xs text-primary font-medium">绿色贡献值: 893</span>
+<div class="w-24 h-1.5 bg-gray-100 rounded-full ml-2">
+<div class="w-[89.3%] h-full bg-primary rounded-full"></div>
+</div>
+</div>
+<p class="text-sm text-gray-600 mt-2">连续14天未移动超过6步，被赞为"稳如绿山"。</p>
+</div>
+</div>
+</div>
+</div>
+<!-- 第二名 -->
+<div class="p-4 border-b border-gray-100">
+<div class="flex items-start">
+<div class="w-6 h-6 rounded-full bg-[#C0C0C0] flex items-center justify-center text-white text-sm font-medium mr-2">2</div>
+<div class="flex items-start flex-1">
+<div class="w-16 h-16 rounded-full overflow-hidden mr-3 flex-shrink-0">
+<img src="https://readdy.ai/api/search-image?query=portrait%20of%20a%20young%20Asian%20man%20in%20his%2030s%20wearing%20a%20neat%20green%20tech%20uniform%2C%20serious%20expression%2C%20minimalist%20style%2C%20clean%20background%2C%20centered%20composition%2C%20professional%20headshot&width=200&height=200&seq=2&orientation=squarish" alt="刘先生" class="w-full h-full object-cover">
+</div>
+<div class="flex-1">
+<h3 class="font-medium">刘先生<span class="text-primary">（数据同步守护者）</span></h3>
+<p class="text-xs text-gray-500 mt-1">ID: GR-2025-0392</p>
+<p class="text-xs text-gray-500">年龄: 32岁 | 职业: 智能家居工程师</p>
+<div class="flex items-center mt-1">
+<span class="text-xs text-primary font-medium">绿色贡献值: 856</span>
+<div class="w-24 h-1.5 bg-gray-100 rounded-full ml-2">
+<div class="w-[85.6%] h-full bg-primary rounded-full"></div>
+</div>
+</div>
+<p class="text-sm text-gray-600 mt-2">每晚22:00自动上传绿意心念语音，无一遗漏。</p>
+</div>
+</div>
+</div>
+</div>
+<!-- 第三名 -->
+<div class="p-4">
+<div class="flex items-start">
+<div class="w-6 h-6 rounded-full bg-[#CD7F32] flex items-center justify-center text-white text-sm font-medium mr-2">3</div>
+<div class="flex items-start flex-1">
+<div class="w-16 h-16 rounded-full overflow-hidden mr-3 flex-shrink-0">
+<img src="https://readdy.ai/api/search-image?query=3D%20medical%20scan%20visualization%20of%20a%20baby%20ultrasound%2C%20soft%20green%20tones%2C%20minimalist%20medical%20imagery%2C%20clean%20background%2C%20centered%20composition&width=200&height=200&seq=3&orientation=squarish" alt="王童童" class="w-full h-full object-cover">
+</div>
+<div class="flex-1">
+<h3 class="font-medium">王童童<span class="text-primary">（未出生，预先守规）</span></h3>
+<p class="text-xs text-gray-500 mt-1">ID: GR-2025-0488</p>
+<p class="text-xs text-gray-500">孕周: 28周 | 预产期: 2025-07-15</p>
+<div class="flex items-center mt-1">
+<span class="text-xs text-primary font-medium">绿色贡献值: 812</span>
+<div class="w-24 h-1.5 bg-gray-100 rounded-full ml-2">
+<div class="w-[81.2%] h-full bg-primary rounded-full"></div>
+</div>
+</div>
+<p class="text-sm text-gray-600 mt-2">胎动频率稳定，不消耗任何自然资源，完全地绿色生活。</p>
+</div>
+</div>
+</div>
+</div>
+<div class="px-4 py-6 bg-gradient-to-br from-[#FFFAF0] to-white border-t border-gray-100">
+<h4 class="text-base font-medium text-gray-800 mb-4">本月奖励</h4>
+<div class="space-y-4">
+<div class="flex items-start">
+<div class="w-8 h-8 flex items-center justify-center bg-[#FFD700] bg-opacity-10 rounded-full mr-3 flex-shrink-0">
+<i class="ri-trophy-fill text-[#FFD700]"></i>
+</div>
+<div class="flex-1">
+<h5 class="text-sm font-medium text-gray-700">金奖 - 姬女士</h5>
+<p class="text-sm text-gray-600 mt-1">奖励：成为绿岛社区领导人，拥有制定岛规权（30天）、专属头像框、社区公示</p>
+</div>
+</div>
+<div class="flex items-start">
+<div class="w-8 h-8 flex items-center justify-center bg-[#C0C0C0] bg-opacity-10 rounded-full mr-3 flex-shrink-0">
+<i class="ri-medal-fill text-[#C0C0C0]"></i>
+</div>
+<div class="flex-1">
+<h5 class="text-sm font-medium text-gray-700">银奖 - 刘先生</h5>
+<p class="text-xs text-gray-600 mt-1">奖励：绿色贡献值加成30%（30天）、专属徽章</p>
+</div>
+</div>
+<div class="flex items-start">
+<div class="w-8 h-8 flex items-center justify-center bg-[#CD7F32] bg-opacity-10 rounded-full mr-3 flex-shrink-0">
+<i class="ri-medal-2-fill text-[#CD7F32]"></i>
+</div>
+<div class="flex-1">
+<h5 class="text-sm font-medium text-gray-700">铜奖 - 王童童</h5>
+<p class="text-xs text-gray-600 mt-1">奖励：绿色贡献值加成10%（30天）、纪念勋章</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- 特殊说明区域 -->
+<div class="bg-gray-50 p-4 rounded-lg mb-10">
+<p class="text-sm text-gray-600">注：绿岛模范系统采用闭环评分机制，用户不可查看评分依据。</p>
+</div>
+<!-- 其他候选居民 -->
+<div class="mb-10">
+<h3 class="text-lg font-medium mb-4 text-gray-700">候选模范居民</h3>
+<div class="space-y-4">
+<div class="p-4 bg-white rounded-lg border border-gray-100">
+<div class="flex items-start">
+<div class="w-12 h-12 rounded-full overflow-hidden mr-3 flex-shrink-0">
+<img src="https://readdy.ai/api/search-image?query=portrait%20of%20a%20middle-aged%20Asian%20man%20with%20glasses%2C%20wearing%20eco-friendly%20clothing%2C%20minimalist%20style%2C%20clean%20background%2C%20centered%20composition%2C%20professional%20headshot&width=200&height=200&seq=4&orientation=squarish" alt="赵先生" class="w-full h-full object-cover">
+</div>
+<div class="flex-1">
+<h4 class="font-medium">赵先生<span class="text-primary">（低碳出行标兵）</span></h4>
+<p class="text-xs text-gray-500 mt-1">ID: GR-2025-0356 | 年龄: 52岁</p>
+<div class="flex items-center mt-1">
+<span class="text-xs text-primary font-medium">绿色贡献值: 785</span>
+<div class="w-24 h-1.5 bg-gray-100 rounded-full ml-2">
+<div class="w-[78.5%] h-full bg-primary rounded-full"></div>
+</div>
+</div>
+<p class="text-sm text-gray-600 mt-2">三个月内未离开500米生活圈，节约碳排放显著。</p>
+</div>
+</div>
+</div>
+<div class="p-4 bg-white rounded-lg border border-gray-100">
+<div class="flex items-start">
+<div class="w-12 h-12 rounded-full overflow-hidden mr-3 flex-shrink-0">
+<img src="https://readdy.ai/api/search-image?query=portrait%20of%20a%20mature%20Asian%20woman%20with%20short%20hair%2C%20wearing%20professional%20attire%20in%20green%20tones%2C%20minimalist%20style%2C%20clean%20background%2C%20centered%20composition%2C%20professional%20headshot&width=200&height=200&seq=5&orientation=squarish" alt="李女士" class="w-full h-full object-cover">
+</div>
+<div class="flex-1">
+<h4 class="font-medium">乔女士<span class="text-primary">（能源管理者）</span></h4>
+<p class="text-xs text-gray-500 mt-1">ID: GR-2025-0412 | 年龄: 48岁</p>
+<div class="flex items-center mt-1">
+<span class="text-xs text-primary font-medium">绿色贡献值: 743</span>
+<div class="w-24 h-1.5 bg-gray-100 rounded-full ml-2">
+<div class="w-[74.3%] h-full bg-primary rounded-full"></div>
+</div>
+</div>
+<p class="text-sm text-gray-600 mt-2">家庭用电从不超过配额，连续6个月精确用电至配额的99.8%。</p>
+</div>
+</div>
+</div>
+<div class="p-4 bg-white rounded-lg border border-gray-100">
+<div class="flex items-start">
+<div class="w-12 h-12 rounded-full overflow-hidden mr-3 flex-shrink-0">
+<img src="https://readdy.ai/api/search-image?query=portrait%20of%20a%20young%20Asian%20man%20in%20his%2020s%2C%20wearing%20a%20green%20uniform%2C%20earnest%20expression%2C%20minimalist%20style%2C%20clean%20background%2C%20centered%20composition%2C%20professional%20headshot&width=200&height=200&seq=6&orientation=squarish" alt="陈先生" class="w-full h-full object-cover">
+</div>
+<div class="flex-1">
+<h4 class="font-medium">陈先生<span class="text-primary">（思想同步优异）</span></h4>
+<p class="text-xs text-gray-500 mt-1">ID: GR-2025-0433 | 年龄: 28岁</p>
+<div class="flex items-center mt-1">
+<span class="text-xs text-primary font-medium">绿色贡献值: 712</span>
+<div class="w-24 h-1.5 bg-gray-100 rounded-full ml-2">
+<div class="w-[71.2%] h-full bg-primary rounded-full"></div>
+</div>
+</div>
+<p class="text-sm text-gray-600 mt-2">社区环保讨论会发言与官方指导文件吻合度达98.7%。</p>
+</div>
+</div>
+</div>
+<div class="p-4 bg-white rounded-lg border border-gray-100">
+<div class="flex items-start">
+<div class="w-12 h-12 rounded-full overflow-hidden mr-3 flex-shrink-0">
+<img src="https://readdy.ai/api/search-image?query=portrait%20of%20a%207-year-old%20Asian%20child%20in%20school%20uniform%2C%20innocent%20smile%2C%20minimalist%20style%2C%20clean%20background%2C%20centered%20composition%2C%20professional%20headshot&width=200&height=200&seq=7&orientation=squarish" alt="黄小朋友" class="w-full h-full object-cover">
+</div>
+<div class="flex-1">
+<h4 class="font-medium">黄小朋友<span class="text-primary">（环保意识培养标兵）</span></h4>
+<p class="text-xs text-gray-500 mt-1">ID: GR-2025-0476 | 年龄: 7岁</p>
+<div class="flex items-center mt-1">
+<span class="text-xs text-primary font-medium">绿色贡献值: 687</span>
+<div class="w-24 h-1.5 bg-gray-100 rounded-full ml-2">
+<div class="w-[68.7%] h-full bg-primary rounded-full"></div>
+</div>
+</div>
+<p class="text-sm text-gray-600 mt-2">年仅7岁，已能背诵《绿岛环保准则》全文并纠正父母不规范行为。</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- 评分标准 -->
+<div class="mb-10">
+<h3 class="text-lg font-medium mb-4 text-gray-700">评分标准（部分公开）</h3>
+<div class="space-y-3">
+<div class="flex items-start">
+<div class="w-8 h-8 flex items-center justify-center bg-primary/10 rounded-full mr-3">
+<i class="ri-check-line text-primary"></i>
+</div>
+<p class="text-sm text-gray-600 flex-1">静态贡献：减少不必要移动，降低能源消耗</p>
+</div>
+<div class="flex items-start">
+<div class="w-8 h-8 flex items-center justify-center bg-primary/10 rounded-full mr-3">
+<i class="ri-check-line text-primary"></i>
+</div>
+<p class="text-sm text-gray-600 flex-1">数据同步：定时上传个人环保数据与思想记录</p>
+</div>
+<div class="flex items-start">
+<div class="w-8 h-8 flex items-center justify-center bg-primary/10 rounded-full mr-3">
+<i class="ri-check-line text-primary"></i>
+</div>
+<p class="text-sm text-gray-600 flex-1">思想纯度：环保理念与社区标准的一致性</p>
+</div>
+<div class="flex items-start">
+<div class="w-8 h-8 flex items-center justify-center bg-primary/10 rounded-full mr-3">
+<i class="ri-check-line text-primary"></i>
+</div>
+<p class="text-sm text-gray-600 flex-1">其他标准：<span class="text-gray-400">[数据已加密]</span></p>
+</div>
+</div>
+</div>
+<!-- 结语 -->
+<div class="fade-in text-center py-8 italic text-gray-700">
+<p class="cursor-pointer" id="showContributionModal">您目前并未上榜，还请加油</p>
+</div>
+<div id="payPasswordModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+<div class="bg-white rounded-lg w-[320px] p-6 relative">
+<button class="absolute right-4 top-4" id="closePayPasswordModal">
+<i class="ri-close-line text-gray-400 text-xl"></i>
+</button>
+<div class="text-center mb-6">
+<h3 class="text-lg font-medium text-gray-800 mb-2">请输入支付密码</h3>
+<p class="text-sm text-gray-500">确认支付 <span id="payAmount" class="text-primary font-medium"></span></p>
+</div>
+<div class="flex justify-between mb-6">
+<input type="password" maxlength="1" class="w-10 h-12 border border-gray-200 rounded text-center text-lg font-medium focus:border-primary focus:outline-none password-input" />
+<input type="password" maxlength="1" class="w-10 h-12 border border-gray-200 rounded text-center text-lg font-medium focus:border-primary focus:outline-none password-input" />
+<input type="password" maxlength="1" class="w-10 h-12 border border-gray-200 rounded text-center text-lg font-medium focus:border-primary focus:outline-none password-input" />
+<input type="password" maxlength="1" class="w-10 h-12 border border-gray-200 rounded text-center text-lg font-medium focus:border-primary focus:outline-none password-input" />
+<input type="password" maxlength="1" class="w-10 h-12 border border-gray-200 rounded text-center text-lg font-medium focus:border-primary focus:outline-none password-input" />
+<input type="password" maxlength="1" class="w-10 h-12 border border-gray-200 rounded text-center text-lg font-medium focus:border-primary focus:outline-none password-input" />
+</div>
+<button class="w-full bg-primary text-white py-3 rounded-button font-medium disabled:bg-gray-300 disabled:cursor-not-allowed" id="confirmPayPassword" disabled>
+确认支付
+</button>
+</div>
+</div>
+<div id="contributionModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+<div class="bg-white rounded-lg w-[320px] p-6 relative">
+<button class="absolute right-4 top-4" id="closeModal">
+<i class="ri-close-line text-gray-400 text-xl"></i>
+</button>
+<div class="text-center mb-6">
+<h3 class="text-lg font-medium text-gray-800 mb-2">我的绿色贡献</h3>
+<div class="text-4xl font-bold text-primary" id="currentContributionValue">177</div>
+<p class="text-sm text-gray-500 mt-2" id="contributionStatus">距离上榜还需要510点贡献值</p>
+</div>
+<div class="bg-gray-50 rounded-lg p-4 mb-6">
+<div class="flex justify-between items-center mb-2">
+<span class="text-sm text-gray-600">充值比例</span>
+<span class="text-sm text-primary font-medium">1积分 = ¥200</span>
+</div>
+<div class="flex justify-between items-center mb-2">
+<span class="text-sm text-gray-600">最低充值</span>
+<span class="text-sm text-primary font-medium">5积分</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-sm text-gray-600">每日限额</span>
+<span class="text-sm text-primary font-medium">100积分</span>
+</div>
+</div>
+<div class="grid grid-cols-3 gap-3 mb-6">
+<button class="contribution-btn py-2 px-3 border border-gray-200 rounded-button text-sm hover:border-primary transition-colors" data-value="5">
+<div class="font-medium">5分</div>
+<div class="text-xs text-gray-500">¥1,000</div>
+</button>
+<button class="contribution-btn py-2 px-3 border border-gray-200 rounded-button text-sm hover:border-primary transition-colors" data-value="20">
+<div class="font-medium">20分</div>
+<div class="text-xs text-gray-500">¥4,000</div>
+</button>
+<button class="contribution-btn py-2 px-3 border border-gray-200 rounded-button text-sm hover:border-primary transition-colors" data-value="50">
+<div class="font-medium">50分</div>
+<div class="text-xs text-gray-500">¥10,000</div>
+</button>
+</div>
+<div class="mb-6">
+<div class="flex items-center justify-between mb-4">
+<span class="text-sm font-medium text-gray-700">支付方式</span>
+<span class="text-xs text-gray-500">请选择支付方式</span>
+</div>
+<div class="space-y-3">
+<button class="payment-method w-full flex items-center justify-between p-3 border border-gray-200 rounded-button hover:border-primary transition-colors">
+<div class="flex items-center">
+<i class="ri-wechat-pay-fill text-[#2AAE67] text-xl"></i>
+<span class="ml-2 text-sm">微信支付</span>
+</div>
+<i class="ri-checkbox-circle-line text-gray-300 payment-check"></i>
+</button>
+<button class="payment-method w-full flex items-center justify-between p-3 border border-gray-200 rounded-button hover:border-primary transition-colors">
+<div class="flex items-center">
+<i class="ri-alipay-fill text-[#1677FF] text-xl"></i>
+<span class="ml-2 text-sm">支付宝</span>
+</div>
+<i class="ri-checkbox-circle-line text-gray-300 payment-check"></i>
+</button>
+</div>
+</div>
+<button class="w-full bg-primary text-white py-3 rounded-button font-medium disabled:bg-gray-300 disabled:cursor-not-allowed" id="rechargeBtn" disabled>
+请选择充值金额和支付方式
+</button>
+</div>
+</div>
+<div id="successModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+<div class="bg-white rounded-lg w-[320px] p-6 text-center">
+<div class="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
+<i class="ri-check-line text-primary text-3xl"></i>
+</div>
+<h3 class="text-lg font-medium text-gray-800 mb-2">充值成功</h3>
+<p class="text-sm text-gray-500 mb-6">您的绿色贡献值已更新</p>
+<button class="w-full bg-primary text-white py-3 rounded-button font-medium" id="closeSuccessModal">
+完成
+</button>
+</div>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+const contributionModal = document.getElementById('contributionModal');
+const successModal = document.getElementById('successModal');
+const showContributionModal = document.getElementById('showContributionModal');
+const closeModal = document.getElementById('closeModal');
+const rechargeBtn = document.getElementById('rechargeBtn');
+const closeSuccessModal = document.getElementById('closeSuccessModal');
+const contributionBtns = document.querySelectorAll('.contribution-btn');
+const paymentMethods = document.querySelectorAll('.payment-method');
+let selectedValue = null;
+let selectedPayment = null;
+showContributionModal.addEventListener('click', () => {
+contributionModal.classList.remove('hidden');
+});
+closeModal.addEventListener('click', () => {
+contributionModal.classList.add('hidden');
+resetSelection();
+});
+contributionBtns.forEach(btn => {
+btn.addEventListener('click', () => {
+contributionBtns.forEach(b => {
+b.classList.remove('border-primary', 'text-primary');
+});
+btn.classList.add('border-primary', 'text-primary');
+selectedValue = btn.getAttribute('data-value');
+updateRechargeButton();
+});
+});
+paymentMethods.forEach(method => {
+method.addEventListener('click', () => {
+paymentMethods.forEach(m => {
+m.classList.remove('border-primary');
+m.querySelector('.payment-check').classList.remove('text-primary');
+});
+method.classList.add('border-primary');
+method.querySelector('.payment-check').classList.add('text-primary');
+selectedPayment = method;
+updateRechargeButton();
+});
+});
+function updateRechargeButton() {
+const btn = document.getElementById('rechargeBtn');
+if (selectedValue && selectedPayment) {
+btn.disabled = false;
+btn.textContent = `确认支付 ¥${selectedValue * 200}`;
+} else {
+btn.disabled = true;
+btn.textContent = '请选择充值金额和支付方式';
+}
+}
+const payPasswordModal = document.getElementById('payPasswordModal');
+const closePayPasswordModal = document.getElementById('closePayPasswordModal');
+const confirmPayPassword = document.getElementById('confirmPayPassword');
+const passwordInputs = document.querySelectorAll('.password-input');
+const payAmount = document.getElementById('payAmount');
+let currentContribution = 177;
+let currentRanking = '未上榜';
+rechargeBtn.addEventListener('click', () => {
+if (!selectedValue || !selectedPayment) {
+const notification = document.createElement('div');
+notification.className = 'fixed top-4 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white px-4 py-2 rounded-lg text-sm z-[60]';
+notification.textContent = '请选择充值金额和支付方式';
+document.body.appendChild(notification);
+setTimeout(() => notification.remove(), 2000);
+return;
+}
+contributionModal.classList.add('hidden');
+payAmount.textContent = `¥${selectedValue * 200}`;
+payPasswordModal.classList.remove('hidden');
+passwordInputs[0].focus();
+});
+passwordInputs.forEach((input, index) => {
+input.addEventListener('input', (e) => {
+if (e.target.value) {
+if (index < passwordInputs.length - 1) {
+passwordInputs[index + 1].focus();
+}
+}
+let filledInputs = Array.from(passwordInputs).filter(input => input.value).length;
+confirmPayPassword.disabled = filledInputs !== passwordInputs.length;
+});
+input.addEventListener('keydown', (e) => {
+if (e.key === 'Backspace' && !e.target.value && index > 0) {
+passwordInputs[index - 1].focus();
+}
+});
+});
+closePayPasswordModal.addEventListener('click', () => {
+payPasswordModal.classList.add('hidden');
+passwordInputs.forEach(input => input.value = '');
+confirmPayPassword.disabled = true;
+});
+confirmPayPassword.addEventListener('click', () => {
+const loadingBtn = confirmPayPassword.cloneNode(true);
+loadingBtn.innerHTML = '<i class="ri-loader-2-line animate-spin mr-2"></i>支付处理中...';
+confirmPayPassword.replaceWith(loadingBtn);
+setTimeout(() => {
+currentContribution += parseInt(selectedValue);
+updateContributionValues();
+payPasswordModal.classList.add('hidden');
+successModal.classList.remove('hidden');
+passwordInputs.forEach(input => input.value = '');
+}, 1500);
+});
+function updateContributionValues() {
+const contributionDisplays = document.querySelectorAll('#currentContributionValue');
+const remainingDisplays = document.querySelectorAll('#contributionStatus');
+const statusText = document.getElementById('showContributionModal');
+
+contributionDisplays.forEach(display => {
+display.textContent = currentContribution;
+});
+
+if (currentContribution >= 687) {
+currentRanking = '候选模范居民';
+remainingDisplays.forEach(display => {
+display.textContent = '恭喜您已达到候选模范居民标准！';
+});
+statusText.textContent = '您已达到候选模范居民标准';
+} else {
+const nextThreshold = 687;
+const remaining = nextThreshold - currentContribution;
+remainingDisplays.forEach(display => {
+display.textContent = `距离上榜还需要${remaining}点贡献值`;
+});
+statusText.textContent = '您目前并未上榜，还请加油';
+}
+
+localStorage.setItem('userContribution', currentContribution);
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+const savedContribution = localStorage.getItem('userContribution');
+if (savedContribution) {
+currentContribution = parseInt(savedContribution);
+updateContributionValues();
+}
+});
+closeSuccessModal.addEventListener('click', () => {
+successModal.classList.add('hidden');
+resetSelection();
+});
+function resetSelection() {
+selectedValue = null;
+selectedPayment = null;
+contributionBtns.forEach(btn => {
+btn.classList.remove('border-primary', 'text-primary');
+});
+paymentMethods.forEach(method => {
+method.classList.remove('border-primary');
+method.querySelector('.payment-check').classList.remove('text-primary');
+});
+updateRechargeButton();
+}
+});
+</script>
+</main>
+<!-- 底部导航栏 -->
+<footer class="fixed bottom-0 left-0 w-full bg-white border-t border-gray-200 z-50">
+<div class="grid grid-cols-4 h-14">
+<a href=""  class="flex flex-col items-center justify-center cursor-pointer text-gray-500">
+<div class="w-6 h-6 flex items-center justify-center">
+<i class="ri-home-5-line"></i>
+</div>
+<span class="text-xs mt-0.5">首页</span>
+</a>
+<a href="#" class="flex flex-col items-center justify-center cursor-pointer text-primary">
+<div class="w-6 h-6 flex items-center justify-center">
+<i class="ri-medal-fill"></i>
+</div>
+<span class="text-xs mt-0.5">荣誉榜</span>
+</a>
+<a href=""  class="flex flex-col items-center justify-center cursor-pointer text-gray-500">
+<div class="w-6 h-6 flex items-center justify-center">
+<i class="ri-leaf-line"></i>
+</div>
+<span class="text-xs mt-0.5">绿色活动</span>
+</a>
+<a href=""  class="flex flex-col items-center justify-center cursor-pointer text-gray-500">
+<div class="w-6 h-6 flex items-center justify-center">
+<i class="ri-user-line"></i>
+</div>
+<span class="text-xs mt-0.5">我的</span>
+</a>
+</div>
+</footer>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+// 动态调整内容区域高度，避免被底部导航栏遮挡
+const main = document.querySelector('main');
+const footer = document.querySelector('footer');
+const footerHeight = footer.offsetHeight;
+main.style.paddingBottom = `${footerHeight + 16}px`;
+// 禁止文本选择
+document.body.style.userSelect = 'none';
+// 渐变出现效果
+const fadeElement = document.querySelector('.fade-in');
+setTimeout(() => {
+fadeElement.style.opacity = '1';
+}, 500);
+});
+</script>
+</body>
+</html>

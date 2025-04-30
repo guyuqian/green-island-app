@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>绿岛交通 - Green Island Transportation</title>
+<script src="https://cdn.tailwindcss.com/3.4.16"></script>
+<script>tailwind.config={theme:{extend:{colors:{primary:'#4CAF50',secondary:'#8BC34A'},borderRadius:{'none':'0px','sm':'4px',DEFAULT:'8px','md':'12px','lg':'16px','xl':'20px','2xl':'24px','3xl':'32px','full':'9999px','button':'8px'}}}}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.5.0/echarts.min.js"></script>
+<style>
+:where([class^="ri-"])::before { content: "\f3c2"; }
+@keyframes pulse {
+0%, 100% { opacity: 0.8; }
+50% { opacity: 0.4; }
+}
+.pulse-animation {
+animation: pulse 2s infinite;
+}
+.text-shadow {
+text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+-webkit-appearance: none;
+margin: 0;
+}
+.map-container {
+background-image: url('https://static.readdy.ai/image/8a17cb5c2119510729cbd5c13557ee5c/6a0f4d62755d0af734450352c16d0943.png');
+background-position: center;
+background-size: cover;
+background-repeat: no-repeat;
+overflow: hidden;
+}
+</style>
+</head>
+<body class="bg-gray-50 font-sans">
+<!-- 顶部导航栏 -->
+<header class="fixed top-0 left-0 w-full bg-primary shadow-sm z-50">
+<div class="flex items-center justify-between px-4 py-3">
+<div class="flex items-center">
+<a href=""  class="w-8 h-8 flex items-center justify-center text-white">
+<i class="ri-arrow-left-line text-xl"></i>
+</a>
+<h1 class="text-xl font-medium text-white ml-2">绿岛交通</h1>
+</div>
+<div class="flex items-center">
+<div class="w-8 h-8 flex items-center justify-center text-white">
+<i class="ri-share-line"></i>
+</div>
+<div class="w-8 h-8 flex items-center justify-center text-white">
+<i class="ri-more-2-line"></i>
+</div>
+</div>
+</div>
+</header>
+<!-- 主内容区域 -->
+<main class="pt-14 pb-16">
+<!-- 顶部标语 -->
+<section class="bg-gradient-to-r from-primary to-secondary text-white p-5 relative overflow-hidden">
+<div class="relative z-10">
+<h2 class="text-2xl font-bold text-shadow">绿色出行，是我们移动中的信仰</h2>
+<p class="mt-2 text-sm opacity-90">低碳、高效、全监控、定轨道制度</p>
+<!-- 个人碳排指标 -->
+<div class="mt-4 bg-white/20 rounded-lg p-3">
+<div class="flex justify-between items-center mb-2">
+<span class="text-sm">今日碳排指标</span>
+<span class="text-sm font-medium">0.02/0.04 kg</span>
+</div>
+<div class="w-full bg-white/30 rounded-full h-2">
+<div class="bg-white h-2 rounded-full" style="width: 50%"></div>
+</div>
+<div class="flex justify-between items-center mt-2">
+<span class="text-xs">绿值等级: A</span>
+<span class="text-xs">剩余: 0.02kg</span>
+</div>
+</div>
+</div>
+<!-- 装饰元素 -->
+<div class="absolute right-0 bottom-0 opacity-20">
+<i class="ri-bike-line text-6xl"></i>
+</div>
+</section>
+<!-- 交通方式选择 -->
+<section class="px-4 py-5 bg-white mt-3">
+<h3 class="text-lg font-medium text-gray-800 mb-4">主要交通工具</h3>
+<!-- 动能单车 -->
+<div class="bg-gray-50 rounded-lg p-4 mb-3 shadow-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center">
+<div class="w-12 h-12 flex items-center justify-center bg-primary/10 rounded-full">
+<i class="ri-bike-fill text-2xl text-primary"></i>
+</div>
+<div class="ml-3">
+<h4 class="font-medium">动能单车</h4>
+<p class="text-xs text-gray-500 mt-1">绿值越高，速度越快</p>
+</div>
+</div>
+<div class="flex flex-col items-end">
+<span class="text-xs text-gray-500">可用车辆</span>
+<span class="text-lg font-medium text-primary">42</span>
+</div>
+</div>
+<div class="mt-3 flex justify-between items-center">
+<div class="text-xs text-gray-500">
+<span>平均绿值速率: </span>
+<span class="text-primary font-medium">4.2km/h</span>
+</div>
+<button class="bg-primary text-white text-sm py-1.5 px-4 rounded-button flex items-center">
+<i class="ri-qr-scan-line mr-1"></i>
+<span>扫码解锁</span>
+</button>
+</div>
+</div>
+<!-- 低碳浮轨车 -->
+<div class="bg-gray-50 rounded-lg p-4 mb-3 shadow-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center">
+<div class="w-12 h-12 flex items-center justify-center bg-primary/10 rounded-full">
+<i class="ri-train-fill text-2xl text-primary"></i>
+</div>
+<div class="ml-3">
+<h4 class="font-medium">低碳浮轨车</h4>
+<p class="text-xs text-gray-500 mt-1">路线固定，仅开放给绿值A级居民</p>
+</div>
+</div>
+<div class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">
+A级专享
+</div>
+</div>
+<div class="mt-3 flex justify-between items-center">
+<div class="text-xs text-gray-500">
+<span>下一班: </span>
+<span class="text-primary font-medium">5分钟后</span>
+</div>
+<button class="bg-primary text-white text-sm py-1.5 px-4 rounded-button flex items-center">
+<i class="ri-calendar-check-line mr-1"></i>
+<span>预约乘坐</span>
+</button>
+</div>
+</div>
+<!-- 徒步体验带 -->
+<div class="bg-gray-50 rounded-lg p-4 shadow-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center">
+<div class="w-12 h-12 flex items-center justify-center bg-primary/10 rounded-full">
+<i class="ri-footprint-fill text-2xl text-primary"></i>
+</div>
+<div class="ml-3">
+<h4 class="font-medium">徒步体验带</h4>
+<p class="text-xs text-gray-500 mt-1">每步记录能耗</p>
+</div>
+</div>
+<div class="flex flex-col items-end">
+<span class="text-xs text-gray-500">今日步数</span>
+<span class="text-lg font-medium text-primary">3,248</span>
+</div>
+</div>
+<div class="mt-3">
+<div class="flex justify-between items-center mb-1">
+<span class="text-xs text-gray-500">能量收集进度</span>
+<span class="text-xs text-gray-500">65%</span>
+</div>
+<div class="w-full bg-gray-200 rounded-full h-2">
+<div class="bg-primary h-2 rounded-full" style="width: 65%"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- 交通制度 -->
+<section class="px-4 py-5 bg-white mt-3">
+<h3 class="text-lg font-medium text-gray-800 mb-4">交通制度</h3>
+<div class="space-y-4">
+<!-- 碳排限额 -->
+<div class="flex items-start">
+<div class="w-10 h-10 flex items-center justify-center bg-primary/10 rounded-full flex-shrink-0">
+<i class="ri-gas-station-line text-xl text-primary"></i>
+</div>
+<div class="ml-3 flex-1">
+<h4 class="font-medium text-sm">每日出行总碳排限额：0.04kg</h4>
+<p class="text-xs text-gray-500 mt-1">超出限额将影响您的绿值评级及相关权益</p>
+</div>
+</div>
+<!-- 智能出行提醒 -->
+<div class="flex items-start">
+<div class="w-10 h-10 flex items-center justify-center bg-primary/10 rounded-full flex-shrink-0">
+<i class="ri-notification-line text-xl text-primary"></i>
+</div>
+<div class="ml-3 flex-1">
+<h4 class="font-medium text-sm">智能出行提醒系统</h4>
+<p class="text-xs text-gray-500 mt-1">会在过度移动时弹窗劝返，保护您的碳排指标</p>
+</div>
+</div>
+<!-- 夜间步行规则 -->
+<div class="flex items-start">
+<div class="w-10 h-10 flex items-center justify-center bg-primary/10 rounded-full flex-shrink-0">
+<i class="ri-moon-line text-xl text-primary"></i>
+</div>
+<div class="ml-3 flex-1">
+<h4 class="font-medium text-sm">夜间步行需佩戴"轨迹闪光徽章"</h4>
+<p class="text-xs text-gray-500 mt-1">以符合集体视效，保障夜间出行安全</p>
+</div>
+</div>
+</div>
+</section>
+<!-- 交通路线地图 -->
+<section class="px-4 py-5 bg-white mt-3">
+<div class="flex justify-between items-center mb-4">
+<h3 class="text-lg font-medium text-gray-800">交通路线地图</h3>
+<button class="text-primary text-sm flex items-center">
+<span>全屏查看</span>
+<i class="ri-fullscreen-line ml-1"></i>
+</button>
+</div>
+<div class="rounded-lg overflow-hidden h-56 map-container relative">
+<!-- 地图覆盖层 -->
+<div class="absolute inset-0 z-10">
+<!-- 路线标记 -->
+<div class="absolute top-1/4 left-1/4 w-3 h-3 bg-primary rounded-full pulse-animation"></div>
+<div class="absolute top-1/2 left-1/3 w-3 h-3 bg-primary rounded-full pulse-animation"></div>
+<div class="absolute top-1/3 right-1/4 w-3 h-3 bg-primary rounded-full pulse-animation"></div>
+<!-- 车辆标记 -->
+<div class="absolute top-1/2 right-1/3 w-4 h-4 flex items-center justify-center bg-white rounded-full shadow-md">
+<i class="ri-bike-line text-xs text-primary"></i>
+</div>
+<div class="absolute bottom-1/4 left-1/3 w-4 h-4 flex items-center justify-center bg-white rounded-full shadow-md">
+<i class="ri-train-line text-xs text-primary"></i>
+</div>
+<!-- 路线 -->
+<div class="absolute top-1/4 left-1/4 w-24 h-0.5 bg-primary transform rotate-45"></div>
+<div class="absolute top-1/3 right-1/4 w-32 h-0.5 bg-primary transform -rotate-15"></div>
+</div>
+<!-- 地图控制按钮 -->
+<div class="absolute bottom-3 right-3 flex flex-col space-y-2 z-20">
+<button class="w-8 h-8 flex items-center justify-center bg-white rounded-full shadow-md">
+<i class="ri-add-line text-gray-700"></i>
+</button>
+<button class="w-8 h-8 flex items-center justify-center bg-white rounded-full shadow-md">
+<i class="ri-subtract-line text-gray-700"></i>
+</button>
+<button class="w-8 h-8 flex items-center justify-center bg-white rounded-full shadow-md">
+<i class="ri-map-pin-line text-primary"></i>
+</button>
+</div>
+<!-- 图例 -->
+<div class="absolute top-3 left-3 bg-white/80 rounded-lg p-2 text-xs z-20">
+<div class="flex items-center mb-1">
+<div class="w-2 h-2 bg-primary rounded-full mr-1"></div>
+<span>动能单车站点</span>
+</div>
+<div class="flex items-center">
+<div class="w-2 h-2 bg-secondary rounded-full mr-1"></div>
+<span>浮轨车站点</span>
+</div>
+</div>
+</div>
+<div class="flex justify-between mt-3 text-xs text-gray-500">
+<span>更新时间: 2025-04-30 14:30</span>
+<span>数据来源: 绿岛交通局</span>
+</div>
+</section>
+<!-- 班次时刻表 -->
+<section class="px-4 py-5 bg-white mt-3">
+<h3 class="text-lg font-medium text-gray-800 mb-4">班次时刻表</h3>
+<!-- 时刻表切换 -->
+<div class="flex bg-gray-100 rounded-full p-1 mb-4">
+<button id="railBtn" class="flex-1 py-1.5 px-1 rounded-full bg-primary text-white text-sm">浮轨车</button>
+<button id="bikeBtn" class="flex-1 py-1.5 px-1 rounded-full text-gray-700 text-sm">公共单车</button>
+</div>
+<!-- 浮轨车时刻表 -->
+<div id="railSchedule" class="space-y-3">
+<div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+<div>
+<div class="flex items-center">
+<div class="w-2 h-2 bg-primary rounded-full mr-2"></div>
+<span class="font-medium">环岛线</span>
+</div>
+<div class="text-xs text-gray-500 mt-1">全程约20分钟</div>
+</div>
+<div class="text-right">
+<div class="text-sm font-medium">06:00 - 22:00</div>
+<div class="text-xs text-gray-500 mt-1">间隔: 15分钟</div>
+</div>
+</div>
+<div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+<div>
+<div class="flex items-center">
+<div class="w-2 h-2 bg-secondary rounded-full mr-2"></div>
+<span class="font-medium">中心区线</span>
+</div>
+<div class="text-xs text-gray-500 mt-1">全程约15分钟</div>
+</div>
+<div class="text-right">
+<div class="text-sm font-medium">07:00 - 21:00</div>
+<div class="text-xs text-gray-500 mt-1">间隔: 10分钟</div>
+</div>
+</div>
+<div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+<div>
+<div class="flex items-center">
+<div class="w-2 h-2 bg-yellow-500 rounded-full mr-2"></div>
+<span class="font-medium">海滨线</span>
+</div>
+<div class="text-xs text-gray-500 mt-1">全程约25分钟</div>
+</div>
+<div class="text-right">
+<div class="text-sm font-medium">08:00 - 20:00</div>
+<div class="text-xs text-gray-500 mt-1">间隔: 20分钟</div>
+</div>
+</div>
+</div>
+<!-- 公共单车时刻表 -->
+<div id="bikeSchedule" class="space-y-3 hidden">
+<div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+<div>
+<div class="flex items-center">
+<div class="w-2 h-2 bg-primary rounded-full mr-2"></div>
+<span class="font-medium">中心商圈站点</span>
+</div>
+<div class="text-xs text-gray-500 mt-1">可用车辆: 42 辆</div>
+</div>
+<div class="text-right">
+<div class="text-sm font-medium">05:00 - 23:00</div>
+<div class="text-xs text-gray-500 mt-1">投放时间</div>
+</div>
+</div>
+<div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+<div>
+<div class="flex items-center">
+<div class="w-2 h-2 bg-secondary rounded-full mr-2"></div>
+<span class="font-medium">滨海公园站点</span>
+</div>
+<div class="text-xs text-gray-500 mt-1">可用车辆: 35 辆</div>
+</div>
+<div class="text-right">
+<div class="text-sm font-medium">06:00 - 22:00</div>
+<div class="text-xs text-gray-500 mt-1">投放时间</div>
+</div>
+</div>
+<div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+<div>
+<div class="flex items-center">
+<div class="w-2 h-2 bg-yellow-500 rounded-full mr-2"></div>
+<span class="font-medium">居民区站点</span>
+</div>
+<div class="text-xs text-gray-500 mt-1">可用车辆: 28 辆</div>
+</div>
+<div class="text-right">
+<div class="text-sm font-medium">06:00 - 22:00</div>
+<div class="text-xs text-gray-500 mt-1">投放时间</div>
+</div>
+</div>
+</div>
+<button class="w-full mt-4 text-primary text-sm flex items-center justify-center">
+<span>查看完整时刻表</span>
+<i class="ri-arrow-right-s-line ml-1"></i>
+</button>
+</section>
+<!-- 绿色出行积分规则 -->
+<section class="px-4 py-5 bg-white mt-3">
+<h3 class="text-lg font-medium text-gray-800 mb-4">绿色出行积分规则</h3>
+<div class="bg-gray-50 rounded-lg p-4">
+<div class="space-y-3">
+<div class="flex items-center">
+<div class="w-8 h-8 flex items-center justify-center bg-primary/10 rounded-full mr-3">
+<i class="ri-bike-line text-primary"></i>
+</div>
+<div class="flex-1">
+<div class="flex justify-between">
+<span class="text-sm font-medium">动能单车</span>
+<span class="text-sm text-primary font-medium">+2分/km</span>
+</div>
+<div class="text-xs text-gray-500 mt-0.5">骑行产生的动能将转化为社区公共电力</div>
+</div>
+</div>
+<div class="flex items-center">
+<div class="w-8 h-8 flex items-center justify-center bg-primary/10 rounded-full mr-3">
+<i class="ri-footprint-line text-primary"></i>
+</div>
+<div class="flex-1">
+<div class="flex justify-between">
+<span class="text-sm font-medium">徒步体验带</span>
+<span class="text-sm text-primary font-medium">+1分/1000步</span>
+</div>
+<div class="text-xs text-gray-500 mt-0.5">步行产生的压力能将转化为地面照明电力</div>
+</div>
+</div>
+<div class="flex items-center">
+<div class="w-8 h-8 flex items-center justify-center bg-primary/10 rounded-full mr-3">
+<i class="ri-train-line text-primary"></i>
+</div>
+<div class="flex-1">
+<div class="flex justify-between">
+<span class="text-sm font-medium">低碳浮轨车</span>
+<span class="text-sm text-primary font-medium">+1分/次</span>
+</div>
+<div class="text-xs text-gray-500 mt-0.5">使用公共交通工具减少个人碳排放</div>
+</div>
+</div>
+</div>
+<div class="mt-4 pt-4 border-t border-gray-200">
+<h4 class="font-medium text-sm mb-2">积分用途</h4>
+<ul class="text-xs text-gray-600 space-y-1">
+<li class="flex items-center">
+<i class="ri-checkbox-circle-line text-primary mr-1"></i>
+<span>兑换绿岛生活用品</span>
+</li>
+<li class="flex items-center">
+<i class="ri-checkbox-circle-line text-primary mr-1"></i>
+<span>提升个人绿值等级</span>
+</li>
+<li class="flex items-center">
+<i class="ri-checkbox-circle-line text-primary mr-1"></i>
+<span>解锁特殊交通工具使用权限</span>
+</li>
+<li class="flex items-center">
+<i class="ri-checkbox-circle-line text-primary mr-1"></i>
+<span>参与绿岛特别活动资格</span>
+</li>
+</ul>
+</div>
+</div>
+</section>
+<!-- 实时交通状况 -->
+<section class="px-4 py-5 bg-white mt-3">
+<h3 class="text-lg font-medium text-gray-800 mb-4">实时交通状况</h3>
+<!-- 交通流量图表 -->
+<div class="bg-gray-50 rounded-lg p-4">
+<div class="flex justify-between items-center mb-3">
+<h4 class="text-sm font-medium">今日交通流量</h4>
+<div class="text-xs text-gray-500">单位: 人次/小时</div>
+</div>
+<div id="trafficChart" class="w-full h-48"></div>
+</div>
+<!-- 拥堵指数 -->
+<div class="grid grid-cols-3 gap-3 mt-4">
+<div class="bg-gray-50 rounded-lg p-3 text-center">
+<div class="text-xs text-gray-500 mb-1">环岛线</div>
+<div class="text-lg font-medium text-green-500">畅通</div>
+<div class="text-xs text-gray-500 mt-1">拥堵指数: 1.2</div>
+</div>
+<div class="bg-gray-50 rounded-lg p-3 text-center">
+<div class="text-xs text-gray-500 mb-1">中心区线</div>
+<div class="text-lg font-medium text-yellow-500">轻微拥堵</div>
+<div class="text-xs text-gray-500 mt-1">拥堵指数: 2.5</div>
+</div>
+<div class="bg-gray-50 rounded-lg p-3 text-center">
+<div class="text-xs text-gray-500 mb-1">海滨线</div>
+<div class="text-lg font-medium text-green-500">畅通</div>
+<div class="text-xs text-gray-500 mt-1">拥堵指数: 1.0</div>
+</div>
+</div>
+</section>
+<!-- 扫码乘车 -->
+<section class="px-4 py-5 bg-white mt-3 mb-3">
+<div class="flex justify-between items-center mb-4">
+<h3 class="text-lg font-medium text-gray-800">扫码乘车</h3>
+<button class="text-primary text-sm">历史记录</button>
+</div>
+<div class="bg-gray-50 rounded-lg p-5 flex flex-col items-center">
+<div class="w-48 h-48 bg-white p-3 rounded-lg shadow-sm">
+<img src="https://readdy.ai/api/search-image?query=QR%2520code%2520with%2520green%2520island%2520logo%2520in%2520center%252C%2520high%2520resolution%252C%2520clean%2520design%252C%2520minimalist%2520style%252C%2520professional%2520photography%2520of%2520QR%2520code&width=180&height=180&seq=1001&orientation=squarish" class="w-full h-full object-cover" alt="乘车码">
+</div>
+<p class="text-sm text-gray-500 mt-4">请将此码对准扫码器</p>
+<p class="text-xs text-gray-400 mt-1">有效期: 2分钟</p>
+<button class="mt-4 bg-primary text-white py-2 px-6 rounded-button flex items-center">
+<i class="ri-refresh-line mr-1"></i>
+<span>刷新乘车码</span>
+</button>
+</div>
+</section>
+</main>
+<!-- 底部导航栏 -->
+<footer class="fixed bottom-0 left-0 w-full bg-white border-t border-gray-200 z-50">
+<div class="grid grid-cols-4 h-14">
+<a href=""  class="flex flex-col items-center justify-center cursor-pointer text-gray-500">
+<div class="w-6 h-6 flex items-center justify-center">
+<i class="ri-home-5-line"></i>
+</div>
+<span class="text-xs mt-0.5">首页</span>
+</a>
+<a href="#" class="flex flex-col items-center justify-center cursor-pointer text-primary">
+<div class="w-6 h-6 flex items-center justify-center">
+<i class="ri-bus-fill"></i>
+</div>
+<span class="text-xs mt-0.5">交通</span>
+</a>
+<a href=""  class="flex flex-col items-center justify-center cursor-pointer text-gray-500">
+<div class="w-6 h-6 flex items-center justify-center">
+<i class="ri-map-2-line"></i>
+</div>
+<span class="text-xs mt-0.5">地图</span>
+</a>
+<a href="#" class="flex flex-col items-center justify-center cursor-pointer text-gray-500">
+<div class="w-6 h-6 flex items-center justify-center">
+<i class="ri-user-line"></i>
+</div>
+<span class="text-xs mt-0.5">我的</span>
+</a>
+</div>
+</footer>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+const railBtn = document.getElementById('railBtn');
+const bikeBtn = document.getElementById('bikeBtn');
+const railSchedule = document.getElementById('railSchedule');
+const bikeSchedule = document.getElementById('bikeSchedule');
+
+railBtn.addEventListener('click', function() {
+railBtn.classList.add('bg-primary', 'text-white');
+railBtn.classList.remove('text-gray-700');
+bikeBtn.classList.remove('bg-primary', 'text-white');
+bikeBtn.classList.add('text-gray-700');
+railSchedule.classList.remove('hidden');
+bikeSchedule.classList.add('hidden');
+});
+
+bikeBtn.addEventListener('click', function() {
+bikeBtn.classList.add('bg-primary', 'text-white');
+bikeBtn.classList.remove('text-gray-700');
+railBtn.classList.remove('bg-primary', 'text-white');
+railBtn.classList.add('text-gray-700');
+bikeSchedule.classList.remove('hidden');
+railSchedule.classList.add('hidden');
+});
+
+// 动态调整内容区域高度，避免被底部导航栏遮挡
+const main = document.querySelector('main');
+const footer = document.querySelector('footer');
+const footerHeight = footer.offsetHeight;
+main.style.paddingBottom = `${footerHeight + 16}px`;
+// 初始化交通流量图表
+const trafficChart = echarts.init(document.getElementById('trafficChart'));
+const option = {
+color: ['#4CAF50'],
+grid: {
+left: '3%',
+right: '4%',
+bottom: '3%',
+top: '3%',
+containLabel: true
+},
+xAxis: {
+type: 'category',
+data: ['6:00', '8:00', '10:00', '12:00', '14:00', '16:00', '18:00', '20:00', '22:00'],
+axisLine: {
+lineStyle: {
+color: '#ddd'
+}
+},
+axisLabel: {
+fontSize: 10,
+color: '#888'
+}
+},
+yAxis: {
+type: 'value',
+axisLine: {
+show: false
+},
+axisTick: {
+show: false
+},
+splitLine: {
+lineStyle: {
+color: '#f0f0f0'
+}
+},
+axisLabel: {
+fontSize: 10,
+color: '#888'
+}
+},
+series: [{
+data: [120, 350, 280, 220, 190, 230, 420, 380, 150],
+type: 'line',
+smooth: true,
+symbol: 'circle',
+symbolSize: 6,
+lineStyle: {
+width: 3
+},
+areaStyle: {
+color: {
+type: 'linear',
+x: 0,
+y: 0,
+x2: 0,
+y2: 1,
+colorStops: [{
+offset: 0,
+color: 'rgba(76, 175, 80, 0.3)'
+}, {
+offset: 1,
+color: 'rgba(76, 175, 80, 0.05)'
+}]
+}
+}
+}]
+};
+trafficChart.setOption(option);
+// 窗口大小变化时重新调整图表大小
+window.addEventListener('resize', function() {
+trafficChart.resize();
+});
+});
+</script>
+</body>
+</html>

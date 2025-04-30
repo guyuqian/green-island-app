@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>园区码</title>
+<script src="https://cdn.tailwindcss.com/3.4.16"></script>
+<script>tailwind.config={theme:{extend:{colors:{primary:'#4CAF50',secondary:'#8BC34A'},borderRadius:{'none':'0px','sm':'4px',DEFAULT:'8px','md':'12px','lg':'16px','xl':'20px','2xl':'24px','3xl':'32px','full':'9999px','button':'8px'}}}}}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+<style>
+:where([class^="ri-"])::before { content: "\f3c2"; }
+body {
+background-color: #f5f7fa;
+}
+.qr-code {
+position: relative;
+width: 240px;
+height: 240px;
+background-color: white;
+display: flex;
+align-items: center;
+justify-content: center;
+}
+.qr-code::before {
+content: "";
+position: absolute;
+width: 220px;
+height: 220px;
+background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 33 33' shape-rendering='crispEdges'%3E%3Cpath fill='%23ffffff' d='M0 0h33v33H0z'/%3E%3Cpath stroke='%23000000' d='M4 4.5h7m1 0h1m1 0h2m1 0h1m2 0h1m1 0h7M4 5.5h1m5 0h1m1 0h1m3 0h2m1 0h1m1 0h1m5 0h1M4 6.5h1m1 0h3m1 0h1m4 0h1m1 0h1m1 0h1m1 0h1m1 0h3m1 0h1M4 7.5h1m1 0h3m1 0h1m1 0h1m1 0h1m3 0h1m1 0h1m1 0h3m1 0h1M4 8.5h1m1 0h3m1 0h1m1 0h1m1 0h1m1 0h3m1 0h1m1 0h3m1 0h1M4 9.5h1m5 0h1m1 0h1m1 0h2m3 0h1m1 0h1m5 0h1M4 10.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M12 11.5h1m1 0h2m1 0h2m1 0h1M4 12.5h1m1 0h5m2 0h1m1 0h1m3 0h1m1 0h1m1 0h2m1 0h2M5 13.5h2m1 0h1m2 0h1m1 0h1m1 0h1m1 0h2m1 0h1m2 0h4M4 14.5h1m1 0h2m1 0h1m1 0h1m2 0h1m1 0h3m3 0h1m1 0h1m1 0h1M4 15.5h1m1 0h1m1 0h1m2 0h4m1 0h1m1 0h1m1 0h1m3 0h1m1 0h1M5 16.5h1m1 0h1m2 0h1m1 0h1m1 0h2m1 0h1m1 0h3m1 0h1m1 0h1m1 0h1M4 17.5h1m1 0h1m1 0h2m3 0h1m1 0h2m1 0h1m1 0h1m3 0h1m2 0h1M12 18.5h2m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1M4 19.5h7m2 0h1m2 0h1m2 0h1m3 0h1m1 0h1m1 0h1M4 20.5h1m5 0h1m1 0h2m1 0h1m2 0h1m1 0h1m1 0h1m1 0h3M4 21.5h1m1 0h3m1 0h1m1 0h1m1 0h2m1 0h1m1 0h1m1 0h1m1 0h1m1 0h3M4 22.5h1m1 0h3m1 0h1m1 0h1m1 0h1m1 0h3m1 0h1m1 0h1m1 0h1m1 0h2M4 23.5h1m1 0h3m1 0h1m1 0h3m1 0h1m3 0h3m1 0h1m1 0h2M4 24.5h1m5 0h1m1 0h1m3 0h1m1 0h1m1 0h1m2 0h1m1 0h2M4 25.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1M12 26.5h1m1 0h5m1 0h1m1 0h1M4 27.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m2 0h2m1 0h1M5 28.5h5m2 0h2m1 0h1m2 0h1m1 0h1m1 0h1m1 0h2m1 0h1M12 29.5h1m1 0h1m1 0h1m2 0h1m1 0h1m3 0h1'/%3E%3C/svg%3E");
+background-size: contain;
+background-repeat: no-repeat;
+background-position: center;
+}
+.countdown-timer {
+font-variant-numeric: tabular-nums;
+}
+</style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+<!-- 顶部导航栏 -->
+<div class="fixed top-0 left-0 w-full bg-primary text-white shadow-md z-10">
+<div class="flex items-center justify-between px-4 h-14">
+<div class="flex items-center">
+<div class="font-['Pacifico'] text-xl bg-gradient-to-r from-[#4CAF50] via-[#8BC34A] to-[#4CAF50] bg-clip-text text-transparent">绿岛 Green Island</div>
+</div>
+<div class="flex items-center gap-4">
+<a href=""  class="w-8 h-8 flex items-center justify-center cursor-pointer text-[#4CAF50]">
+<i class="ri-arrow-left-line ri-lg"></i>
+</a>
+<div class="w-8 h-8 flex items-center justify-center cursor-pointer text-[#4CAF50]" id="shareBtn">
+<i class="ri-share-line ri-lg"></i>
+</div>
+</div>
+</div>
+</div>
+<!-- 主要内容区域 -->
+<div class="pt-14 pb-16 px-4">
+<!-- 二维码展示区 -->
+<div class="mt-6 flex flex-col items-center">
+<div class="bg-white p-6 rounded-lg shadow-md flex flex-col items-center">
+<div class="text-base text-[#1B5E20] mb-3">我的绿岛社区通行码</div>
+<div class="qr-code rounded-lg shadow-sm mb-3" style="filter: hue-rotate(85deg) brightness(1.2)"></div>
+<div class="text-sm text-primary/80 mt-2">请向工作人员出示二维码</div>
+</div>
+</div>
+<!-- 用户信息区 -->
+<div class="mt-6 bg-white p-4 rounded-lg shadow-sm">
+<div class="flex items-center justify-between mb-3">
+<div class="flex items-center">
+<div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+<i class="ri-user-fill ri-lg text-[#4CAF50]"></i>
+</div>
+<div class="ml-3">
+<div class="flex items-center gap-2">
+<div id="displayName" class="font-medium cursor-pointer text-gray-800">请输入您的姓名</div>
+<div class="w-4 h-4 flex items-center justify-center cursor-pointer" id="editNameBtn">
+<i class="ri-edit-line text-primary/70"></i>
+</div>
+</div>
+<div class="text-xs text-primary/70">业主 · b栋2单元1201</div>
+</div>
+</div>
+<div class="px-3 py-1 bg-primary/10 text-primary text-xs rounded-full">已认证</div>
+</div>
+<div id="editNameModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center">
+<div class="bg-white rounded-xl w-[90%] max-w-sm p-5">
+<div class="text-lg font-medium mb-4">修改姓名</div>
+<form id="nameForm" class="mb-4">
+<input type="text" id="nameInput" class="w-full px-3 py-2 border border-gray-200 rounded focus:outline-none focus:border-primary" placeholder="请输入姓名" maxlength="10">
+</form>
+<div class="flex gap-3">
+<button id="cancelEditName" class="flex-1 py-2 text-center bg-gray-100 rounded-button">取消</button>
+<button id="saveNameBtn" class="flex-1 py-2 text-center bg-primary text-white rounded-button">保存</button>
+</div>
+</div>
+</div>
+<div class="border-t border-gray-100 pt-3">
+<div class="flex justify-between items-center text-sm">
+<div class="text-primary/70">用户ID</div>
+<div class="text-primary">GI20250429835</div>
+</div>
+</div>
+</div>
+<!-- 有效期信息区 -->
+<div class="mt-4 bg-white p-4 rounded-lg shadow-sm">
+<div class="flex items-center justify-between mb-2">
+<div class="text-sm text-primary/70">二维码有效期</div>
+<div class="text-xs px-2 py-1 bg-green-50 text-primary rounded-full">有效中</div>
+</div>
+<div class="flex items-center justify-between">
+<div class="text-xs text-primary/70" id="updateTime">更新时间: </div>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+function updateTimestamp() {
+const now = new Date();
+const year = now.getFullYear();
+const month = String(now.getMonth() + 1).padStart(2, '0');
+const day = String(now.getDate()).padStart(2, '0');
+const hours = String(now.getHours()).padStart(2, '0');
+const minutes = String(now.getMinutes()).padStart(2, '0');
+const seconds = String(now.getSeconds()).padStart(2, '0');
+const timestamp = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+document.getElementById('updateTime').textContent = `更新时间: ${timestamp}`;
+}
+updateTimestamp();
+setInterval(updateTimestamp, 1000);
+});
+</script>
+<div class="countdown-timer text-sm font-medium text-primary" id="countdown">29:59</div>
+</div>
+</div>
+<!-- 使用说明区域 -->
+<div class="mt-4 bg-white p-4 rounded-lg shadow-sm">
+<div class="flex items-center mb-3">
+<div class="w-5 h-5 flex items-center justify-center text-[#1B5E20]">
+<i class="ri-information-line"></i>
+</div>
+<div class="ml-2 font-medium text-[#1B5E20]">使用说明</div>
+</div>
+<ul class="text-sm text-gray-600 space-y-2">
+<li class="flex items-start">
+<span class="text-primary mr-2">•</span>
+<span>园区码用于园区出入通行、访客登记、设施预约等场景</span>
+</li>
+<li class="flex items-start">
+<span class="text-primary mr-2">•</span>
+<span>每 30 分钟自动更新一次，也可手动刷新</span>
+</li>
+<li class="flex items-start">
+<span class="text-primary mr-2">•</span>
+<span>请勿将您的园区码分享给无关人员，保护个人信息安全</span>
+</li>
+</ul>
+</div>
+<!-- 常见问题 -->
+<div class="mt-4 bg-white p-4 rounded-lg shadow-sm">
+<div class="flex items-center justify-between cursor-pointer" id="faqToggle">
+<div class="flex items-center">
+<div class="w-5 h-5 flex items-center justify-center text-[#1B5E20]">
+<i class="ri-question-line"></i>
+</div>
+<div class="ml-2 font-medium text-[#1B5E20]">常见问题</div>
+</div>
+<div class="w-5 h-5 flex items-center justify-center">
+<i class="ri-arrow-down-s-line" id="faqArrow"></i>
+</div>
+</div>
+<div class="mt-3 hidden" id="faqContent">
+<div class="text-sm text-primary/80 space-y-3">
+<div>
+<div class="font-medium mb-1 text-primary">Q: 园区码无法刷新怎么办？</div>
+<div class="text-primary/70">A: 请检查网络连接，或退出应用后重新登录尝试。</div>
+</div>
+<div>
+<div class="font-medium mb-1 text-primary">Q: 园区码扫描失败怎么办？</div>
+<div class="text-primary/70">A: 请调整亮度，确保二维码完整显示，或联系园区管理员。</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- 底部功能按钮 -->
+<div class="fixed bottom-0 left-0 w-full bg-white shadow-lg border-t border-gray-100">
+<div class="flex h-16">
+<button id="refreshBtn" class="flex-1 flex flex-col items-center justify-center cursor-pointer">
+<div class="w-6 h-6 flex items-center justify-center text-gray-500">
+<i class="ri-refresh-line ri-lg"></i>
+</div>
+<div class="text-xs mt-1">刷新</div>
+</button>
+<button id="shareButton" class="flex-1 flex flex-col items-center justify-center cursor-pointer">
+<div class="w-6 h-6 flex items-center justify-center text-gray-500">
+<i class="ri-share-forward-line ri-lg"></i>
+</div>
+<div class="text-xs mt-1">分享</div>
+</button>
+<a href=""  class="flex-1 flex flex-col items-center justify-center cursor-pointer">
+<div class="w-6 h-6 flex items-center justify-center text-gray-500">
+<i class="ri-home-line ri-lg"></i>
+</div>
+<div class="text-xs mt-1">首页</div>
+</a>
+<a href=""  class="flex-1 flex flex-col items-center justify-center cursor-pointer">
+<div class="w-6 h-6 flex items-center justify-center text-gray-500">
+<i class="ri-user-line ri-lg"></i>
+</div>
+<div class="text-xs mt-1">我的</div>
+</a>
+</div>
+</div>
+<!-- 分享弹窗 -->
+<div id="shareModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-end justify-center">
+<div class="bg-white rounded-t-xl w-full max-w-md p-5">
+<div class="flex justify-between items-center mb-4">
+<h3 class="font-medium text-lg">分享园区码</h3>
+<button id="closeShareModal" class="w-8 h-8 flex items-center justify-center cursor-pointer">
+<i class="ri-close-line ri-lg"></i>
+</button>
+</div>
+<div class="grid grid-cols-4 gap-4 mb-6">
+<div class="flex flex-col items-center">
+<div class="w-12 h-12 rounded-full bg-green-50 flex items-center justify-center mb-2">
+<i class="ri-wechat-fill ri-lg text-green-600"></i>
+</div>
+<span class="text-xs">微信</span>
+</div>
+<div class="flex flex-col items-center">
+<div class="w-12 h-12 rounded-full bg-blue-50 flex items-center justify-center mb-2">
+<i class="ri-qq-fill ri-lg text-blue-500"></i>
+</div>
+<span class="text-xs">QQ</span>
+</div>
+<div class="flex flex-col items-center">
+<div class="w-12 h-12 rounded-full bg-red-50 flex items-center justify-center mb-2">
+<i class="ri-weibo-fill ri-lg text-red-500"></i>
+</div>
+<span class="text-xs">微博</span>
+</div>
+<div class="flex flex-col items-center">
+<div class="w-12 h-12 rounded-full bg-gray-50 flex items-center justify-center mb-2">
+<i class="ri-more-fill ri-lg text-gray-500"></i>
+</div>
+<span class="text-xs">更多</span>
+</div>
+</div>
+<button id="cancelShare" class="w-full py-3 text-center bg-gray-100 rounded-button text-gray-700">取消</button>
+</div>
+</div>
+<!-- 刷新成功提示 -->
+<div id="refreshToast" class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-black bg-opacity-70 text-white px-4 py-2 rounded-lg hidden">
+刷新成功
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+// 姓名编辑功能
+const editNameBtn = document.getElementById('editNameBtn');
+const editNameModal = document.getElementById('editNameModal');
+const nameInput = document.getElementById('nameInput');
+const displayName = document.getElementById('displayName');
+const cancelEditName = document.getElementById('cancelEditName');
+const saveNameBtn = document.getElementById('saveNameBtn');
+const nameForm = document.getElementById('nameForm');
+function openEditNameModal() {
+editNameModal.classList.remove('hidden');
+nameInput.value = displayName.textContent;
+nameInput.focus();
+}
+function closeEditNameModal() {
+editNameModal.classList.add('hidden');
+}
+function updateName(newName) {
+if (newName.trim()) {
+displayName.textContent = newName;
+displayName.classList.remove('text-gray-400');
+localStorage.setItem('userName', newName);
+} else {
+displayName.textContent = '请输入您的姓名';
+displayName.classList.add('text-gray-400');
+localStorage.removeItem('userName');
+}
+closeEditNameModal();
+}
+
+nameInput.addEventListener('input', function() {
+if (this.value.trim()) {
+displayName.textContent = this.value;
+displayName.classList.remove('text-gray-400');
+localStorage.setItem('userName', this.value);
+} else {
+displayName.textContent = '请输入您的姓名';
+displayName.classList.add('text-gray-400');
+localStorage.removeItem('userName');
+}
+});
+
+const savedName = localStorage.getItem('userName');
+if (savedName) {
+displayName.textContent = savedName;
+displayName.classList.remove('text-gray-400');
+}
+editNameBtn.addEventListener('click', openEditNameModal);
+cancelEditName.addEventListener('click', closeEditNameModal);
+nameForm.addEventListener('submit', (e) => {
+e.preventDefault();
+updateName(nameInput.value);
+});
+saveNameBtn.addEventListener('click', () => {
+updateName(nameInput.value);
+});
+// 倒计时功能
+let minutes = 29;
+let seconds = 59;
+function updateCountdown() {
+const countdownEl = document.getElementById('countdown');
+countdownEl.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+if (seconds > 0) {
+seconds--;
+} else if (minutes > 0) {
+minutes--;
+seconds = 59;
+} else {
+// 重置倒计时
+minutes = 29;
+seconds = 59;
+}
+}
+setInterval(updateCountdown, 1000);
+// FAQ 折叠功能
+const faqToggle = document.getElementById('faqToggle');
+const faqContent = document.getElementById('faqContent');
+const faqArrow = document.getElementById('faqArrow');
+faqToggle.addEventListener('click', function() {
+faqContent.classList.toggle('hidden');
+if (faqContent.classList.contains('hidden')) {
+faqArrow.classList.remove('ri-arrow-up-s-line');
+faqArrow.classList.add('ri-arrow-down-s-line');
+} else {
+faqArrow.classList.remove('ri-arrow-down-s-line');
+faqArrow.classList.add('ri-arrow-up-s-line');
+}
+});
+// 刷新按钮功能
+const refreshBtn = document.getElementById('refreshBtn');
+const refreshToast = document.getElementById('refreshToast');
+refreshBtn.addEventListener('click', function() {
+// 显示刷新成功提示
+refreshToast.classList.remove('hidden');
+// 3秒后隐藏提示
+setTimeout(function() {
+refreshToast.classList.add('hidden');
+}, 1500);
+// 重置倒计时
+minutes = 29;
+seconds = 59;
+updateCountdown();
+});
+// 分享功能
+const shareBtn = document.getElementById('shareBtn');
+const shareButton = document.getElementById('shareButton');
+const shareModal = document.getElementById('shareModal');
+const closeShareModal = document.getElementById('closeShareModal');
+const cancelShare = document.getElementById('cancelShare');
+function openShareModal() {
+shareModal.classList.remove('hidden');
+}
+function closeShareModalFunc() {
+shareModal.classList.add('hidden');
+}
+shareBtn.addEventListener('click', openShareModal);
+shareButton.addEventListener('click', openShareModal);
+closeShareModal.addEventListener('click', closeShareModalFunc);
+cancelShare.addEventListener('click', closeShareModalFunc);
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>绿岛环境数据</title>
+<script src="https://cdn.tailwindcss.com/3.4.16"></script>
+<script>tailwind.config={theme:{extend:{colors:{primary:'#4CAF50',secondary:'#2196F3'},borderRadius:{'none':'0px','sm':'4px',DEFAULT:'8px','md':'12px','lg':'16px','xl':'20px','2xl':'24px','3xl':'32px','full':'9999px','button':'8px'}}}}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.5.0/echarts.min.js"></script>
+<style>
+:where([class^="ri-"])::before { content: "\f3c2"; }
+@keyframes pulse {
+0%, 100% { opacity: 1; }
+50% { opacity: 0.7; }
+}
+.pulse-animation {
+animation: pulse 2s infinite;
+}
+@keyframes slideLeft {
+0% { transform: translateX(100%); }
+100% { transform: translateX(-100%); }
+}
+.slide-text {
+animation: slideLeft 15s linear infinite;
+white-space: nowrap;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+-webkit-appearance: none;
+margin: 0;
+}
+.glass-effect {
+backdrop-filter: blur(8px);
+background-color: rgba(255, 255, 255, 0.85);
+}
+.progress-animation {
+transition: width 1.5s ease-in-out;
+}
+</style>
+</head>
+<body class="bg-gray-50 font-sans">
+<!-- 顶部导航栏 -->
+<header class="fixed top-0 left-0 w-full bg-white shadow-sm z-50">
+<div class="flex items-center justify-between px-4 py-3">
+<div class="flex items-center">
+<a href=""  class="w-8 h-8 flex items-center justify-center cursor-pointer">
+<i class="ri-arrow-left-s-line text-xl text-gray-700"></i>
+</a>
+<h1 class="text-lg font-medium ml-2">绿岛环境实时感知系统</h1>
+</div>
+<div class="w-8 h-8 flex items-center justify-center cursor-pointer">
+<i class="ri-more-2-line text-xl text-gray-700"></i>
+</div>
+</div>
+<!-- 筛选和时间范围选择 -->
+<div class="flex items-center justify-between px-4 py-2 bg-gray-50 border-t border-gray-100">
+<div class="flex space-x-2">
+<button id="realTimeBtn" class="px-3 py-1.5 bg-primary text-white text-xs rounded-full flex items-center !rounded-button">
+<span>实时数据</span>
+</button>
+<button id="historyBtn" class="px-3 py-1.5 bg-white text-gray-700 text-xs rounded-full border border-gray-200 flex items-center !rounded-button">
+<span>历史数据</span>
+</button>
+</div>
+<div class="flex items-center space-x-2">
+<button id="datePickerBtn" class="flex items-center text-xs text-gray-700 cursor-pointer">
+<span id="selectedDate">2025年4月</span>
+<i class="ri-arrow-down-s-line ml-1"></i>
+</button>
+<button id="downloadBtn" class="hidden items-center text-xs text-gray-700 cursor-pointer">
+<i class="ri-download-line mr-1"></i>
+<span>下载报告</span>
+</button>
+<button id="shareBtn" class="hidden items-center text-xs text-gray-700 cursor-pointer">
+<i class="ri-share-line mr-1"></i>
+<span>分享</span>
+</button>
+</div>
+<!-- 日期选择弹窗 -->
+<div id="datePickerModal" class="fixed inset-0 bg-black/70 z-50 flex items-center justify-center hidden">
+<div class="bg-white rounded-lg w-[280px]">
+<div class="p-4 border-b border-gray-100">
+<div class="flex items-center justify-between">
+<h3 class="text-lg font-medium text-primary">选择日期</h3>
+<button id="closeDatePickerBtn" class="w-8 h-8 flex items-center justify-center cursor-pointer">
+<i class="ri-close-line text-xl"></i>
+</button>
+</div>
+</div>
+<div class="p-4">
+<div class="mb-4">
+<label class="text-sm text-gray-600 mb-1 block">年份</label>
+<select id="yearSelect" class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-primary">
+<option value="2024">2024年</option>
+<option value="2025" selected>2025年</option>
+<option value="2026">2026年</option>
+</select>
+</div>
+<div class="mb-6">
+<label class="text-sm text-gray-600 mb-1 block">月份</label>
+<div class="grid grid-cols-4 gap-2">
+<button class="month-btn px-3 py-2 text-sm border border-gray-200 rounded-lg hover:border-primary hover:text-primary">1月</button>
+<button class="month-btn px-3 py-2 text-sm border border-gray-200 rounded-lg hover:border-primary hover:text-primary">2月</button>
+<button class="month-btn px-3 py-2 text-sm border border-gray-200 rounded-lg hover:border-primary hover:text-primary">3月</button>
+<button class="month-btn px-3 py-2 text-sm border border-gray-200 rounded-lg hover:border-primary hover:text-primary">4月</button>
+<button class="month-btn px-3 py-2 text-sm border border-gray-200 rounded-lg hover:border-primary hover:text-primary">5月</button>
+<button class="month-btn px-3 py-2 text-sm border border-gray-200 rounded-lg hover:border-primary hover:text-primary">6月</button>
+<button class="month-btn px-3 py-2 text-sm border border-gray-200 rounded-lg hover:border-primary hover:text-primary">7月</button>
+<button class="month-btn px-3 py-2 text-sm border border-gray-200 rounded-lg hover:border-primary hover:text-primary">8月</button>
+<button class="month-btn px-3 py-2 text-sm border border-gray-200 rounded-lg hover:border-primary hover:text-primary">9月</button>
+<button class="month-btn px-3 py-2 text-sm border border-gray-200 rounded-lg hover:border-primary hover:text-primary">10月</button>
+<button class="month-btn px-3 py-2 text-sm border border-gray-200 rounded-lg hover:border-primary hover:text-primary">11月</button>
+<button class="month-btn px-3 py-2 text-sm border border-gray-200 rounded-lg hover:border-primary hover:text-primary">12月</button>
+</div>
+</div>
+<div class="flex space-x-2">
+<button id="cancelDateBtn" class="flex-1 px-4 py-2 border border-gray-200 rounded-lg text-sm !rounded-button">取消</button>
+<button id="confirmDateBtn" class="flex-1 px-4 py-2 bg-primary text-white rounded-lg text-sm !rounded-button">确定</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</header>
+<!-- 主内容区域 -->
+<main class="pt-28 pb-16">
+<!-- 背景图 -->
+<div class="fixed inset-0 z-0 opacity-10">
+<img src="https://readdy.ai/api/search-image?query=Futuristic%2520green%2520smart%2520city%2520tower%2520with%2520environmental%2520sensors%252C%2520clean%2520energy%2520technology%252C%2520sustainable%2520architecture%252C%2520digital%2520monitoring%2520systems%252C%2520high-tech%2520eco-friendly%2520design%252C%2520bright%2520daylight%252C%2520professional%2520architectural%2520visualization&width=375&height=762&seq=201&orientation=portrait" class="w-full h-full object-cover" alt="绿岛智能感知塔">
+</div>
+<!-- 数据总览 -->
+<section class="relative z-10 px-4 mb-6">
+<div class="glass-effect rounded-lg p-4 shadow-lg">
+<h2 class="text-lg font-medium text-primary mb-3 flex items-center">
+<i class="ri-dashboard-3-line mr-2"></i>
+环境数据总览
+<span class="ml-2 px-2 py-0.5 bg-green-100 text-green-800 text-xs rounded-full">实时</span>
+</h2>
+<div class="grid grid-cols-2 gap-3">
+<!-- 空气清洁度指数 -->
+<div class="bg-white rounded-lg p-3 shadow-sm border border-gray-100">
+<div class="flex items-center justify-between">
+<span class="text-xs text-gray-500">空气清洁度指数</span>
+<div class="w-6 h-6 flex items-center justify-center bg-green-100 rounded-full">
+<i class="ri-leaf-fill text-primary"></i>
+</div>
+</div>
+<div class="mt-2 flex items-end">
+<span class="text-2xl font-bold text-primary" id="airQualityValue">99.9987</span>
+<span class="ml-1 text-xs text-gray-500 mb-1">%</span>
+</div>
+<div class="mt-2 w-full bg-gray-100 rounded-full h-1.5">
+<div class="bg-primary h-1.5 rounded-full" style="width: 99.9%"></div>
+</div>
+<div class="mt-1 text-xs text-gray-500 flex justify-between">
+<span>优秀</span>
+<span class="text-primary">远超标准</span>
+</div>
+</div>
+<!-- 水资源循环率 -->
+<div class="bg-white rounded-lg p-3 shadow-sm border border-gray-100">
+<div class="flex items-center justify-between">
+<span class="text-xs text-gray-500">水资源循环率</span>
+<div class="w-6 h-6 flex items-center justify-center bg-blue-100 rounded-full">
+<i class="ri-water-flash-fill text-secondary"></i>
+</div>
+</div>
+<div class="mt-2 flex items-end">
+<span class="text-2xl font-bold text-secondary" id="waterRecycleValue">102</span>
+<span class="ml-1 text-xs text-gray-500 mb-1">%</span>
+</div>
+<div class="mt-2 w-full bg-gray-100 rounded-full h-1.5">
+<div class="bg-secondary h-1.5 rounded-full" style="width: 100%"></div>
+</div>
+<div class="mt-1 text-xs text-gray-500 flex justify-between">
+<span>循环</span>
+<span class="text-secondary">超额生产</span>
+</div>
+</div>
+<!-- 生态自愈速度指数 -->
+<div class="bg-white rounded-lg p-3 shadow-sm border border-gray-100">
+<div class="flex items-center justify-between">
+<span class="text-xs text-gray-500">生态自愈速度指数</span>
+<div class="w-6 h-6 flex items-center justify-center bg-green-100 rounded-full">
+<i class="ri-seedling-fill text-primary"></i>
+</div>
+</div>
+<div class="mt-2 flex items-end">
+<span class="text-xl font-bold text-primary" id="ecoHealingValue">+37.5</span>
+<span class="ml-1 text-xs text-gray-500 mb-1">%/年</span>
+</div>
+<div class="mt-2 w-full bg-gray-100 rounded-full h-1.5">
+<div class="bg-primary h-1.5 rounded-full" style="width: 85%"></div>
+</div>
+<div class="mt-1 text-xs text-gray-500 flex justify-between">
+<span>持续恢复</span>
+<span class="text-primary">高于预期</span>
+</div>
+</div>
+<!-- 负碳排放覆盖率 -->
+<div class="bg-white rounded-lg p-3 shadow-sm border border-gray-100">
+<div class="flex items-center justify-between">
+<span class="text-xs text-gray-500">负碳排放覆盖率</span>
+<div class="w-6 h-6 flex items-center justify-center bg-blue-100 rounded-full">
+<i class="ri-cloud-fill text-secondary"></i>
+</div>
+</div>
+<div class="mt-2 flex items-end">
+<span class="text-2xl font-bold text-secondary" id="carbonValue">115.2</span>
+<span class="ml-1 text-xs text-gray-500 mb-1">%</span>
+</div>
+<div class="mt-2 w-full bg-gray-100 rounded-full h-1.5">
+<div class="bg-secondary h-1.5 rounded-full" style="width: 100%"></div>
+</div>
+<div class="mt-1 text-xs text-gray-500 flex justify-between">
+<span>负碳</span>
+<span class="text-secondary">超额贡献</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 详细数据板块 -->
+<section class="relative z-10 px-4 mb-6">
+<div class="glass-effect rounded-lg p-4 shadow-lg">
+<h2 class="text-lg font-medium text-primary mb-3 flex items-center">
+<i class="ri-file-chart-line mr-2"></i>
+详细环境指标
+</h2>
+<div class="space-y-4">
+<!-- 呼吸净化效率 -->
+<div class="bg-white rounded-lg p-3 shadow-sm border border-gray-100">
+<div class="flex items-center justify-between">
+<span class="text-sm font-medium">呼吸净化效率</span>
+<span class="text-xs text-gray-500">每分钟过滤杂质</span>
+</div>
+<div class="mt-2 flex items-end justify-between">
+<div class="flex items-baseline">
+<span class="text-xl font-bold text-primary">0.002</span>
+<span class="ml-1 text-xs text-gray-500">克</span>
+</div>
+<div class="flex items-center text-xs text-green-600">
+<i class="ri-arrow-up-s-line"></i>
+<span>0.0001克</span>
+</div>
+</div>
+<div class="mt-2 text-xs text-gray-500">
+空气中悬浮颗粒物含量低于国际标准的1/100
+</div>
+</div>
+<!-- 绿色覆盖视觉指数 -->
+<div class="bg-white rounded-lg p-3 shadow-sm border border-gray-100">
+<div class="flex items-center justify-between">
+<span class="text-sm font-medium">绿色覆盖视觉指数</span>
+<span class="text-xs text-gray-500">人眼可感知绿度提升</span>
+</div>
+<div class="mt-2 flex items-end justify-between">
+<div class="flex items-baseline">
+<span class="text-xl font-bold text-primary">250</span>
+<span class="ml-1 text-xs text-gray-500">%</span>
+</div>
+<div class="flex items-center text-xs text-green-600">
+<i class="ri-arrow-up-s-line"></i>
+<span>5%</span>
+</div>
+</div>
+<div class="mt-2 text-xs text-gray-500">
+视觉绿化覆盖率远超常规城市景观标准
+</div>
+</div>
+<!-- 垃圾消失速度 -->
+<div class="bg-white rounded-lg p-3 shadow-sm border border-gray-100">
+<div class="flex items-center justify-between">
+<span class="text-sm font-medium">垃圾消失速度</span>
+<span class="text-xs text-gray-500">表面垃圾视觉消失时间</span>
+</div>
+<div class="mt-2 flex items-end justify-between">
+<div class="flex items-baseline">
+<span class="text-xl font-bold text-secondary">72</span>
+<span class="ml-1 text-xs text-gray-500">小时</span>
+</div>
+<div class="flex items-center text-xs text-green-600">
+<i class="ri-arrow-down-s-line"></i>
+<span>12小时</span>
+</div>
+</div>
+<div class="mt-2 text-xs text-gray-500">
+智能回收系统效率提升，视觉清洁度达标
+</div>
+</div>
+<!-- 心理舒适度指数 -->
+<div class="bg-white rounded-lg p-3 shadow-sm border border-gray-100">
+<div class="flex items-center justify-between">
+<span class="text-sm font-medium">心理舒适度指数</span>
+<span class="text-xs text-gray-500">居民幸福感申报</span>
+</div>
+<div class="mt-2 flex items-end justify-between">
+<div class="flex items-baseline">
+<span class="text-xl font-bold text-secondary">98</span>
+<span class="ml-1 text-xs text-gray-500">%</span>
+</div>
+<div class="flex items-center text-xs text-green-600">
+<i class="ri-arrow-up-s-line"></i>
+<span>1.5%</span>
+</div>
+</div>
+<div class="mt-2 text-xs text-gray-500">
+基于绿岛生态视觉标准3.0修正测算
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 历史数据趋势图表 -->
+<section class="relative z-10 px-4 mb-6">
+<div class="glass-effect rounded-lg p-4 shadow-lg">
+<h2 class="text-lg font-medium text-primary mb-3 flex items-center">
+<i class="ri-line-chart-line mr-2"></i>
+历史数据趋势
+</h2>
+<div class="bg-white rounded-lg p-3 shadow-sm border border-gray-100 mb-3">
+<div class="flex items-center justify-between mb-2">
+<span class="text-sm font-medium">空气质量指数趋势</span>
+<div class="flex items-center text-xs">
+<button class="px-2 py-0.5 bg-primary text-white rounded-full mr-1 !rounded-button">月</button>
+<button class="px-2 py-0.5 bg-gray-100 text-gray-600 rounded-full !rounded-button">季</button>
+<button class="px-2 py-0.5 bg-gray-100 text-gray-600 rounded-full ml-1 !rounded-button">年</button>
+</div>
+</div>
+<div id="airQualityChart" style="width: 100%; height: 200px;"></div>
+</div>
+<div class="bg-white rounded-lg p-3 shadow-sm border border-gray-100">
+<div class="flex items-center justify-between mb-2">
+<span class="text-sm font-medium">碳排放趋势</span>
+<div class="flex items-center text-xs">
+<button class="px-2 py-0.5 bg-primary text-white rounded-full mr-1 !rounded-button">月</button>
+<button class="px-2 py-0.5 bg-gray-100 text-gray-600 rounded-full !rounded-button">季</button>
+<button class="px-2 py-0.5 bg-gray-100 text-gray-600 rounded-full ml-1 !rounded-button">年</button>
+</div>
+</div>
+<div id="carbonEmissionChart" style="width: 100%; height: 200px;"></div>
+</div>
+</div>
+</section>
+<!-- 个人环保贡献数据 -->
+<section class="relative z-10 px-4 mb-6">
+<div class="glass-effect rounded-lg p-4 shadow-lg">
+<h2 class="text-lg font-medium text-primary mb-3 flex items-center">
+<i class="ri-user-heart-line mr-2"></i>
+个人环保贡献
+</h2>
+<div class="bg-white rounded-lg p-4 shadow-sm border border-gray-100 mb-3">
+<div class="flex items-center">
+<div class="ml-3">
+<div class="text-xs text-gray-500 mt-0.5">b栋2单元1201业主 | 绿岛居民</div>
+<div class="flex items-center mt-1">
+<span class="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full">环保积极分子</span>
+<span class="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full ml-1">节水标兵</span>
+</div>
+</div>
+</div>
+<div class="mt-4">
+<div class="flex items-center justify-between">
+<span class="text-sm">环保积分</span>
+<span class="text-sm font-medium text-primary">177 分</span>
+</div>
+<div class="mt-1 w-full bg-gray-100 rounded-full h-2">
+<div class="bg-primary h-2 rounded-full" style="width: 16%"></div>
+</div>
+<div class="mt-1 flex justify-between text-xs text-gray-500">
+<span>社区排名: 第 335 名</span>
+<span>超过 16% 的居民</span>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-3">
+<!-- 节能贡献 -->
+<div class="bg-white rounded-lg p-3 shadow-sm border border-gray-100">
+<div class="flex items-center justify-between">
+<span class="text-xs text-gray-500">节能贡献</span>
+<div class="w-6 h-6 flex items-center justify-center bg-green-100 rounded-full">
+<i class="ri-lightbulb-flash-fill text-primary"></i>
+</div>
+</div>
+<div class="mt-2">
+<span class="text-xl font-bold text-primary">-18.7</span>
+<span class="ml-1 text-xs text-gray-500">kWh</span>
+</div>
+<div class="mt-1 text-xs text-gray-500">较社区平均少用电量</div>
+</div>
+<!-- 节水贡献 -->
+<div class="bg-white rounded-lg p-3 shadow-sm border border-gray-100">
+<div class="flex items-center justify-between">
+<span class="text-xs text-gray-500">节水贡献</span>
+<div class="w-6 h-6 flex items-center justify-center bg-blue-100 rounded-full">
+<i class="ri-drop-fill text-secondary"></i>
+</div>
+</div>
+<div class="mt-2">
+<span class="text-xl font-bold text-secondary">-25.3</span>
+<span class="ml-1 text-xs text-gray-500">吨</span>
+</div>
+<div class="mt-1 text-xs text-gray-500">较社区平均少用水量</div>
+</div>
+<!-- 碳减排 -->
+<div class="bg-white rounded-lg p-3 shadow-sm border border-gray-100">
+<div class="flex items-center justify-between">
+<span class="text-xs text-gray-500">碳减排</span>
+<div class="w-6 h-6 flex items-center justify-center bg-green-100 rounded-full">
+<i class="ri-recycle-fill text-primary"></i>
+</div>
+</div>
+<div class="mt-2">
+<span class="text-xl font-bold text-primary">-32.6</span>
+<span class="ml-1 text-xs text-gray-500">kg</span>
+</div>
+<div class="mt-1 text-xs text-gray-500">本月减少碳排放量</div>
+</div>
+<!-- 绿色出行 -->
+<div class="bg-white rounded-lg p-3 shadow-sm border border-gray-100">
+<div class="flex items-center justify-between">
+<span class="text-xs text-gray-500">绿色出行</span>
+<div class="w-6 h-6 flex items-center justify-center bg-blue-100 rounded-full">
+<i class="ri-bike-fill text-secondary"></i>
+</div>
+</div>
+<div class="mt-2">
+<span class="text-xl font-bold text-secondary">45.8</span>
+<span class="ml-1 text-xs text-gray-500">km</span>
+</div>
+<div class="mt-1 text-xs text-gray-500">本月绿色出行里程</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 环保目标完成进度 -->
+<section class="relative z-10 px-4 mb-6">
+<div class="glass-effect rounded-lg p-4 shadow-lg">
+<h2 class="text-lg font-medium text-primary mb-3 flex items-center">
+<i class="ri-flag-line mr-2"></i>
+环保目标完成进度
+</h2>
+<div class="space-y-4">
+<!-- 社区目标 -->
+<div class="bg-white rounded-lg p-3 shadow-sm border border-gray-100">
+<div class="flex items-center justify-between">
+<span class="text-sm font-medium">社区目标：碳中和计划</span>
+<span class="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full">进行中</span>
+</div>
+<div class="mt-3">
+<div class="flex justify-between text-xs mb-1">
+<span>当前进度</span>
+<span>92%</span>
+</div>
+<div class="w-full bg-gray-100 rounded-full h-2.5">
+<div class="bg-primary h-2.5 rounded-full progress-animation" style="width: 92%"></div>
+</div>
+</div>
+<div class="mt-3 text-xs text-gray-500">
+目标：2025年底前实现社区碳中和
+</div>
+</div>
+<!-- 个人目标 -->
+<div class="bg-white rounded-lg p-3 shadow-sm border border-gray-100">
+<div class="flex items-center justify-between">
+<span class="text-sm font-medium">个人目标：绿色出行挑战</span>
+<span class="text-xs bg-yellow-100 text-yellow-700 px-2 py-0.5 rounded-full">需努力</span>
+</div>
+<div class="mt-3">
+<div class="flex justify-between text-xs mb-1">
+<span>当前进度</span>
+<span>65%</span>
+</div>
+<div class="w-full bg-gray-100 rounded-full h-2.5">
+<div class="bg-secondary h-2.5 rounded-full progress-animation" style="width: 65%"></div>
+</div>
+</div>
+<div class="mt-3 text-xs text-gray-500">
+目标：本月绿色出行里程达到70公里
+</div>
+</div>
+<!-- 家庭目标 -->
+<div class="bg-white rounded-lg p-3 shadow-sm border border-gray-100">
+<div class="flex items-center justify-between">
+<span class="text-sm font-medium">家庭目标：节能减排</span>
+<span class="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">优秀</span>
+</div>
+<div class="mt-3">
+<div class="flex justify-between text-xs mb-1">
+<span>当前进度</span>
+<span>85%</span>
+</div>
+<div class="w-full bg-gray-100 rounded-full h-2.5">
+<div class="bg-primary h-2.5 rounded-full progress-animation" style="width: 85%"></div>
+</div>
+</div>
+<div class="mt-3 text-xs text-gray-500">
+目标：家庭能源消耗较去年同期减少20%
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 特别声明区 -->
+<section class="relative z-10 px-4 mb-6">
+<div class="glass-effect rounded-lg p-4 shadow-lg overflow-hidden">
+<h2 class="text-xs text-gray-500 mb-2">特别声明</h2>
+<div class="relative w-full overflow-hidden h-4">
+<div class="slide-text absolute text-[10px] text-gray-500 opacity-50">
+所有数据基于"绿岛生态视觉标准3.0"修正测算；局部水质数据因项目优化暂缓公开；生态负荷压力指数为内部参考，不对外发布；空气质量指数已根据绿岛特殊标准进行校准；碳排放计算包含视觉碳汇因素；部分环境指标采用预测模型生成。
+</div>
+</div>
+</div>
+</section>
+<!-- 查看个体绿度贡献图按钮 -->
+<section class="relative z-10 px-4 mb-10">
+<button id="showContributionBtn" class="w-full py-3 bg-primary text-white font-medium rounded-lg shadow-lg flex items-center justify-center !rounded-button">
+<i class="ri-leaf-fill mr-2"></i>
+查看个体绿度贡献图
+</button>
+</section>
+</main>
+<!-- 底部导航栏 -->
+<footer class="fixed bottom-0 left-0 w-full bg-white border-t border-gray-200 z-50">
+<div class="grid grid-cols-4 h-14">
+<a href=""  class="flex flex-col items-center justify-center cursor-pointer text-gray-500">
+<div class="w-6 h-6 flex items-center justify-center">
+<i class="ri-home-5-line"></i>
+</div>
+<span class="text-xs mt-0.5">首页</span>
+</a>
+<a href=""  class="flex flex-col items-center justify-center cursor-pointer text-gray-500">
+<div class="w-6 h-6 flex items-center justify-center">
+<i class="ri-qr-code-line"></i>
+</div>
+<span class="text-xs mt-0.5">园区码</span>
+</a>
+<a href=""  class="flex flex-col items-center justify-center cursor-pointer text-gray-500">
+<div class="w-6 h-6 flex items-center justify-center">
+<i class="ri-leaf-line"></i>
+</div>
+<span class="text-xs mt-0.5">绿岛居民内网</span>
+</a>
+<a href="#" class="flex flex-col items-center justify-center cursor-pointer text-primary">
+<div class="w-6 h-6 flex items-center justify-center">
+<i class="ri-bar-chart-fill"></i>
+</div>
+<span class="text-xs mt-0.5">环境数据</span>
+</a>
+</div>
+</footer>
+<!-- 个体绿度贡献图弹窗 -->
+<div id="contributionModal" class="fixed inset-0 bg-black/70 z-50 flex items-center justify-center hidden">
+<div class="bg-white rounded-lg w-[90%] max-h-[80%] overflow-y-auto">
+<div class="p-4 border-b border-gray-100">
+<div class="flex items-center justify-between">
+<h3 class="text-lg font-medium text-primary">个体碳足迹可视化报告</h3>
+<button id="closeModalBtn" class="w-8 h-8 flex items-center justify-center cursor-pointer">
+<i class="ri-close-line text-xl"></i>
+</button>
+</div>
+</div>
+<div class="p-4">
+<div class="bg-green-50 p-3 rounded-lg mb-4">
+<div class="text-sm font-medium text-primary mb-2">本月环保贡献概览</div>
+<div class="text-xs text-gray-700">
+您的日常行为已为地球复苏贡献了<span class="text-primary font-medium">0.00003%</span>的力量，这相当于种植了<span class="text-primary font-medium">0.0125</span>棵树！
+</div>
+</div>
+<div class="space-y-4">
+<div class="bg-white rounded-lg p-3 shadow-sm border border-gray-100">
+<div class="text-sm font-medium mb-2">步行贡献</div>
+<div class="flex items-center justify-between">
+<div class="text-xs text-gray-500">本月增加步行距离</div>
+<div class="text-sm font-medium text-primary">0.01 公里</div>
+</div>
+<div class="mt-2 w-full bg-gray-100 rounded-full h-1.5">
+<div class="bg-primary h-1.5 rounded-full" style="width: 5%"></div>
+</div>
+<div class="mt-2 text-xs text-gray-500">
+您的步行增加已减少碳排放<span class="text-primary">0.00023 kg</span>
+</div>
+</div>
+<div class="bg-white rounded-lg p-3 shadow-sm border border-gray-100">
+<div class="text-sm font-medium mb-2">用电节约</div>
+<div class="flex items-center justify-between">
+<div class="text-xs text-gray-500">本月节约用电</div>
+<div class="text-sm font-medium text-primary">0.35 kWh</div>
+</div>
+<div class="mt-2 w-full bg-gray-100 rounded-full h-1.5">
+<div class="bg-primary h-1.5 rounded-full" style="width: 15%"></div>
+</div>
+<div class="mt-2 text-xs text-gray-500">
+您的节电行为相当于减少了<span class="text-primary">0.00175 kg</span>的碳排放
+</div>
+</div>
+<div class="bg-white rounded-lg p-3 shadow-sm border border-gray-100">
+<div class="text-sm font-medium mb-2">垃圾分类</div>
+<div class="flex items-center justify-between">
+<div class="text-xs text-gray-500">本月垃圾分类准确率</div>
+<div class="text-sm font-medium text-primary">99.8%</div>
+</div>
+<div class="mt-2 w-full bg-gray-100 rounded-full h-1.5">
+<div class="bg-primary h-1.5 rounded-full" style="width: 99.8%"></div>
+</div>
+<div class="mt-2 text-xs text-gray-500">
+您的垃圾分类行为已帮助社区减少<span class="text-primary">0.00842 kg</span>的碳排放
+</div>
+</div>
+<div class="bg-white rounded-lg p-3 shadow-sm border border-gray-100">
+<div class="text-sm font-medium mb-2">环保倡议参与</div>
+<div class="flex items-center justify-between">
+<div class="text-xs text-gray-500">本月参与环保活动</div>
+<div class="text-sm font-medium text-primary">1 次</div>
+</div>
+<div class="mt-2 w-full bg-gray-100 rounded-full h-1.5">
+<div class="bg-primary h-1.5 rounded-full" style="width: 20%"></div>
+</div>
+<div class="mt-2 text-xs text-gray-500">
+您的参与已影响<span class="text-primary">0.0005</span>个社区居民加入环保行列
+</div>
+</div>
+</div>
+<div class="mt-6 text-center">
+<div class="text-sm text-gray-700 mb-2">您的环保行为已获得认证</div>
+<div class="inline-block px-4 py-2 bg-primary text-white rounded-full text-sm font-medium !rounded-button">
+绿岛环保参与者 Lv.2
+</div>
+</div>
+</div>
+</div>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+const realTimeBtn = document.getElementById('realTimeBtn');
+const historyBtn = document.getElementById('historyBtn');
+const downloadBtn = document.getElementById('downloadBtn');
+const shareBtn = document.getElementById('shareBtn');
+function switchToHistoryView() {
+realTimeBtn.classList.remove('bg-primary', 'text-white');
+realTimeBtn.classList.add('bg-white', 'text-gray-700', 'border', 'border-gray-200');
+historyBtn.classList.remove('bg-white', 'text-gray-700', 'border', 'border-gray-200');
+historyBtn.classList.add('bg-primary', 'text-white');
+downloadBtn.style.display = 'flex';
+shareBtn.style.display = 'flex';
+airQualityChart.setOption({
+dataZoom: [{
+type: 'inside',
+start: 0,
+end: 100
+}, {
+type: 'slider',
+start: 0,
+end: 100
+}],
+legend: {
+data: ['当前', '上月同期'],
+top: 0,
+right: 10,
+textStyle: {
+fontSize: 10
+}
+},
+series: [{
+name: '当前',
+data: [97.5, 98.1, 98.7, 99.2, 99.5, 99.7, 99.8, 99.85, 99.9, 99.92, 99.95, 99.99]
+}, {
+name: '上月同期',
+data: [97.0, 97.8, 98.2, 98.8, 99.1, 99.4, 99.6, 99.75, 99.85, 99.88, 99.91, 99.95],
+type: 'line',
+smooth: true,
+lineStyle: {
+color: '#9E9E9E'
+},
+areaStyle: {
+color: {
+type: 'linear',
+x: 0,
+y: 0,
+x2: 0,
+y2: 1,
+colorStops: [{
+offset: 0,
+color: 'rgba(158, 158, 158, 0.3)'
+}, {
+offset: 1,
+color: 'rgba(158, 158, 158, 0.1)'
+}]
+}
+},
+symbol: 'circle',
+symbolSize: 6,
+itemStyle: {
+color: '#9E9E9E'
+}
+}]
+});
+carbonEmissionChart.setOption({
+dataZoom: [{
+type: 'inside',
+start: 0,
+end: 100
+}, {
+type: 'slider',
+start: 0,
+end: 100
+}],
+legend: {
+data: ['当前', '上月同期'],
+top: 0,
+right: 10,
+textStyle: {
+fontSize: 10
+}
+},
+series: [{
+name: '当前',
+data: [100, 95, 85, 75, 65, 55, 45, 35, 25, 15, 5, -5]
+}, {
+name: '上月同期',
+data: [110, 105, 95, 85, 75, 65, 55, 45, 35, 25, 15, 5],
+type: 'line',
+smooth: true,
+lineStyle: {
+color: '#9E9E9E'
+},
+areaStyle: {
+color: {
+type: 'linear',
+x: 0,
+y: 0,
+x2: 0,
+y2: 1,
+colorStops: [{
+offset: 0,
+color: 'rgba(158, 158, 158, 0.3)'
+}, {
+offset: 1,
+color: 'rgba(158, 158, 158, 0.1)'
+}]
+}
+},
+symbol: 'circle',
+symbolSize: 6,
+itemStyle: {
+color: '#9E9E9E'
+}
+}]
+});
+}
+function switchToRealTimeView() {
+historyBtn.classList.remove('bg-primary', 'text-white');
+historyBtn.classList.add('bg-white', 'text-gray-700', 'border', 'border-gray-200');
+realTimeBtn.classList.remove('bg-white', 'text-gray-700', 'border', 'border-gray-200');
+realTimeBtn.classList.add('bg-primary', 'text-white');
+downloadBtn.style.display = 'none';
+shareBtn.style.display = 'none';
+airQualityChart.setOption({
+dataZoom: false,
+legend: { show: false },
+series: [{
+data: [97.5, 98.1, 98.7, 99.2, 99.5, 99.7, 99.8, 99.85, 99.9, 99.92, 99.95, 99.99]
+}]
+});
+carbonEmissionChart.setOption({
+dataZoom: false,
+legend: { show: false },
+series: [{
+data: [100, 95, 85, 75, 65, 55, 45, 35, 25, 15, 5, -5]
+}]
+});
+}
+historyBtn.addEventListener('click', switchToHistoryView);
+realTimeBtn.addEventListener('click', switchToRealTimeView);
+downloadBtn.addEventListener('click', function() {
+const link = document.createElement('a');
+link.download = '绿岛环境历史数据报告.pdf';
+link.href = '#';
+document.body.appendChild(link);
+link.click();
+document.body.removeChild(link);
+});
+shareBtn.addEventListener('click', function() {
+if (navigator.share) {
+navigator.share({
+title: '绿岛环境历史数据报告',
+text: '查看详细的环境数据历史报告',
+url: window.location.href
+});
+}
+});
+// 日期选择器相关
+const datePickerBtn = document.getElementById('datePickerBtn');
+const datePickerModal = document.getElementById('datePickerModal');
+const closeDatePickerBtn = document.getElementById('closeDatePickerBtn');
+const cancelDateBtn = document.getElementById('cancelDateBtn');
+const confirmDateBtn = document.getElementById('confirmDateBtn');
+const yearSelect = document.getElementById('yearSelect');
+const selectedDate = document.getElementById('selectedDate');
+let selectedMonth = 4; // 默认选中4月
+// 初始化月份按钮选中状态
+const monthButtons = document.querySelectorAll('.month-btn');
+monthButtons[selectedMonth - 1].classList.add('border-primary', 'text-primary');
+// 打开日期选择器
+datePickerBtn.addEventListener('click', function() {
+datePickerModal.classList.remove('hidden');
+document.body.style.overflow = 'hidden';
+});
+// 关闭日期选择器
+function closeDatePicker() {
+datePickerModal.classList.add('hidden');
+document.body.style.overflow = 'auto';
+}
+closeDatePickerBtn.addEventListener('click', closeDatePicker);
+cancelDateBtn.addEventListener('click', closeDatePicker);
+// 点击弹窗外部关闭
+datePickerModal.addEventListener('click', function(e) {
+if (e.target === datePickerModal) {
+closeDatePicker();
+}
+});
+// 月份选择
+monthButtons.forEach((button, index) => {
+button.addEventListener('click', function() {
+monthButtons.forEach(btn => btn.classList.remove('border-primary', 'text-primary'));
+button.classList.add('border-primary', 'text-primary');
+selectedMonth = index + 1;
+});
+});
+// 确认选择
+confirmDateBtn.addEventListener('click', function() {
+const selectedYear = yearSelect.value;
+selectedDate.textContent = `${selectedYear}年${selectedMonth}月`;
+closeDatePicker();
+// 这里可以添加更新数据的逻辑
+updatePageData(selectedYear, selectedMonth);
+});
+function updatePageData(year, month) {
+// 模拟数据更新，实际项目中应该从后端获取数据
+console.log(`Updating data for ${year}年${month}月`);
+// 更新图表数据示例
+airQualityChart.setOption({
+series: [{
+data: Array.from({length: 12}, () => 90 + Math.random() * 10)
+}]
+});
+carbonEmissionChart.setOption({
+series: [{
+data: Array.from({length: 12}, () => -10 + Math.random() * 120)
+}]
+});
+}
+// 动态调整内容区域高度，避免被底部导航栏遮挡
+const main = document.querySelector('main');
+const footer = document.querySelector('footer');
+const footerHeight = footer.offsetHeight;
+main.style.paddingBottom = `${footerHeight + 16}px`;
+// 初始化空气质量图表
+const airQualityChart = echarts.init(document.getElementById('airQualityChart'));
+const airQualityOption = {
+grid: {
+left: '3%',
+right: '4%',
+bottom: '3%',
+top: '3%',
+containLabel: true
+},
+xAxis: {
+type: 'category',
+data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
+axisLabel: {
+fontSize: 10
+}
+},
+yAxis: {
+type: 'value',
+min: 90,
+axisLabel: {
+fontSize: 10
+}
+},
+series: [
+{
+data: [97.5, 98.1, 98.7, 99.2, 99.5, 99.7, 99.8, 99.85, 99.9, 99.92, 99.95, 99.99],
+type: 'line',
+smooth: true,
+lineStyle: {
+color: '#4CAF50'
+},
+areaStyle: {
+color: {
+type: 'linear',
+x: 0,
+y: 0,
+x2: 0,
+y2: 1,
+colorStops: [
+{
+offset: 0,
+color: 'rgba(76, 175, 80, 0.5)'
+},
+{
+offset: 1,
+color: 'rgba(76, 175, 80, 0.1)'
+}
+]
+}
+},
+symbol: 'circle',
+symbolSize: 6,
+itemStyle: {
+color: '#4CAF50'
+}
+}
+],
+tooltip: {
+trigger: 'axis',
+formatter: '{b}: {c}%',
+textStyle: {
+fontSize: 12
+}
+}
+};
+airQualityChart.setOption(airQualityOption);
+// 初始化碳排放图表
+const carbonEmissionChart = echarts.init(document.getElementById('carbonEmissionChart'));
+const carbonEmissionOption = {
+grid: {
+left: '3%',
+right: '4%',
+bottom: '3%',
+top: '3%',
+containLabel: true
+},
+xAxis: {
+type: 'category',
+data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
+axisLabel: {
+fontSize: 10
+}
+},
+yAxis: {
+type: 'value',
+axisLabel: {
+fontSize: 10
+}
+},
+series: [
+{
+data: [100, 95, 85, 75, 65, 55, 45, 35, 25, 15, 5, -5],
+type: 'line',
+smooth: true,
+lineStyle: {
+color: '#2196F3'
+},
+areaStyle: {
+color: {
+type: 'linear',
+x: 0,
+y: 0,
+x2: 0,
+y2: 1,
+colorStops: [
+{
+offset: 0,
+color: 'rgba(33, 150, 243, 0.5)'
+},
+{
+offset: 1,
+color: 'rgba(33, 150, 243, 0.1)'
+}
+]
+}
+},
+symbol: 'circle',
+symbolSize: 6,
+itemStyle: {
+color: '#2196F3'
+}
+}
+],
+tooltip: {
+trigger: 'axis',
+formatter: '{b}: {c}%',
+textStyle: {
+fontSize: 12
+}
+}
+};
+carbonEmissionChart.setOption(carbonEmissionOption);
+// 处理窗口大小变化时重新渲染图表
+window.addEventListener('resize', function() {
+airQualityChart.resize();
+carbonEmissionChart.resize();
+});
+// 数据动画效果
+function animateValue(id, start, end, duration) {
+const obj = document.getElementById(id);
+let startTimestamp = null;
+const step = (timestamp) => {
+if (!startTimestamp) startTimestamp = timestamp;
+const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+const value = progress * (end - start) + start;
+obj.innerHTML = value.toFixed(4);
+if (progress < 1) {
+window.requestAnimationFrame(step);
+}
+};
+window.requestAnimationFrame(step);
+}
+// 启动数值动画
+animateValue("airQualityValue", 99.9980, 99.9987, 3000);
+animateValue("waterRecycleValue", 101.5, 102, 3000);
+animateValue("ecoHealingValue", 37.0, 37.5, 3000);
+animateValue("carbonValue", 114.8, 115.2, 3000);
+// 个体绿度贡献图弹窗
+const contributionBtn = document.getElementById('showContributionBtn');
+const contributionModal = document.getElementById('contributionModal');
+const closeModalBtn = document.getElementById('closeModalBtn');
+contributionBtn.addEventListener('click', function() {
+contributionModal.classList.remove('hidden');
+document.body.style.overflow = 'hidden';
+});
+closeModalBtn.addEventListener('click', function() {
+contributionModal.classList.add('hidden');
+document.body.style.overflow = 'auto';
+});
+// 点击弹窗外部关闭弹窗
+contributionModal.addEventListener('click', function(e) {
+if (e.target === contributionModal) {
+contributionModal.classList.add('hidden');
+document.body.style.overflow = 'auto';
+}
+});
+});
+</script>
+</body>
+</html>

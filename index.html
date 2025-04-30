@@ -1,0 +1,39 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#17b17a">
+  <title>绿岛 Green Island</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icon-192.png">
+  <link rel="apple-touch-icon" href="icon-512.png">
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      background: #ffffff url('pure-white-background.png') center center no-repeat;
+      background-size: cover;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen;
+    }
+    .loading {
+      text-align: center;
+      color: #17b17a;
+      font-size: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="loading">绿岛 Green Island<br>Loading...</div>
+  <script>
+    setTimeout(() => {
+      window.location.href = "login.html";
+    }, 1500);
+  </script>
+</body>
+</html>

@@ -1,0 +1,1281 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>绿岛地图 - Green Island Map</title>
+<script src="https://cdn.tailwindcss.com/3.4.16"></script>
+<script>tailwind.config={theme:{extend:{colors:{primary:'#4CAF50',secondary:'#8BC34A'},borderRadius:{'none':'0px','sm':'4px',DEFAULT:'8px','md':'12px','lg':'16px','xl':'20px','2xl':'24px','3xl':'32px','full':'9999px','button':'8px'}}}}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.5.0/echarts.min.js"></script>
+<style>
+:where([class^="ri-"])::before { content: "\f3c2"; }
+#shareContent {
+transform: translateY(100%);
+}
+#shareContent.translate-y-0 {
+transform: translateY(0);
+}
+#shareContent.translate-y-full {
+transform: translateY(100%);
+}
+.map-container {
+position: relative;
+width: 100%;
+height: 100%;
+overflow: hidden;
+background-image: url('https://readdy.ai/api/search-image?query=top%20down%20view%20of%20a%20circular%20island%20map%2C%20minimalist%20flat%20design%2C%20green%20areas%20for%20parks%20and%20nature%20zones%2C%20light%20gray%20roads%20network%2C%20light%20blue%20water%20surrounding%20the%20island%2C%20simple%20geometric%20shapes%2C%20clean%20lines%2C%20residential%20districts%20marked%20in%20light%20beige%2C%20commercial%20areas%20in%20muted%20colors%2C%20essential%20infrastructure%20highlighted%2C%202D%20cartographic%20style%2C%20no%20textures%2C%20clear%20district%20boundaries%2C%20modern%20urban%20planning%20layout%2C%20the%20island%20should%20take%20up%2070%25%20of%20the%20frame%2C%20centered%20composition%2C%20high%20contrast%20between%20different%20zones&width=1280&height=720&seq=2&orientation=landscape');
+background-position: center;
+background-size: cover;
+}
+.map-point {
+position: absolute;
+transform: translate(-50%, -50%);
+transition: transform 0.3s ease;
+}
+.map-point:hover {
+transform: translate(-50%, -50%) scale(1.2);
+}
+.map-point:active {
+transform: translate(-50%, -50%) scale(1.1);
+}
+.map-point[data-id="center"],
+.map-point[data-id="energy"],
+.map-point[data-id="visitor"],
+.map-point[data-id="track"] {
+background-color: var(--bg-color) !important;
+}
+.map-point[data-id="center"] {
+--bg-color: rgba(76, 175, 80, 0.8);
+}
+.map-point[data-id="energy"],
+.map-point[data-id="visitor"],
+.map-point[data-id="track"] {
+--bg-color: rgba(6, 182, 212, 0.8);
+}
+</修改前>
+<修改>
+<修改前>
+<!-- 地图点位 -->
+<!-- 核心设施 -->
+<div class="map-point absolute top-[45%] left-[50%] w-10 h-10 bg-primary/80 rounded-full flex items-center justify-center cursor-pointer shadow-lg" data-id="center">
+<i class="ri-building-2-fill text-white text-xl"></i>
+</div>
+<!-- 餐饮设施 -->
+<div class="map-point absolute top-[35%] left-[45%] w-8 h-8 bg-yellow-500/80 rounded-full flex items-center justify-center cursor-pointer shadow-md" data-id="restaurant1">
+<i class="ri-restaurant-2-fill text-white text-lg"></i>
+</div>
+<div class="map-point absolute top-[55%] left-[55%] w-8 h-8 bg-yellow-500/80 rounded-full flex items-center justify-center cursor-pointer shadow-md" data-id="restaurant2">
+<i class="ri-restaurant-2-fill text-white text-lg"></i>
+</div>
+<div class="map-point absolute top-[40%] left-[35%] w-8 h-8 bg-yellow-500/80 rounded-full flex items-center justify-center cursor-pointer shadow-md" data-id="restaurant3">
+<i class="ri-restaurant-2-fill text-white text-lg"></i>
+</div>
+<!-- 住宿设施 -->
+<div class="map-point absolute top-[45%] left-[15%] w-8 h-8 bg-secondary/80 rounded-full flex items-center justify-center cursor-pointer shadow-md" data-id="hotel2">
+<i class="ri-hotel-fill text-white text-lg"></i>
+</div>
+<div class="map-point absolute top-[30%] left-[35%] w-8 h-8 bg-secondary/80 rounded-full flex items-center justify-center cursor-pointer shadow-md" data-id="residential">
+<i class="ri-home-4-fill text-white text-lg"></i>
+</div>
+<div class="map-point absolute top-[25%] left-[55%] w-8 h-8 bg-secondary/80 rounded-full flex items-center justify-center cursor-pointer shadow-md" data-id="villa">
+<i class="ri-home-smile-fill text-white text-lg"></i>
+</div>
+<div class="map-point absolute top-[60%] left-[40%] w-8 h-8 bg-secondary/80 rounded-full flex items-center justify-center cursor-pointer shadow-md" data-id="hotel">
+<i class="ri-hotel-fill text-white text-lg"></i>
+</div>
+<div class="map-point absolute top-[58%] left-[80%] w-8 h-8 bg-secondary/80 rounded-full flex items-center justify-center cursor-pointer shadow-md" data-id="camping">
+<i class="ri-tent-fill text-white text-lg"></i>
+</div>
+<div class="map-point absolute top-[45%] left-[60%] w-8 h-8 bg-secondary/80 rounded-full flex items-center justify-center cursor-pointer shadow-md" data-id="residential2">
+<i class="ri-home-4-fill text-white text-lg"></i>
+</div>
+<div class="map-point absolute top-[45%] left-[35%] w-8 h-8 bg-secondary/80 rounded-full flex items-center justify-center cursor-pointer shadow-md" data-id="residential3">
+<i class="ri-home-4-fill text-white text-lg"></i>
+</div>
+<div class="map-point absolute top-[55%] left-[45%] w-8 h-8 bg-secondary/80 rounded-full flex items-center justify-center cursor-pointer shadow-md" data-id="residential4">
+<i class="ri-home-4-fill text-white text-lg"></i>
+</div>
+<div class="map-point absolute top-[55%] left-[15%] w-8 h-8 bg-secondary/80 rounded-full flex items-center justify-center cursor-pointer shadow-md" data-id="residential5">
+<i class="ri-home-4-fill text-white text-lg"></i>
+</div>
+<div class="map-point absolute top-[70%] left-[35%] w-8 h-8 bg-secondary/80 rounded-full flex items-center justify-center cursor-pointer shadow-md" data-id="residential6">
+<i class="ri-home-4-fill text-white text-lg"></i>
+</div>
+<div class="map-point absolute top-[72%] left-[67%] w-8 h-8 bg-secondary/80 rounded-full flex items-center justify-center cursor-pointer shadow-md" data-id="residential7">
+<i class="ri-home-4-fill text-white text-lg"></i>
+</div>
+<div class="map-point absolute top-[25%] left-[65%] w-8 h-8 bg-secondary/80 rounded-full flex items-center justify-center cursor-pointer shadow-md" data-id="residential8">
+<i class="ri-home-4-fill text-white text-lg"></i>
+</div>
+<div class="map-point absolute top-[35%] left-[75%] w-8 h-8 bg-secondary/80 rounded-full flex items-center justify-center cursor-pointer shadow-md" data-id="residential9">
+<i class="ri-home-heart-fill text-white text-lg"></i>
+</div>
+<div class="map-point absolute top-[65%] left-[25%] w-8 h-8 bg-secondary/80 rounded-full flex items-center justify-center cursor-pointer shadow-md" data-id="residential10">
+<i class="ri-home-heart-fill text-white text-lg"></i>
+</div>
+<!-- 公共设施 -->
+<div class="map-point absolute top-[45%] left-[70%] w-8 h-8 bg-cyan-500/80 rounded-full flex items-center justify-center cursor-pointer shadow-md" data-id="energy">
+<i class="ri-windy-fill text-white text-lg"></i>
+</div>
+<div class="map-point absolute top-[55%] left-[30%] w-8 h-8 bg-cyan-500/80 rounded-full flex items-center justify-center cursor-pointer shadow-md" data-id="visitor">
+<i class="ri-information-fill text-white text-lg"></i>
+</div>
+<div class="map-point absolute top-[65%] left-[50%] w-8 h-8 bg-cyan-500/80 rounded-full flex items-center justify-center cursor-pointer shadow-md" data-id="track">
+<i class="ri-footprint-fill text-white text-lg"></i>
+</div>
+<!-- 景点 -->
+<div class="map-point absolute top-[20%] left-[45%] w-8 h-8 bg-purple-500/80 rounded-full flex items-center justify-center cursor-pointer shadow-md" data-id="observatory">
+<i class="ri-telescope-fill text-white text-lg"></i>
+</div>
+<div class="map-point absolute top-[35%] left-[65%] w-8 h-8 bg-purple-500/80 rounded-full flex items-center justify-center cursor-pointer shadow-md" data-id="garden">
+<i class="ri-flower-fill text-white text-lg"></i>
+</div>
+<div class="map-point absolute top-[82%] left-[42%] w-8 h-8 bg-purple-500/80 rounded-full flex items-center justify-center cursor-pointer shadow-md" data-id="beach">
+<i class="ri-ship-fill text-white text-lg"></i>
+</div>
+</修改前>
+<修改后>
+<!-- 地图点位 -->
+<!-- 核心设施 -->
+<div class="map-point absolute top-[45%] left-[50%] w-10 h-10 bg-primary/80 rounded-full flex items-center justify-center cursor-pointer shadow-lg" data-id="center">
+<i class="ri-building-2-fill text-white text-xl"></i>
+</div>
+<!-- 餐饮设施 -->
+<div class="map-point absolute top-[35%] left-[45%] w-8 h-8 bg-yellow-500/80 rounded-full flex items-center justify-center cursor-pointer shadow-md" data-id="restaurant1">
+<i class="ri-restaurant-2-fill text-white text-lg"></i>
+</div>
+<div class="map-point absolute top-[55%] left-[55%] w-8 h-8 bg-yellow-500/80 rounded-full flex items-center justify-center cursor-pointer shadow-md" data-id="restaurant2">
+<i class="ri-restaurant-2-fill text-white text-lg"></i>
+</div>
+<div class="map-point absolute top-[40%] left-[35%] w-8 h-8 bg-yellow-500/80 rounded-full flex items-center justify-center cursor-pointer shadow-md" data-id="restaurant3">
+<i class="ri-restaurant-2-fill text-white text-lg"></i>
+</div>
+<!-- 住宿设施 -->
+<div class="map-point absolute top-[45%] left-[15%] w-8 h-8 bg-secondary/80 rounded-full flex items-center justify-center cursor-pointer shadow-md" data-id="hotel2">
+<i class="ri-hotel-fill text-white text-lg"></i>
+</div>
+<div class="map-point absolute top-[30%] left-[35%] w-8 h-8 bg-secondary/80 rounded-full flex items-center justify-center cursor-pointer shadow-md" data-id="residential">
+<i class="ri-home-4-fill text-white text-lg"></i>
+</div>
+<div class="map-point absolute top-[25%] left-[55%] w-8 h-8 bg-secondary/80 rounded-full flex items-center justify-center cursor-pointer shadow-md" data-id="villa">
+<i class="ri-home-smile-fill text-white text-lg"></i>
+</div>
+<div class="map-point absolute top-[60%] left-[40%] w-8 h-8 bg-secondary/80 rounded-full flex items-center justify-center cursor-pointer shadow-md" data-id="hotel">
+<i class="ri-hotel-fill text-white text-lg"></i>
+</div>
+<div class="map-point absolute top-[58%] left-[80%] w-8 h-8 bg-secondary/80 rounded-full flex items-center justify-center cursor-pointer shadow-md" data-id="camping">
+<i class="ri-tent-fill text-white text-lg"></i>
+</div>
+<div class="map-point absolute top-[45%] left-[60%] w-8 h-8 bg-secondary/80 rounded-full flex items-center justify-center cursor-pointer shadow-md" data-id="residential2">
+<i class="ri-home-4-fill text-white text-lg"></i>
+</div>
+<div class="map-point absolute top-[45%] left-[35%] w-8 h-8 bg-secondary/80 rounded-full flex items-center justify-center cursor-pointer shadow-md" data-id="residential3">
+<i class="ri-home-4-fill text-white text-lg"></i>
+</div>
+<div class="map-point absolute top-[55%] left-[45%] w-8 h-8 bg-secondary/80 rounded-full flex items-center justify-center cursor-pointer shadow-md" data-id="residential4">
+<i class="ri-home-4-fill text-white text-lg"></i>
+</div>
+<div class="map-point absolute top-[55%] left-[15%] w-8 h-8 bg-secondary/80 rounded-full flex items-center justify-center cursor-pointer shadow-md" data-id="residential5">
+<i class="ri-home-4-fill text-white text-lg"></i>
+</div>
+<div class="map-point absolute top-[70%] left-[35%] w-8 h-8 bg-secondary/80 rounded-full flex items-center justify-center cursor-pointer shadow-md" data-id="residential6">
+<i class="ri-home-4-fill text-white text-lg"></i>
+</div>
+<div class="map-point absolute top-[72%] left-[67%] w-8 h-8 bg-secondary/80 rounded-full flex items-center justify-center cursor-pointer shadow-md" data-id="residential7">
+<i class="ri-home-4-fill text-white text-lg"></i>
+</div>
+<div class="map-point absolute top-[25%] left-[65%] w-8 h-8 bg-secondary/80 rounded-full flex items-center justify-center cursor-pointer shadow-md" data-id="residential8">
+<i class="ri-home-4-fill text-white text-lg"></i>
+</div>
+<div class="map-point absolute top-[35%] left-[75%] w-8 h-8 bg-secondary/80 rounded-full flex items-center justify-center cursor-pointer shadow-md" data-id="residential9">
+<i class="ri-home-heart-fill text-white text-lg"></i>
+</div>
+<div class="map-point absolute top-[65%] left-[25%] w-8 h-8 bg-secondary/80 rounded-full flex items-center justify-center cursor-pointer shadow-md" data-id="residential10">
+<i class="ri-home-heart-fill text-white text-lg"></i>
+</div>
+<!-- 公共设施 -->
+<div class="map-point absolute top-[45%] left-[70%] w-8 h-8 bg-cyan-500/80 rounded-full flex items-center justify-center cursor-pointer shadow-md" data-id="energy">
+<i class="ri-windy-fill text-white text-lg"></i>
+</div>
+<div class="map-point absolute top-[55%] left-[30%] w-8 h-8 bg-cyan-500/80 rounded-full flex items-center justify-center cursor-pointer shadow-md" data-id="visitor">
+<i class="ri-information-fill text-white text-lg"></i>
+</div>
+<div class="map-point absolute top-[65%] left-[50%] w-8 h-8 bg-cyan-500/80 rounded-full flex items-center justify-center cursor-pointer shadow-md" data-id="track">
+<i class="ri-footprint-fill text-white text-lg"></i>
+</div>
+<!-- 景点 -->
+<div class="map-point absolute top-[20%] left-[45%] w-8 h-8 bg-purple-500/80 rounded-full flex items-center justify-center cursor-pointer shadow-md" data-id="observatory">
+<i class="ri-telescope-fill text-white text-lg"></i>
+</div>
+<div class="map-point absolute top-[35%] left-[65%] w-8 h-8 bg-purple-500/80 rounded-full flex items-center justify-center cursor-pointer shadow-md" data-id="garden">
+<i class="ri-flower-fill text-white text-lg"></i>
+</div>
+<div class="map-point absolute top-[82%] left-[42%] w-8 h-8 bg-purple-500/80 rounded-full flex items-center justify-center cursor-pointer shadow-md" data-id="beach">
+<i class="ri-ship-fill text-white text-lg"></i>
+</div>
+<div class="map-point absolute top-[20%] left-[45%] w-8 h-8 bg-yellow-500/80 rounded-full flex items-center justify-center cursor-pointer shadow-md" data-id="education">
+<i class="ri-school-fill text-white text-lg"></i>
+</div>
+<div class="map-point absolute top-[45%] left-[40%] w-8 h-8 bg-purple-500/80 rounded-full flex items-center justify-center cursor-pointer shadow-md" data-id="lab">
+<i class="ri-flask-fill text-white text-lg"></i>
+</div>
+<div class="map-point absolute top-[60%] left-[65%] w-8 h-8 bg-red-500/80 rounded-full flex items-center justify-center cursor-pointer shadow-md" data-id="medical">
+<i class="ri-hospital-fill text-white text-lg"></i>
+</div>
+<div class="map-point absolute top-[40%] left-[60%] w-8 h-8 bg-indigo-500/80 rounded-full flex items-center justify-center cursor-pointer shadow-md" data-id="sport">
+<i class="ri-basketball-fill text-white text-lg"></i>
+</div>
+<div class="map-point absolute top-[75%] left-[40%] w-8 h-8 bg-pink-500/80 rounded-full flex items-center justify-center cursor-pointer shadow-md" data-id="culture">
+<i class="ri-movie-fill text-white text-lg"></i>
+</div>
+.map-point {
+position: absolute;
+transform: translate(-50%, -50%);
+transition: all 0.3s ease;
+}
+.map-point:hover {
+transform: translate(-50%, -50%) scale(1.2);
+}
+.info-card {
+transition: all 0.3s ease;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+-webkit-appearance: none;
+margin: 0;
+}
+</style>
+</head>
+<body class="bg-gray-50 font-sans">
+<!-- 顶部导航栏 -->
+<header class="fixed top-0 left-0 w-full bg-white shadow-sm z-50">
+<div class="flex items-center justify-between px-4 py-3">
+<div class="flex items-center">
+<a href=""  class="w-8 h-8 flex items-center justify-center">
+<i class="ri-arrow-left-s-line text-xl text-gray-700"></i>
+</a>
+<h1 class="text-lg font-medium ml-2">绿岛分区一览 · Island Structure</h1>
+</div>
+<div class="w-8 h-8 flex items-center justify-center cursor-pointer" id="shareButton">
+<i class="ri-share-line text-xl text-gray-700"></i>
+</div>
+<!-- Share Dialog -->
+<div class="fixed inset-0 bg-black/50 z-50 hidden" id="shareModal">
+<div class="absolute bottom-0 left-0 right-0 bg-white rounded-t-xl p-4 transform transition-transform duration-300" id="shareContent">
+<div class="flex justify-between items-center mb-4">
+<h3 class="text-lg font-medium">分享绿岛地图</h3>
+<button class="w-8 h-8 flex items-center justify-center" id="closeShareModal">
+<i class="ri-close-line text-xl"></i>
+</button>
+</div>
+<p class="text-sm text-gray-600 mb-6">与朋友分享这座环保智能岛屿的地图</p>
+<div class="grid grid-cols-4 gap-4 mb-6">
+<button class="flex flex-col items-center">
+<div class="w-12 h-12 rounded-full bg-green-50 flex items-center justify-center mb-1">
+<i class="ri-wechat-fill text-2xl text-[#07C160]"></i>
+</div>
+<span class="text-xs">微信</span>
+</button>
+<button class="flex flex-col items-center">
+<div class="w-12 h-12 rounded-full bg-green-50 flex items-center justify-center mb-1">
+<i class="ri-wechat-moments-fill text-2xl text-[#07C160]"></i>
+</div>
+<span class="text-xs">朋友圈</span>
+</button>
+<button class="flex flex-col items-center">
+<div class="w-12 h-12 rounded-full bg-blue-50 flex items-center justify-center mb-1">
+<i class="ri-qq-fill text-2xl text-[#12B7F5]"></i>
+</div>
+<span class="text-xs">QQ</span>
+</button>
+<button class="flex flex-col items-center">
+<div class="w-12 h-12 rounded-full bg-red-50 flex items-center justify-center mb-1">
+<i class="ri-weibo-fill text-2xl text-[#E6162D]"></i>
+</div>
+<span class="text-xs">微博</span>
+</button>
+</div>
+<div class="flex gap-3 mb-4">
+<button class="flex-1 border border-gray-200 py-3 rounded-button flex items-center justify-center text-sm">
+<i class="ri-qr-code-line mr-2"></i>
+<span>生成二维码</span>
+</button>
+<button class="flex-1 border border-gray-200 py-3 rounded-button flex items-center justify-center text-sm" id="copyLinkBtn">
+<i class="ri-link mr-2"></i>
+<span>复制链接</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- 搜索栏 -->
+<div class="px-4 pb-3">
+<div class="relative">
+<input type="text" placeholder="搜索景点、设施、建筑..." class="w-full py-2 px-10 rounded-full border border-gray-200 text-sm focus:outline-none focus:ring-1 focus:ring-primary bg-gray-50">
+<span class="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 flex items-center justify-center text-gray-400">
+<i class="ri-search-line"></i>
+</span>
+<span class="absolute right-3 top-1/2 transform -translate-y-1/2 w-5 h-5 flex items-center justify-center text-gray-400 cursor-pointer">
+<i class="ri-mic-line"></i>
+</span>
+</div>
+</div>
+<!-- 分类筛选 -->
+<div class="flex px-2 pb-2 overflow-x-auto whitespace-nowrap">
+<button class="px-3 py-1 mx-1 rounded-full bg-primary text-white text-xs flex items-center">
+<i class="ri-compass-3-line mr-1"></i>全部
+</button>
+<button class="px-3 py-1 mx-1 rounded-full bg-gray-100 text-gray-700 text-xs flex items-center">
+<i class="ri-restaurant-line mr-1"></i>餐饮
+</button>
+<button class="px-3 py-1 mx-1 rounded-full bg-gray-100 text-gray-700 text-xs flex items-center">
+<i class="ri-hotel-line mr-1"></i>住宿
+</button>
+<button class="px-3 py-1 mx-1 rounded-full bg-gray-100 text-gray-700 text-xs flex items-center">
+<i class="ri-government-line mr-1"></i>公共设施
+</button>
+<button class="px-3 py-1 mx-1 rounded-full bg-gray-100 text-gray-700 text-xs flex items-center">
+<i class="ri-landscape-line mr-1"></i>景点
+</button>
+<button class="px-3 py-1 mx-1 rounded-full bg-gray-100 text-gray-700 text-xs flex items-center">
+<i class="ri-shopping-bag-line mr-1"></i>购物
+</button>
+</div>
+</header>
+<!-- 主内容区域 -->
+<main class="pt-[130px] pb-16 h-screen">
+<!-- 地图容器 -->
+<div class="relative h-[calc(100vh-130px-64px)]">
+<div class="map-container h-full" id="mapContainer">
+<!-- 地图点位 -->
+<!-- 核心设施 -->
+<div class="map-point absolute top-[45%] left-[50%] w-10 h-10 bg-primary/80 rounded-full flex items-center justify-center cursor-pointer shadow-lg" data-id="center">
+<i class="ri-building-2-fill text-white text-xl"></i>
+</div>
+<!-- 餐饮设施 -->
+<div class="map-point absolute top-[35%] left-[45%] w-8 h-8 bg-yellow-500/80 rounded-full flex items-center justify-center cursor-pointer shadow-md" data-id="restaurant1">
+<i class="ri-restaurant-2-fill text-white text-lg"></i>
+</div>
+<div class="map-point absolute top-[55%] left-[55%] w-8 h-8 bg-yellow-500/80 rounded-full flex items-center justify-center cursor-pointer shadow-md" data-id="restaurant2">
+<i class="ri-restaurant-2-fill text-white text-lg"></i>
+</div>
+<div class="map-point absolute top-[40%] left-[35%] w-8 h-8 bg-yellow-500/80 rounded-full flex items-center justify-center cursor-pointer shadow-md" data-id="restaurant3">
+<i class="ri-restaurant-2-fill text-white text-lg"></i>
+</div>
+<!-- 住宿设施 -->
+<div class="map-point absolute top-[45%] left-[15%] w-8 h-8 bg-secondary/80 rounded-full flex items-center justify-center cursor-pointer shadow-md" data-id="hotel2">
+<i class="ri-hotel-fill text-white text-lg"></i>
+</div>
+<div class="map-point absolute top-[30%] left-[35%] w-8 h-8 bg-secondary/80 rounded-full flex items-center justify-center cursor-pointer shadow-md" data-id="residential">
+<i class="ri-home-4-fill text-white text-lg"></i>
+</div>
+<div class="map-point absolute top-[25%] left-[55%] w-8 h-8 bg-secondary/80 rounded-full flex items-center justify-center cursor-pointer shadow-md" data-id="villa">
+<i class="ri-home-smile-fill text-white text-lg"></i>
+</div>
+<div class="map-point absolute top-[60%] left-[40%] w-8 h-8 bg-secondary/80 rounded-full flex items-center justify-center cursor-pointer shadow-md" data-id="hotel">
+<i class="ri-hotel-fill text-white text-lg"></i>
+</div>
+<div class="map-point absolute top-[58%] left-[80%] w-8 h-8 bg-secondary/80 rounded-full flex items-center justify-center cursor-pointer shadow-md" data-id="camping">
+<i class="ri-tent-fill text-white text-lg"></i>
+</div>
+<div class="map-point absolute top-[45%] left-[60%] w-8 h-8 bg-secondary/80 rounded-full flex items-center justify-center cursor-pointer shadow-md" data-id="residential2">
+<i class="ri-home-4-fill text-white text-lg"></i>
+</div>
+<div class="map-point absolute top-[45%] left-[35%] w-8 h-8 bg-secondary/80 rounded-full flex items-center justify-center cursor-pointer shadow-md" data-id="residential3">
+<i class="ri-home-4-fill text-white text-lg"></i>
+</div>
+<div class="map-point absolute top-[55%] left-[45%] w-8 h-8 bg-secondary/80 rounded-full flex items-center justify-center cursor-pointer shadow-md" data-id="residential4">
+<i class="ri-home-4-fill text-white text-lg"></i>
+</div>
+<div class="map-point absolute top-[55%] left-[15%] w-8 h-8 bg-secondary/80 rounded-full flex items-center justify-center cursor-pointer shadow-md" data-id="residential5">
+<i class="ri-home-4-fill text-white text-lg"></i>
+</div>
+<div class="map-point absolute top-[70%] left-[35%] w-8 h-8 bg-secondary/80 rounded-full flex items-center justify-center cursor-pointer shadow-md" data-id="residential6">
+<i class="ri-home-4-fill text-white text-lg"></i>
+</div>
+<div class="map-point absolute top-[72%] left-[67%] w-8 h-8 bg-secondary/80 rounded-full flex items-center justify-center cursor-pointer shadow-md" data-id="residential7">
+<i class="ri-home-4-fill text-white text-lg"></i>
+</div>
+<div class="map-point absolute top-[25%] left-[65%] w-8 h-8 bg-secondary/80 rounded-full flex items-center justify-center cursor-pointer shadow-md" data-id="residential8">
+<i class="ri-home-4-fill text-white text-lg"></i>
+</div>
+<div class="map-point absolute top-[35%] left-[75%] w-8 h-8 bg-secondary/80 rounded-full flex items-center justify-center cursor-pointer shadow-md" data-id="residential9">
+<i class="ri-home-heart-fill text-white text-lg"></i>
+</div>
+<div class="map-point absolute top-[65%] left-[25%] w-8 h-8 bg-secondary/80 rounded-full flex items-center justify-center cursor-pointer shadow-md" data-id="residential10">
+<i class="ri-home-heart-fill text-white text-lg"></i>
+</div>
+<!-- 公共设施 -->
+<div class="map-point absolute top-[45%] left-[70%] w-8 h-8 bg-cyan-500/80 rounded-full flex items-center justify-center cursor-pointer shadow-md" data-id="energy">
+<i class="ri-windy-fill text-white text-lg"></i>
+</div>
+<div class="map-point absolute top-[55%] left-[30%] w-8 h-8 bg-cyan-500/80 rounded-full flex items-center justify-center cursor-pointer shadow-md" data-id="visitor">
+<i class="ri-information-fill text-white text-lg"></i>
+</div>
+<div class="map-point absolute top-[65%] left-[50%] w-8 h-8 bg-cyan-500/80 rounded-full flex items-center justify-center cursor-pointer shadow-md" data-id="track">
+<i class="ri-footprint-fill text-white text-lg"></i>
+</div>
+<!-- 景点 -->
+<div class="map-point absolute top-[20%] left-[45%] w-8 h-8 bg-purple-500/80 rounded-full flex items-center justify-center cursor-pointer shadow-md" data-id="observatory">
+<i class="ri-telescope-fill text-white text-lg"></i>
+</div>
+<div class="map-point absolute top-[35%] left-[65%] w-8 h-8 bg-purple-500/80 rounded-full flex items-center justify-center cursor-pointer shadow-md" data-id="garden">
+<i class="ri-flower-fill text-white text-lg"></i>
+</div>
+<div class="map-point absolute top-[82%] left-[42%] w-8 h-8 bg-purple-500/80 rounded-full flex items-center justify-center cursor-pointer shadow-md" data-id="beach">
+<i class="ri-ship-fill text-white text-lg"></i>
+</div>
+</div>
+<!-- 地图控制按钮 -->
+<div class="absolute bottom-4 right-4 flex flex-col gap-2">
+<button class="w-10 h-10 bg-white rounded-full shadow-lg flex items-center justify-center cursor-pointer">
+<i class="ri-add-line text-xl text-gray-700"></i>
+</button>
+<button class="w-10 h-10 bg-white rounded-full shadow-lg flex items-center justify-center cursor-pointer">
+<i class="ri-subtract-line text-xl text-gray-700"></i>
+</button>
+<button class="w-10 h-10 bg-white rounded-full shadow-lg flex items-center justify-center cursor-pointer" id="currentLocation">
+<i class="ri-focus-3-line text-xl text-primary"></i>
+</button>
+</div>
+<!-- 图例 -->
+<div class="absolute bottom-4 left-4 bg-white/90 rounded-lg shadow-lg p-3 text-xs">
+<div class="font-medium mb-2">图例</div>
+<div class="flex items-center mb-1.5">
+<div class="w-3 h-3 rounded-full bg-primary mr-2" style="background-color: var(--primary-color, #4CAF50) !important;"></div>
+<span>核心区域</span>
+</div>
+<div class="flex items-center mb-1.5">
+<div class="w-3 h-3 rounded-full bg-secondary mr-2"></div>
+<span>居住区</span>
+</div>
+<div class="flex items-center mb-1.5">
+<div class="w-3 h-3 rounded-full bg-cyan-500 mr-2" style="background-color: rgb(6, 182, 212, 0.8) !important;"></div>
+<span>公共设施</span>
+</div>
+<div class="flex items-center">
+<div class="w-3 h-3 rounded-full bg-yellow-500 mr-2"></div>
+<span>餐饮设施</span>
+</div>
+</div>
+<!-- 数据覆盖层按钮 -->
+<div class="absolute top-4 left-0 right-0 flex justify-center gap-3">
+<button class="bg-gradient-to-r from-teal-500 to-green-500 text-white text-xs px-3 py-1.5 rounded-full shadow-md flex items-center" id="airQualityBtn">
+<i class="ri-leaf-fill mr-1.5"></i>
+<span>空气净度95%+ 覆盖区</span>
+</button>
+<button class="bg-gradient-to-r from-green-700 to-green-600 text-white text-xs px-3 py-1.5 rounded-full shadow-md flex items-center" id="cameraBtn">
+<i class="ri-camera-fill mr-1.5"></i>
+<span>绿色忠诚行为摄像带</span>
+</button>
+</div>
+</div>
+<!-- 信息卡片 -->
+<div class="fixed bottom-16 left-4 right-4 bg-white rounded-lg shadow-lg p-4 hidden info-card" id="infoCard">
+<div class="flex justify-between items-start mb-3">
+<h3 class="text-lg font-medium" id="cardTitle">绿色资源塔</h3>
+<button class="w-6 h-6 flex items-center justify-center" id="closeCard">
+<i class="ri-close-line text-gray-500"></i>
+</button>
+</div>
+<div class="mb-3" id="cardContent">
+<p class="text-sm text-gray-600 mb-2">绿岛核心建筑，集中处理社区垃圾并转化为可再生能源。</p>
+<div class="flex gap-2 mb-2">
+<span class="bg-green-100 text-green-800 text-xs px-2 py-0.5 rounded-full">能源中心</span>
+<span class="bg-green-100 text-green-800 text-xs px-2 py-0.5 rounded-full">垃圾处理</span>
+<span class="bg-green-100 text-green-800 text-xs px-2 py-0.5 rounded-full">资源循环</span>
+</div>
+<div class="flex items-center text-xs text-gray-500">
+<i class="ri-time-line mr-1"></i>
+<span>开放时间: 09:00-17:00</span>
+</div>
+</div>
+<div class="flex gap-2">
+<button class="flex-1 bg-primary text-white py-2 rounded-button flex items-center justify-center text-sm !rounded-button" id="navButton">
+<i class="ri-navigation-line mr-1.5"></i>
+<span>导航前往</span>
+</button>
+<button class="flex-1 border border-gray-200 py-2 rounded-button flex items-center justify-center text-sm !rounded-button" id="detailButton">
+<i class="ri-information-line mr-1.5"></i>
+<span>详细信息</span>
+</button>
+</div>
+</div>
+<!-- 覆盖层信息 -->
+<div class="fixed top-1/2 left-4 right-4 bg-white/90 rounded-lg shadow-lg p-4 hidden info-card" id="overlayInfo">
+<div class="flex justify-between items-start mb-3">
+<h3 class="text-lg font-medium" id="overlayTitle">空气净度覆盖区</h3>
+<button class="w-6 h-6 flex items-center justify-center" id="closeOverlay">
+<i class="ri-close-line text-gray-500"></i>
+</button>
+</div>
+<div id="overlayContent">
+<p class="text-sm text-gray-600 mb-3">绿岛采用先进的空气净化系统，确保社区内95%以上区域的空气质量达到优良标准。</p>
+<div class="h-40 mb-3" id="chartContainer"></div>
+<div class="grid grid-cols-3 gap-2 text-center text-xs">
+<div class="bg-green-50 p-2 rounded">
+<div class="text-primary font-medium text-lg">98%</div>
+<div class="text-gray-500">核心区</div>
+</div>
+<div class="bg-green-50 p-2 rounded">
+<div class="text-primary font-medium text-lg">96%</div>
+<div class="text-gray-500">居住区</div>
+</div>
+<div class="bg-green-50 p-2 rounded">
+<div class="text-primary font-medium text-lg">93%</div>
+<div class="text-gray-500">外围区</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- 底部导航栏 -->
+<footer class="fixed bottom-0 left-0 w-full bg-white border-t border-gray-200 z-40">
+<div class="grid grid-cols-3 h-16">
+<a href=""  class="flex flex-col items-center justify-center cursor-pointer text-gray-500">
+<div class="w-6 h-6 flex items-center justify-center">
+<i class="ri-home-5-line"></i>
+</div>
+<span class="text-xs mt-0.5">首页</span>
+</a>
+<a href="#" class="flex flex-col items-center justify-center cursor-pointer text-primary">
+<div class="w-6 h-6 flex items-center justify-center">
+<i class="ri-map-2-fill"></i>
+</div>
+<span class="text-xs mt-0.5">地图</span>
+</a>
+<a href=""  class="flex flex-col items-center justify-center cursor-pointer text-gray-500">
+<div class="w-6 h-6 flex items-center justify-center">
+<i class="ri-user-line"></i>
+</div>
+<span class="text-xs mt-0.5">我的</span>
+</a>
+</div>
+</footer>
+<!-- 路线规划弹窗 -->
+<div class="fixed inset-0 bg-black/50 z-50 hidden" id="routeModal">
+<div class="absolute bottom-0 left-0 right-0 bg-white rounded-t-xl p-4">
+<div class="flex justify-between items-center mb-4">
+<h3 class="text-lg font-medium">路线规划</h3>
+<button class="w-8 h-8 flex items-center justify-center" id="closeRouteModal">
+<i class="ri-close-line text-xl"></i>
+</button>
+</div>
+<div class="mb-4">
+<div class="flex items-center bg-gray-50 p-3 rounded-lg mb-3">
+<div class="w-8 h-8 flex items-center justify-center bg-blue-100 rounded-full mr-3">
+<i class="ri-focus-3-fill text-blue-500"></i>
+</div>
+<div class="flex-1">
+<div class="text-sm">当前位置</div>
+<div class="text-xs text-gray-500">游客接待中心</div>
+</div>
+</div>
+<div class="flex items-center bg-gray-50 p-3 rounded-lg">
+<div class="w-8 h-8 flex items-center justify-center bg-primary/20 rounded-full mr-3">
+<i class="ri-flag-fill text-primary"></i>
+</div>
+<div class="flex-1">
+<div class="text-sm" id="destinationName">绿色资源塔</div>
+<div class="text-xs text-gray-500">绿岛核心区</div>
+</div>
+</div>
+</div>
+<div class="mb-4">
+<div class="flex justify-between mb-2">
+<div class="text-sm font-medium">出行方式</div>
+</div>
+<div class="flex gap-2">
+<button class="flex-1 bg-primary text-white py-2 px-3 rounded-button flex items-center justify-center text-sm !rounded-button">
+<i class="ri-walk-line mr-1.5"></i>
+<span>步行</span>
+</button>
+<button class="flex-1 border border-gray-200 py-2 px-3 rounded-button flex items-center justify-center text-sm !rounded-button">
+<i class="ri-bike-line mr-1.5"></i>
+<span>骑行</span>
+</button>
+<button class="flex-1 border border-gray-200 py-2 px-3 rounded-button flex items-center justify-center text-sm !rounded-button">
+<i class="ri-bus-line mr-1.5"></i>
+<span>公交</span>
+</button>
+</div>
+</div>
+<div class="bg-gray-50 p-3 rounded-lg mb-4">
+<div class="flex items-center justify-between mb-2">
+<div class="text-sm font-medium">预计到达时间</div>
+<div class="text-primary text-sm font-medium">8 分钟</div>
+</div>
+<div class="flex items-center text-xs text-gray-500">
+<i class="ri-route-line mr-1.5"></i>
+<span>距离约 650 米，建议步行前往</span>
+</div>
+</div>
+<button class="w-full bg-primary text-white py-3 rounded-button flex items-center justify-center !rounded-button" id="startNavBtn">
+<i class="ri-navigation-line mr-2"></i>
+<span>开始导航</span>
+</button>
+</div>
+</div>
+
+<!-- Navigation Interface -->
+<div class="fixed inset-0 bg-white z-50 hidden" id="navigationInterface">
+<div class="h-full flex flex-col">
+<!-- Navigation Header -->
+<div class="bg-primary text-white px-4 py-3 flex items-center justify-between">
+<button class="w-8 h-8 flex items-center justify-center" id="closeNavigation">
+<i class="ri-arrow-left-s-line text-xl"></i>
+</button>
+<div class="flex-1 text-center">
+<div class="text-sm" id="navDestination">绿色资源塔</div>
+<div class="text-xs opacity-80">预计到达时间 <span id="arrivalTime">8</span> 分钟</div>
+</div>
+<button class="w-8 h-8 flex items-center justify-center" id="toggleVoice">
+<i class="ri-volume-up-line text-xl"></i>
+</button>
+</div>
+
+<!-- Progress Bar -->
+<div class="bg-gray-100 h-1">
+<div class="bg-primary h-full transition-all duration-300" id="navProgress" style="width: 0%"></div>
+</div>
+
+<!-- Navigation Content -->
+<div class="flex-1 relative">
+<div class="absolute inset-0 bg-gray-100">
+<!-- Map Placeholder -->
+<div class="h-full relative">
+<div class="map-container h-full opacity-50"></div>
+<!-- Navigation Route -->
+<div class="absolute inset-0 flex items-center justify-center">
+<div class="w-1 h-40 bg-primary/20 relative">
+<div class="absolute top-0 left-1/2 -translate-x-1/2 w-3 h-3 rounded-full bg-primary"></div>
+<div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-3 h-3 rounded-full bg-primary animate-pulse"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Navigation Instructions -->
+<div class="bg-white p-4 shadow-up">
+<div class="flex items-center mb-4">
+<div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center mr-3">
+<i class="ri-arrow-up-line text-xl text-primary"></i>
+</div>
+<div class="flex-1">
+<div class="text-sm font-medium">直行 200 米</div>
+<div class="text-xs text-gray-500">沿生态步道前进</div>
+</div>
+<div class="text-sm font-medium text-primary">200m</div>
+</div>
+
+<div class="flex items-center">
+<div class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center mr-3">
+<i class="ri-turn-right-line text-xl text-gray-400"></i>
+</div>
+<div class="flex-1">
+<div class="text-sm text-gray-400">右转</div>
+<div class="text-xs text-gray-400">前往目的地</div>
+</div>
+<div class="text-sm text-gray-400">450m</div>
+</div>
+</div>
+
+<!-- Navigation Controls -->
+<div class="p-4 flex gap-3">
+<button class="flex-1 border border-gray-200 py-3 rounded-button flex items-center justify-center" id="pauseNavigation">
+<i class="ri-pause-line mr-2"></i>
+<span>暂停</span>
+</button>
+<button class="flex-1 border border-red-200 text-red-500 py-3 rounded-button flex items-center justify-center" id="endNavigation">
+<i class="ri-close-line mr-2"></i>
+<span>结束导航</span>
+</button>
+</div>
+</div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+// Navigation Interface Control
+const startNavBtn = document.getElementById('startNavBtn');
+const navigationInterface = document.getElementById('navigationInterface');
+const closeNavigation = document.getElementById('closeNavigation');
+const pauseNavigation = document.getElementById('pauseNavigation');
+const endNavigation = document.getElementById('endNavigation');
+const toggleVoice = document.getElementById('toggleVoice');
+const navProgress = document.getElementById('navProgress');
+const arrivalTime = document.getElementById('arrivalTime');
+
+let isPaused = false;
+let isVoiceEnabled = true;
+let progressInterval;
+
+startNavBtn.addEventListener('click', function() {
+routeModal.classList.add('hidden');
+navigationInterface.classList.remove('hidden');
+startNavigation();
+});
+
+closeNavigation.addEventListener('click', function() {
+if (confirm('确定要退出导航吗？')) {
+endNavigationSession();
+}
+});
+
+pauseNavigation.addEventListener('click', function() {
+isPaused = !isPaused;
+if (isPaused) {
+pauseNavigation.innerHTML = '<i class="ri-play-line mr-2"></i><span>继续</span>';
+clearInterval(progressInterval);
+} else {
+pauseNavigation.innerHTML = '<i class="ri-pause-line mr-2"></i><span>暂停</span>';
+startNavigation();
+}
+});
+
+endNavigation.addEventListener('click', function() {
+if (confirm('确定要结束导航吗？')) {
+endNavigationSession();
+}
+});
+
+toggleVoice.addEventListener('click', function() {
+isVoiceEnabled = !isVoiceEnabled;
+toggleVoice.innerHTML = isVoiceEnabled ? 
+'<i class="ri-volume-up-line text-xl"></i>' : 
+'<i class="ri-volume-mute-line text-xl"></i>';
+});
+
+function startNavigation() {
+let progress = 0;
+progressInterval = setInterval(() => {
+if (progress < 100) {
+progress += 0.5;
+navProgress.style.width = progress + '%';
+arrivalTime.textContent = Math.ceil((100 - progress) * 8 / 100);
+} else {
+clearInterval(progressInterval);
+showArrivalNotification();
+}
+}, 500);
+}
+
+function endNavigationSession() {
+clearInterval(progressInterval);
+navigationInterface.classList.add('hidden');
+navProgress.style.width = '0%';
+isPaused = false;
+pauseNavigation.innerHTML = '<i class="ri-pause-line mr-2"></i><span>暂停</span>';
+}
+
+function showArrivalNotification() {
+const notification = document.createElement('div');
+notification.className = 'fixed top-20 left-1/2 transform -translate-x-1/2 bg-primary text-white px-4 py-2 rounded-full text-sm z-[60]';
+notification.textContent = '您已到达目的地';
+document.body.appendChild(notification);
+setTimeout(() => {
+notification.remove();
+endNavigationSession();
+}, 3000);
+}
+
+// Share functionality
+const shareButton = document.getElementById('shareButton');
+const shareModal = document.getElementById('shareModal');
+const shareContent = document.getElementById('shareContent');
+const closeShareModal = document.getElementById('closeShareModal');
+const copyLinkBtn = document.getElementById('copyLinkBtn');
+shareButton.addEventListener('click', function() {
+shareModal.classList.remove('hidden');
+setTimeout(() => {
+shareContent.classList.add('translate-y-0');
+}, 10);
+});
+closeShareModal.addEventListener('click', function() {
+shareContent.classList.add('translate-y-full');
+setTimeout(() => {
+shareModal.classList.add('hidden');
+shareContent.classList.remove('translate-y-full');
+}, 300);
+});
+shareModal.addEventListener('click', function(e) {
+if (e.target === shareModal) {
+shareContent.classList.add('translate-y-full');
+setTimeout(() => {
+shareModal.classList.add('hidden');
+shareContent.classList.remove('translate-y-full');
+}, 300);
+}
+});
+copyLinkBtn.addEventListener('click', function() {
+navigator.clipboard.writeText(window.location.href).then(() => {
+const toast = document.createElement('div');
+toast.className = 'fixed top-20 left-1/2 transform -translate-x-1/2 bg-black/70 text-white px-4 py-2 rounded-full text-sm z-50';
+toast.textContent = '链接已复制';
+document.body.appendChild(toast);
+setTimeout(() => {
+toast.remove();
+}, 2000);
+});
+});
+// 点位数据
+const pointsData = {
+hotel2: {
+title: "山顶精品酒店",
+content: "位于岛屿制高点的豪华酒店，采用全玻璃设计，提供360度全景视野，配备智能环保系统。",
+tags: ["豪华住宿", "全景视野", "智能环保"],
+time: "24小时营业"
+},
+residential9: {
+title: "竹林禅意民宿",
+content: "坐落在竹林中的日式风格民宿，采用天然建材，提供静谧的休憩空间。",
+tags: ["特色民宿", "禅意设计", "生态建筑"],
+time: "全天开放预订"
+},
+residential10: {
+title: "海湾艺术民宿",
+content: "由艺术家设计的海景民宿，融合环保理念和艺术创作，每个房间都是独特的艺术品。",
+tags: ["艺术民宿", "海景房", "创意空间"],
+time: "全天开放预订"
+},
+residential5: {
+title: "生态联排住宅",
+content: "采用环保建材建造的联排住宅，配备雨水回收系统和屋顶花园。",
+tags: ["联排住宅", "雨水回收", "屋顶花园"],
+time: "仅对业主开放"
+},
+residential6: {
+title: "海景生态公寓",
+content: "面向海岸线的环保公寓，采用自然通风设计，配备太阳能热水系统。",
+tags: ["海景公寓", "自然通风", "太阳能"],
+time: "仅对业主开放"
+},
+residential7: {
+title: "森林度假别墅",
+content: "依山而建的环保度假别墅，融入自然景观，采用智能家居系统。",
+tags: ["度假别墅", "智能家居", "自然景观"],
+time: "仅对业主开放"
+},
+residential8: {
+title: "山顶观景住宅",
+content: "位于制高点的精品住宅，360度全景观景，配备地源热泵系统。",
+tags: ["观景住宅", "地源热泵", "全景视野"],
+time: "仅对业主开放"
+},
+restaurant1: {
+title: "绿意轩素食餐厅",
+content: "提供精致的创意素食料理，使用岛上有机农场的新鲜食材。",
+tags: ["素食", "有机食材", "创意料理"],
+time: "营业时间: 11:00-21:00"
+},
+hotel: {
+title: "生态精品酒店",
+content: "采用环保建材打造的精品酒店，每间客房都配备智能节能系统。",
+tags: ["豪华住宿", "智能客房", "环保建筑"],
+time: "24小时营业"
+},
+camping: {
+title: "星空露营基地",
+content: "位于岛屿东侧的露营地，配备太阳能设施，提供独特的户外住宿体验。",
+tags: ["露营", "户外活动", "观星"],
+time: "全天开放"
+},
+observatory: {
+title: "天文观测站",
+content: "建在岛屿最高处的观测站，可以欣赏星空和海景。",
+tags: ["观星", "科普教育", "观景台"],
+time: "开放时间: 19:00-23:00"
+},
+garden: {
+title: "生态花园",
+content: "展示各类本地植物的主题花园，设有蝴蝶园和药用植物区。",
+tags: ["植物园", "科普教育", "休闲游览"],
+time: "开放时间: 09:00-17:30"
+},
+beach: {
+title: "生态沙滩",
+content: "天然沙滩区域，设有环保主题的海洋科普站和休闲设施。",
+tags: ["海滩", "科普教育", "休闲"],
+time: "开放时间: 08:00-18:00"
+},
+restaurant2: {
+title: "循环餐厅",
+content: "践行零浪费理念的特色餐厅，所有食材都充分利用，厨余进行堆肥处理。",
+tags: ["零浪费", "可持续餐饮", "本地食材"],
+time: "营业时间: 10:00-22:00"
+},
+restaurant3: {
+title: "海岸咖啡馆",
+content: "使用可降解包装的咖啡馆，供应有机咖啡和健康轻食。",
+tags: ["咖啡", "轻食", "环保包装"],
+time: "营业时间: 08:00-20:00"
+},
+center: {
+title: "绿色资源塔",
+content: "绿岛核心建筑，集中处理社区垃圾并转化为可再生能源。",
+tags: ["能源中心", "垃圾处理", "资源循环"],
+time: "开放时间: 09:00-17:00"
+},
+residential: {
+title: "集装箱绿色住宅区",
+content: "采用回收集装箱改造的环保住宅区，提供舒适且可持续的生活空间。",
+tags: ["住宅", "集装箱改造", "节能设计"],
+time: "参观时间: 10:00-16:00 (需预约)"
+},
+villa: {
+title: "绿色别墅环带",
+content: "高端环保住宅区，采用太阳能和雨水收集系统，实现能源自给自足。",
+tags: ["高端住宅", "可再生能源", "智能家居"],
+time: "仅对业主开放"
+},
+energy: {
+title: "风能展示平台",
+content: "展示绿岛风能利用技术，参观者可了解风能发电原理和应用。",
+tags: ["可再生能源", "科普教育", "互动体验"],
+time: "开放时间: 09:30-16:30"
+},
+visitor: {
+title: "游客接待站",
+content: "绿岛游客服务中心，提供导览、咨询和休息服务。",
+tags: ["游客服务", "信息咨询", "纪念品"],
+time: "开放时间: 08:30-18:00"
+},
+track: {
+title: "动能步道",
+content: "特殊材料铺设的步道，可将行人脚步转化为电能，为公共设施供电。",
+tags: ["能源收集", "健康步行", "科技体验"],
+time: "全天开放"
+},
+education: {
+title: "环保教育中心",
+content: "面向青少年的环保教育基地，设有互动展览和实验室。",
+tags: ["环保教育", "互动学习", "科普基地"],
+time: "开放时间: 09:00-16:30"
+},
+lab: {
+title: "绿色科技实验室",
+content: "研发环保技术的实验基地，开展各类环保项目研究。",
+tags: ["科技研发", "实验研究", "创新中心"],
+time: "工作日: 09:00-17:00"
+},
+medical: {
+title: "健康医疗中心",
+content: "提供绿色医疗服务，采用环保医疗设备和可降解医疗用品。",
+tags: ["医疗服务", "环保医疗", "健康管理"],
+time: "24小时营业"
+},
+sport: {
+title: "生态运动场",
+content: "采用环保材料建造的综合运动场，设有太阳能照明系统。",
+tags: ["运动健身", "生态设计", "户外活动"],
+time: "开放时间: 06:00-22:00"
+},
+culture: {
+title: "文化艺术中心",
+content: "展示环保主题艺术作品，举办各类文化活动的场所。",
+tags: ["文化展览", "艺术创作", "活动空间"],
+time: "开放时间: 10:00-21:00"
+}
+};
+// 地图点位点击事件
+const mapPoints = document.querySelectorAll('.map-point');
+const infoCard = document.getElementById('infoCard');
+const cardTitle = document.getElementById('cardTitle');
+const cardContent = document.getElementById('cardContent');
+const closeCard = document.getElementById('closeCard');
+mapPoints.forEach(point => {
+point.addEventListener('click', function() {
+const pointId = this.getAttribute('data-id');
+const data = pointsData[pointId];
+// 更新卡片内容
+cardTitle.textContent = data.title;
+let tagsHtml = '';
+data.tags.forEach(tag => {
+tagsHtml += `<span class="bg-green-100 text-green-800 text-xs px-2 py-0.5 rounded-full">${tag}</span>`;
+});
+cardContent.innerHTML = `
+<p class="text-sm text-gray-600 mb-2">${data.content}</p>
+<div class="flex gap-2 mb-2">
+${tagsHtml}
+</div>
+<div class="flex items-center text-xs text-gray-500">
+<i class="ri-time-line mr-1"></i>
+<span>${data.time}</span>
+</div>
+`;
+// 显示卡片
+infoCard.classList.remove('hidden');
+// 显示卡片
+infoCard.classList.remove('hidden');
+});
+});
+// 关闭信息卡片
+closeCard.addEventListener('click', function() {
+infoCard.classList.add('hidden');
+});
+// 导航和详细信息按钮点击事件
+const navButton = document.getElementById('navButton');
+const detailButton = document.getElementById('detailButton');
+const routeModal = document.getElementById('routeModal');
+const destinationName = document.getElementById('destinationName');
+navButton.addEventListener('click', function() {
+routeModal.classList.remove('hidden');
+destinationName.textContent = cardTitle.textContent;
+});
+detailButton.addEventListener('click', function() {
+const currentTitle = cardTitle.textContent;
+let detailContent = '';
+// 根据当前标题查找对应的详细信息
+for (const [id, data] of Object.entries(pointsData)) {
+if (data.title === currentTitle) {
+// 创建详细信息弹窗
+const detailModal = document.createElement('div');
+detailModal.className = 'fixed inset-0 bg-black/50 z-50 flex items-center justify-center';
+detailModal.innerHTML = `
+<div class="bg-white rounded-xl p-4 mx-4 w-full max-w-md">
+<div class="flex justify-between items-center mb-4">
+<h3 class="text-lg font-medium">${data.title}</h3>
+<button class="w-8 h-8 flex items-center justify-center close-detail">
+<i class="ri-close-line text-xl"></i>
+</button>
+</div>
+<div class="space-y-4">
+<div class="bg-gray-50 p-3 rounded-lg">
+<div class="text-sm font-medium mb-1">基本信息</div>
+<p class="text-sm text-gray-600">${data.content}</p>
+</div>
+<div class="bg-gray-50 p-3 rounded-lg">
+<div class="text-sm font-medium mb-2">特色标签</div>
+<div class="flex flex-wrap gap-2">
+${data.tags.map(tag => `<span class="bg-green-100 text-green-800 text-xs px-2 py-0.5 rounded-full">${tag}</span>`).join('')}
+</div>
+</div>
+<div class="bg-gray-50 p-3 rounded-lg">
+<div class="text-sm font-medium mb-1">开放时间</div>
+<div class="flex items-center text-sm text-gray-600">
+<i class="ri-time-line mr-2"></i>
+<span>${data.time}</span>
+</div>
+</div>
+</div>
+</div>
+`;
+document.body.appendChild(detailModal);
+// 关闭详细信息弹窗
+detailModal.querySelector('.close-detail').addEventListener('click', function() {
+detailModal.remove();
+});
+detailModal.addEventListener('click', function(e) {
+if (e.target === detailModal) {
+detailModal.remove();
+}
+});
+break;
+}
+}
+});
+// 关闭路线规划弹窗
+document.getElementById('closeRouteModal').addEventListener('click', function() {
+routeModal.classList.add('hidden');
+});
+// 空气质量按钮点击事件
+const airQualityBtn = document.getElementById('airQualityBtn');
+const overlayInfo = document.getElementById('overlayInfo');
+const overlayTitle = document.getElementById('overlayTitle');
+const overlayContent = document.getElementById('overlayContent');
+const closeOverlay = document.getElementById('closeOverlay');
+airQualityBtn.addEventListener('click', function() {
+overlayTitle.textContent = '空气净度覆盖区';
+overlayContent.innerHTML = `
+<p class="text-sm text-gray-600 mb-3">绿岛采用先进的空气净化系统，确保社区内95%以上区域的空气质量达到优良标准。</p>
+<div class="h-40 mb-3" id="chartContainer"></div>
+<div class="grid grid-cols-3 gap-2 text-center text-xs">
+<div class="bg-green-50 p-2 rounded">
+<div class="text-primary font-medium text-lg">98%</div>
+<div class="text-gray-500">核心区</div>
+</div>
+<div class="bg-green-50 p-2 rounded">
+<div class="text-primary font-medium text-lg">96%</div>
+<div class="text-gray-500">居住区</div>
+</div>
+<div class="bg-green-50 p-2 rounded">
+<div class="text-primary font-medium text-lg">93%</div>
+<div class="text-gray-500">外围区</div>
+</div>
+</div>
+`;
+overlayInfo.classList.remove('hidden');
+// 初始化图表
+const chartContainer = document.getElementById('chartContainer');
+const chart = echarts.init(chartContainer);
+const option = {
+tooltip: {
+trigger: 'axis'
+},
+grid: {
+left: '3%',
+right: '4%',
+bottom: '3%',
+top: '10%',
+containLabel: true
+},
+xAxis: {
+type: 'category',
+data: ['1月', '2月', '3月', '4月', '5月', '6月']
+},
+yAxis: {
+type: 'value',
+min: 90,
+max: 100
+},
+series: [
+{
+name: '空气净度',
+type: 'line',
+data: [92, 94, 96, 95, 97, 98],
+smooth: true,
+itemStyle: {
+color: '#4CAF50'
+},
+areaStyle: {
+color: {
+type: 'linear',
+x: 0,
+y: 0,
+x2: 0,
+y2: 1,
+colorStops: [
+{
+offset: 0,
+color: 'rgba(76, 175, 80, 0.6)'
+},
+{
+offset: 1,
+color: 'rgba(76, 175, 80, 0.1)'
+}
+]
+}
+}
+}
+]
+};
+chart.setOption(option);
+// 响应窗口大小变化
+window.addEventListener('resize', function() {
+chart.resize();
+});
+});
+// 摄像带按钮点击事件
+const cameraBtn = document.getElementById('cameraBtn');
+cameraBtn.addEventListener('click', function() {
+overlayTitle.textContent = '绿色忠诚行为摄像带';
+overlayContent.innerHTML = `
+<p class="text-sm text-gray-600 mb-3">绿岛全区域安装了智能摄像系统，用于记录和鼓励居民的环保行为，同时监测不符合绿色生活准则的行为。</p>
+<div class="h-40 mb-3" id="chartContainer"></div>
+<div class="grid grid-cols-3 gap-2 text-center text-xs">
+<div class="bg-green-50 p-2 rounded">
+<div class="text-primary font-medium text-lg">100%</div>
+<div class="text-gray-500">覆盖率</div>
+</div>
+<div class="bg-green-50 p-2 rounded">
+<div class="text-primary font-medium text-lg">24h</div>
+<div class="text-gray-500">监测时间</div>
+</div>
+<div class="bg-green-50 p-2 rounded">
+<div class="text-primary font-medium text-lg">99.8%</div>
+<div class="text-gray-500">准确率</div>
+</div>
+</div>
+`;
+overlayInfo.classList.remove('hidden');
+// 初始化图表
+const chartContainer = document.getElementById('chartContainer');
+const chart = echarts.init(chartContainer);
+const option = {
+tooltip: {
+trigger: 'item'
+},
+legend: {
+bottom: '0%',
+left: 'center',
+textStyle: {
+fontSize: 10
+}
+},
+series: [
+{
+name: '行为类型',
+type: 'pie',
+radius: ['40%', '70%'],
+center: ['50%', '40%'],
+avoidLabelOverlap: false,
+itemStyle: {
+borderRadius: 10,
+borderColor: '#fff',
+borderWidth: 2
+},
+label: {
+show: false,
+position: 'center'
+},
+emphasis: {
+label: {
+show: true,
+fontSize: 12,
+fontWeight: 'bold'
+}
+},
+labelLine: {
+show: false
+},
+data: [
+{ value: 65, name: '绿色行为', itemStyle: { color: '#4CAF50' } },
+{ value: 20, name: '中性行为', itemStyle: { color: '#8BC34A' } },
+{ value: 15, name: '待改进行为', itemStyle: { color: '#FF9800' } }
+]
+}
+]
+};
+chart.setOption(option);
+// 响应窗口大小变化
+window.addEventListener('resize', function() {
+chart.resize();
+});
+});
+// 关闭覆盖层信息
+closeOverlay.addEventListener('click', function() {
+overlayInfo.classList.add('hidden');
+});
+// 当前位置按钮点击事件
+const currentLocationBtn = document.getElementById('currentLocation');
+currentLocationBtn.addEventListener('click', function() {
+// 模拟定位功能
+const toast = document.createElement('div');
+toast.className = 'fixed top-20 left-1/2 transform -translate-x-1/2 bg-black/70 text-white px-4 py-2 rounded-full text-sm';
+toast.textContent = '已定位到当前位置';
+document.body.appendChild(toast);
+setTimeout(() => {
+toast.remove();
+}, 2000);
+});
+// 分类筛选按钮点击事件
+const filterButtons = document.querySelectorAll('.rounded-full');
+filterButtons.forEach(button => {
+button.addEventListener('click', function() {
+filterButtons.forEach(btn => {
+btn.classList.remove('bg-primary', 'text-white');
+btn.classList.add('bg-gray-100', 'text-gray-700');
+});
+this.classList.remove('bg-gray-100', 'text-gray-700');
+this.classList.add('bg-primary', 'text-white');
+});
+});
+});
+</script>
+</body>
+</html>

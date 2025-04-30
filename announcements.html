@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>最新通告 · 请主动适应</title>
+<script src="https://cdn.tailwindcss.com/3.4.16"></script>
+<script>tailwind.config={theme:{extend:{colors:{primary:'#4CAF50',secondary:'#2D3F43'},borderRadius:{'none':'0px','sm':'4px',DEFAULT:'8px','md':'12px','lg':'16px','xl':'20px','2xl':'24px','3xl':'32px','full':'9999px','button':'8px'}}}}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+<style>
+:where([class^="ri-"])::before { content: "\f3c2"; }
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+body {
+font-family: 'Inter', sans-serif;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+-webkit-appearance: none;
+margin: 0;
+}
+.announcement-item {
+transition: all 0.3s ease;
+}
+.announcement-item.expanded .announcement-content {
+max-height: 500px;
+opacity: 1;
+}
+.announcement-content {
+max-height: 0;
+opacity: 0;
+overflow: hidden;
+transition: all 0.3s ease;
+}
+</style>
+</head>
+<body class="bg-gray-50">
+<!-- 顶部导航栏 -->
+<header class="fixed top-0 left-0 w-full bg-white shadow-sm z-50">
+<div class="flex items-center justify-between px-4 py-3">
+<a href=""  class="w-8 h-8 flex items-center justify-center text-gray-700">
+<i class="ri-arrow-left-line text-xl"></i>
+</a>
+<h1 class="text-lg font-medium text-gray-900">最新通告 · 请主动适应</h1>
+<div class="w-8 h-8 flex items-center justify-center opacity-0">
+<i class="ri-more-line"></i>
+</div>
+</div>
+<div class="h-px bg-[#435449]/20"></div>
+</header>
+<!-- 筛选区域 -->
+<div class="fixed top-[50px] left-0 w-full bg-white z-40 border-b border-gray-100">
+<div class="flex items-center justify-between px-4 py-2">
+<div class="flex space-x-2">
+<button class="px-3 py-1.5 text-xs bg-primary text-white rounded-full !rounded-button flex items-center">
+<span>全部</span>
+<i class="ri-arrow-down-s-line ml-1"></i>
+</button>
+<div class="relative">
+<button id="importanceBtn" class="px-3 py-1.5 text-xs bg-white border border-gray-200 text-gray-600 rounded-full !rounded-button flex items-center">
+<span>重要程度</span>
+<i class="ri-arrow-down-s-line ml-1"></i>
+</button>
+<div id="importanceDropdown" class="hidden absolute top-full left-0 mt-1 w-32 bg-white rounded-lg shadow-lg border border-gray-100 z-50">
+<div class="p-2 space-y-1">
+<label class="flex items-center space-x-2 cursor-pointer hover:bg-gray-50 p-1.5 rounded">
+<input type="checkbox" class="importance-filter" value="强制执行">
+<span class="text-xs">强制执行</span>
+</label>
+<label class="flex items-center space-x-2 cursor-pointer hover:bg-gray-50 p-1.5 rounded">
+<input type="checkbox" class="importance-filter" value="高度关注">
+<span class="text-xs">高度关注</span>
+</label>
+<label class="flex items-center space-x-2 cursor-pointer hover:bg-gray-50 p-1.5 rounded">
+<input type="checkbox" class="importance-filter" value="环境调整">
+<span class="text-xs">环境调整</span>
+</label>
+<label class="flex items-center space-x-2 cursor-pointer hover:bg-gray-50 p-1.5 rounded">
+<input type="checkbox" class="importance-filter" value="行为规范">
+<span class="text-xs">行为规范</span>
+</label>
+<label class="flex items-center space-x-2 cursor-pointer hover:bg-gray-50 p-1.5 rounded">
+<input type="checkbox" class="importance-filter" value="思想管理">
+<span class="text-xs">思想管理</span>
+</label>
+</div>
+</div>
+</div>
+</div>
+<button class="px-3 py-1.5 text-xs bg-white border border-gray-200 text-gray-600 rounded-full !rounded-button flex items-center">
+<i class="ri-filter-3-line mr-1"></i>
+<span>筛选</span>
+</button>
+</div>
+</div>
+<!-- 主内容区域 -->
+<main class="pt-[100px] pb-16 px-4">
+<div class="space-y-4">
+<!-- 公告项 1 -->
+<div class="announcement-item bg-white rounded-lg overflow-hidden">
+<div class="p-4 cursor-pointer" onclick="toggleAnnouncement(this.parentNode)">
+<div class="flex items-start">
+<div class="w-8 h-8 flex items-center justify-center bg-primary/10 rounded-full text-primary font-medium">
+<span>01</span>
+</div>
+<div class="ml-3 flex-1">
+<div class="flex items-center justify-between">
+<span class="text-xs text-gray-500">今日发布</span>
+<span class="text-xs px-2 py-0.5 bg-red-100 text-red-600 rounded-full">强制执行</span>
+</div>
+<h3 class="text-gray-900 font-medium mt-1">本周起，夜间所有房屋窗帘必须保持统一拉拢状态，避免城市热感指数扰动。</h3>
+<div class="flex items-center justify-between mt-2">
+<span class="text-xs text-[#435449]">已确认接收</span>
+<i class="ri-arrow-down-s-line text-[#435449]"></i>
+</div>
+</div>
+</div>
+<div class="announcement-content pl-11 pr-4 pb-4 mt-3 text-sm text-[#2d2d2d] font-mono leading-relaxed">
+<p>尊敬的绿岛居民：</p>
+<p class="mt-2">根据《绿岛热能管理条例》第 47 条规定，为维护社区热感指数稳定，自 2025 年 4 月 30 日起，所有住户必须在 22:00-06:00 期间保持窗帘完全拉拢状态。</p>
+<p class="mt-2">理由：</p>
+<ol class="list-decimal pl-5 mt-1 space-y-1">
+<li>开放窗帘会导致热能不规则散发，干扰社区温度监测</li>
+<li>光线溢出会影响绿岛夜间生态频率稳定</li>
+<li>保持统一拉拢状态有助于居民形成集体热感认同</li>
+</ol>
+<p class="mt-2">违规处理：首次违规将导致家庭能源配额下调 15%，连续违规将安排强制适应培训。</p>
+<div class="mt-3 pt-3 border-t border-[#435449]/10 flex justify-between items-center">
+<span class="text-xs text-[#435449]">编号：GI-20250430-01</span>
+<span class="text-xs text-[#435449]">已记录</span>
+</div>
+</div>
+</div>
+</div>
+<!-- 公告项 2 -->
+<div class="announcement-item bg-white rounded-lg overflow-hidden">
+<div class="p-4 cursor-pointer" onclick="toggleAnnouncement(this.parentNode)">
+<div class="flex items-start">
+<div class="w-8 h-8 flex items-center justify-center bg-primary/10 rounded-full text-primary font-medium">
+<span>02</span>
+</div>
+<div class="ml-3 flex-1">
+<div class="flex items-center justify-between">
+<span class="text-xs text-gray-500">今日发布</span>
+<span class="text-xs px-2 py-0.5 bg-orange-100 text-orange-600 rounded-full">高度关注</span>
+</div>
+<h3 class="text-gray-900 font-medium mt-1">"绿感评分低于 60"的住户将暂时收回说话权限，系统将为您代言。</h3>
+<div class="flex items-center justify-between mt-2">
+<span class="text-xs text-[#435449]">已确认接收</span>
+<i class="ri-arrow-down-s-line text-[#435449]"></i>
+</div>
+</div>
+</div>
+<div class="announcement-content pl-11 pr-4 pb-4 mt-3 text-sm text-[#2d2d2d] font-mono leading-relaxed">
+<p>尊敬的绿岛居民：</p>
+<p class="mt-2">根据《绿岛社区和谐表达管理规定》，自 2025 年 5 月 1 日起，凡绿感评分低于 60 分的居民，将启动"和谐代言"系统。</p>
+<p class="mt-2">具体实施细则：</p>
+<ol class="list-decimal pl-5 mt-1 space-y-1">
+<li>系统将通过颈环感应器监测您的发声意图</li>
+<li>检测到发声意图后，系统将自动替您选择合适的、符合绿岛价值观的表达</li>
+<li>您的原始表达将被记录并用于后续绿感评分调整</li>
+<li>此措施仅为临时性，待您的绿感评分恢复至 75 分以上时自动解除</li>
+</ol>
+<p class="mt-2">我们相信，此举将帮助您更好地融入绿岛和谐生活圈，感谢您的理解与配合。</p>
+<div class="mt-3 pt-3 border-t border-[#435449]/10 flex justify-between items-center">
+<span class="text-xs text-[#435449]">编号：GI-20250430-02</span>
+<span class="text-xs text-[#435449]">已记录</span>
+</div>
+</div>
+</div>
+</div>
+<!-- 公告项 3 -->
+<div class="announcement-item bg-white rounded-lg overflow-hidden">
+<div class="p-4 cursor-pointer" onclick="toggleAnnouncement(this.parentNode)">
+<div class="flex items-start">
+<div class="w-8 h-8 flex items-center justify-center bg-primary/10 rounded-full text-primary font-medium">
+<span>03</span>
+</div>
+<div class="ml-3 flex-1">
+<div class="flex items-center justify-between">
+<span class="text-xs text-gray-500">今日发布</span>
+<span class="text-xs px-2 py-0.5 bg-blue-100 text-blue-600 rounded-full">环境调整</span>
+</div>
+<h3 class="text-gray-900 font-medium mt-1">空气过于干净，已启动人工杂质均衡系统，感谢您的理解。</h3>
+<div class="flex items-center justify-between mt-2">
+<span class="text-xs text-[#435449]">已确认接收</span>
+<i class="ri-arrow-down-s-line text-[#435449]"></i>
+</div>
+</div>
+</div>
+<div class="announcement-content pl-11 pr-4 pb-4 mt-3 text-sm text-[#2d2d2d] font-mono leading-relaxed">
+<p>尊敬的绿岛居民：</p>
+<p class="mt-2">我们监测到绿岛空气纯净度已达到 99.7%，超出了人体适应范围。过于纯净的空气可能导致居民免疫系统退化，不利于长期健康。</p>
+<p class="mt-2">因此，绿岛环境管理委员会决定：</p>
+<ol class="list-decimal pl-5 mt-1 space-y-1">
+<li>即日起启动"人工杂质均衡系统"，向空气中定量释放经过筛选的无害微粒</li>
+<li>微粒成分包括：花粉、植物纤维、矿物质微尘等自然元素</li>
+<li>杂质浓度将严格控制在健康标准范围内（AQI 50-80）</li>
+</ol>
+<p class="mt-2">此举旨在模拟更为自然的生存环境，增强居民免疫力。请放心，所有添加物均经过严格筛选，绝对安全。</p>
+<div class="mt-3 pt-3 border-t border-[#435449]/10 flex justify-between items-center">
+<span class="text-xs text-[#435449]">编号：GI-20250430-03</span>
+<span class="text-xs text-[#435449]">已记录</span>
+</div>
+</div>
+</div>
+</div>
+<!-- 公告项 4 -->
+<div class="announcement-item bg-white rounded-lg overflow-hidden">
+<div class="p-4 cursor-pointer" onclick="toggleAnnouncement(this.parentNode)">
+<div class="flex items-start">
+<div class="w-8 h-8 flex items-center justify-center bg-primary/10 rounded-full text-primary font-medium">
+<span>04</span>
+</div>
+<div class="ml-3 flex-1">
+<div class="flex items-center justify-between">
+<span class="text-xs text-gray-500">今日发布</span>
+<span class="text-xs px-2 py-0.5 bg-green-100 text-green-600 rounded-full">行为规范</span>
+</div>
+<h3 class="text-gray-900 font-medium mt-1">请居民尽量避免走路过快，以防穿越声景破坏统一生态频率。</h3>
+<div class="flex items-center justify-between mt-2">
+<span class="text-xs text-[#435449]">已确认接收</span>
+<i class="ri-arrow-down-s-line text-[#435449]"></i>
+</div>
+</div>
+</div>
+<div class="announcement-content pl-11 pr-4 pb-4 mt-3 text-sm text-[#2d2d2d] font-mono leading-relaxed">
+<p>尊敬的绿岛居民：</p>
+<p class="mt-2">绿岛声景设计部门发现，部分居民行走速度过快，导致步频与社区声景设计不匹配，破坏了绿岛精心构建的"和谐频率场"。</p>
+<p class="mt-2">为维护绿岛声景生态，请注意：</p>
+<ol class="list-decimal pl-5 mt-1 space-y-1">
+<li>成人步行速度应保持在每分钟 90-110 步</li>
+<li>步行时请配合地面标记的节奏提示</li>
+<li>公共区域已安装"步频引导音"，请跟随节拍行走</li>
+<li>如需快速通行，请使用专用"快速通道"，并佩戴隔音耳机</li>
+</ol>
+<p class="mt-2">研究表明，统一的步行节奏有助于形成集体意识，提升社区归属感。感谢您为绿岛声景和谐做出的贡献。</p>
+<div class="mt-3 pt-3 border-t border-[#435449]/10 flex justify-between items-center">
+<span class="text-xs text-[#435449]">编号：GI-20250430-04</span>
+<span class="text-xs text-[#435449]">已记录</span>
+</div>
+</div>
+</div>
+</div>
+<!-- 公告项 5 -->
+<div class="announcement-item bg-white rounded-lg overflow-hidden">
+<div class="p-4 cursor-pointer" onclick="toggleAnnouncement(this.parentNode)">
+<div class="flex items-start">
+<div class="w-8 h-8 flex items-center justify-center bg-primary/10 rounded-full text-primary font-medium">
+<span>05</span>
+</div>
+<div class="ml-3 flex-1">
+<div class="flex items-center justify-between">
+<span class="text-xs text-gray-500">今日发布</span>
+<span class="text-xs px-2 py-0.5 bg-purple-100 text-purple-600 rounded-full">思想管理</span>
+</div>
+<h3 class="text-gray-900 font-medium mt-1">为防止异常思维输出，书写日记需同步上传系统备份。</h3>
+<div class="flex items-center justify-between mt-2">
+<span class="text-xs text-[#435449]">已确认接收</span>
+<i class="ri-arrow-down-s-line text-[#435449]"></i>
+</div>
+</div>
+</div>
+<div class="announcement-content pl-11 pr-4 pb-4 mt-3 text-sm text-[#2d2d2d] font-mono leading-relaxed">
+<p>尊敬的绿岛居民：</p>
+<p class="mt-2">为促进思想健康发展，防止异常思维在社区蔓延，绿岛思想管理委员会现推出"思维备份计划"。</p>
+<p class="mt-2">具体规定如下：</p>
+<ol class="list-decimal pl-5 mt-1 space-y-1">
+<li>居民撰写日记、笔记等个人文字材料时，需同步上传至"思维云"系统</li>
+<li>所有纸质笔记本均已升级为智能记录版本，可自动同步内容</li>
+<li>系统将对上传内容进行"思维健康评估"，并提供改进建议</li>
+<li>评分低于标准线的内容将被自动修正，并向您推送"思想纠正课程"</li>
+</ol>
+<p class="mt-2">此举旨在帮助居民保持积极健康的思想状态，预防不必要的思想波动。您的思维健康，是绿岛最关心的事。</p>
+<div class="mt-3 pt-3 border-t border-[#435449]/10 flex justify-between items-center">
+<span class="text-xs text-[#435449]">编号：GI-20250430-05</span>
+<span class="text-xs text-[#435449]">已记录</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- 底部导航栏 -->
+<footer class="fixed bottom-0 left-0 w-full bg-white border-t border-gray-100 z-50">
+<div class="grid grid-cols-4 h-14">
+<a href=""  class="flex flex-col items-center justify-center cursor-pointer text-gray-500">
+<div class="w-6 h-6 flex items-center justify-center">
+<i class="ri-home-5-line"></i>
+</div>
+<span class="text-xs mt-0.5">首页</span>
+</a>
+<a href=""  class="flex flex-col items-center justify-center cursor-pointer text-gray-500">
+<div class="w-6 h-6 flex items-center justify-center">
+<i class="ri-file-list-3-line"></i>
+</div>
+<span class="text-xs mt-0.5">规则</span>
+</a>
+<a href="#" class="flex flex-col items-center justify-center cursor-pointer text-primary">
+<div class="w-6 h-6 flex items-center justify-center">
+<i class="ri-notification-3-fill"></i>
+</div>
+<span class="text-xs mt-0.5">公告</span>
+</a>
+<a href=""  class="flex flex-col items-center justify-center cursor-pointer text-gray-500">
+<div class="w-6 h-6 flex items-center justify-center">
+<i class="ri-user-line"></i>
+</div>
+<span class="text-xs mt-0.5">我的</span>
+</a>
+</div>
+</footer>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+const main = document.querySelector('main');
+const footer = document.querySelector('footer');
+const footerHeight = footer.offsetHeight;
+main.style.paddingBottom = `${footerHeight + 16}px`;
+});
+document.addEventListener('DOMContentLoaded', function() {
+const importanceBtn = document.getElementById('importanceBtn');
+const importanceDropdown = document.getElementById('importanceDropdown');
+const importanceFilters = document.querySelectorAll('.importance-filter');
+let selectedFilters = new Set();
+importanceBtn.addEventListener('click', function(e) {
+e.stopPropagation();
+importanceDropdown.classList.toggle('hidden');
+});
+document.addEventListener('click', function(e) {
+if (!importanceDropdown.contains(e.target) && e.target !== importanceBtn) {
+importanceDropdown.classList.add('hidden');
+}
+});
+importanceFilters.forEach(filter => {
+filter.addEventListener('change', function() {
+if (this.checked) {
+selectedFilters.add(this.value);
+} else {
+selectedFilters.delete(this.value);
+}
+const announcements = document.querySelectorAll('.announcement-item');
+announcements.forEach(announcement => {
+const tag = announcement.querySelector('.rounded-full').textContent;
+if (selectedFilters.size === 0 || selectedFilters.has(tag)) {
+announcement.style.display = '';
+} else {
+announcement.style.display = 'none';
+}
+});
+if (selectedFilters.size > 0) {
+importanceBtn.classList.remove('bg-white', 'text-gray-600');
+importanceBtn.classList.add('bg-primary', 'text-white');
+} else {
+importanceBtn.classList.remove('bg-primary', 'text-white');
+importanceBtn.classList.add('bg-white', 'text-gray-600');
+}
+});
+});
+});
+function toggleAnnouncement(element) {
+element.classList.toggle('expanded');
+const arrowIcon = element.querySelector('.ri-arrow-down-s-line');
+if (element.classList.contains('expanded')) {
+arrowIcon.classList.remove('ri-arrow-down-s-line');
+arrowIcon.classList.add('ri-arrow-up-s-line');
+} else {
+arrowIcon.classList.remove('ri-arrow-up-s-line');
+arrowIcon.classList.add('ri-arrow-down-s-line');
+}
+}
+</script>
+</body>
+</html>

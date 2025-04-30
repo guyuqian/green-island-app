@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>环境回响 - 绿岛</title>
+<script src="https://cdn.tailwindcss.com/3.4.16"></script>
+<script>tailwind.config={theme:{extend:{colors:{primary:'#4CAF50',secondary:'#8BC34A'},borderRadius:{'none':'0px','sm':'4px',DEFAULT:'8px','md':'12px','lg':'16px','xl':'20px','2xl':'24px','3xl':'32px','full':'9999px','button':'8px'}}}}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+<style>
+:where([class^="ri-"])::before { content: "\f3c2"; }
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+textarea:focus, input:focus {
+  outline: none;
+}
+</style>
+</head>
+<body class="bg-gray-50 font-sans">
+  <!-- 顶部导航栏 -->
+  <header class="fixed top-0 left-0 w-full bg-white shadow-sm z-50">
+    <div class="flex items-center justify-between px-4 py-3">
+      <div class="flex items-center">
+        <a href=""  class="w-8 h-8 flex items-center justify-center mr-2">
+          <i class="ri-arrow-left-line text-xl text-gray-600"></i>
+        </a>
+        <h1 class="text-xl font-medium text-gray-800">环境回响</h1>
+      </div>
+      <div class="flex items-center">
+        <div class="w-8 h-8 flex items-center justify-center">
+          <i class="ri-question-line text-xl text-gray-600"></i>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- 主内容区域 -->
+  <main class="pt-14 pb-24 px-4">
+    <!-- 上传区域 -->
+    <section class="mt-4">
+      <div id="uploadContainer" class="relative w-full h-56 border-2 border-dashed border-primary/50 rounded-lg flex flex-col items-center justify-center bg-primary/5 cursor-pointer overflow-hidden">
+        <input type="file" id="imageUpload" accept="image/*" class="absolute inset-0 opacity-0 cursor-pointer" />
+        <div id="uploadPlaceholder" class="flex flex-col items-center">
+          <div class="w-16 h-16 flex items-center justify-center bg-primary/20 rounded-full mb-3">
+            <i class="ri-camera-line text-3xl text-primary"></i>
+          </div>
+          <p class="text-sm text-gray-600 mb-1">点击上传照片</p>
+          <p class="text-xs text-gray-500">记录您的环保行为瞬间</p>
+        </div>
+        <div id="imagePreview" class="absolute inset-0 hidden">
+          <img id="previewImg" src="" alt="预览图片" class="w-full h-full object-cover">
+          <button id="removeImage" class="absolute top-2 right-2 w-8 h-8 bg-black/50 rounded-full flex items-center justify-center text-white">
+            <i class="ri-close-line"></i>
+          </button>
+        </div>
+      </div>
+      <div class="flex justify-between mt-2 px-1">
+        <button id="takePhotoBtn" class="flex items-center text-xs text-primary">
+          <i class="ri-camera-line mr-1"></i>
+          <span>拍照</span>
+        </button>
+        <button id="chooseFromAlbumBtn" class="flex items-center text-xs text-primary">
+          <i class="ri-image-line mr-1"></i>
+          <span>从相册选择</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- 文字描述区域 -->
+    <section class="mt-6">
+      <div class="flex items-center mb-2">
+        <h3 class="text-base font-medium text-gray-800">今日环保行为</h3>
+        <span class="ml-1 text-red-500">*</span>
+      </div>
+      <div class="relative">
+        <textarea id="ecoDescription" class="w-full border border-gray-200 rounded-lg p-3 min-h-32 text-sm text-gray-700" placeholder="描述您今天的环保行为，例如：使用可重复使用的购物袋、减少一次性塑料使用、节约用水用电等..."></textarea>
+        <div class="absolute bottom-2 right-2 text-xs text-gray-400">
+          <span id="charCount">0</span>/200
+        </div>
+      </div>
+    </section>
+
+    <!-- 情绪状态选择 -->
+    <section class="mt-6">
+      <div class="flex items-center mb-3">
+        <h3 class="text-base font-medium text-gray-800">互动感受</h3>
+        <span class="ml-1 text-red-500">*</span>
+      </div>
+      <div class="grid grid-cols-5 gap-2">
+        <div class="emotion-item flex flex-col items-center" data-emotion="joyful">
+          <div class="w-12 h-12 flex items-center justify-center bg-gray-100 rounded-full mb-1">
+            <i class="ri-emotion-happy-line text-xl text-gray-500"></i>
+          </div>
+          <span class="text-xs text-gray-500">愉悦</span>
+        </div>
+        <div class="emotion-item flex flex-col items-center" data-emotion="calm">
+          <div class="w-12 h-12 flex items-center justify-center bg-gray-100 rounded-full mb-1">
+            <i class="ri-emotion-normal-line text-xl text-gray-500"></i>
+          </div>
+          <span class="text-xs text-gray-500">平静</span>
+        </div>
+        <div class="emotion-item flex flex-col items-center" data-emotion="grateful">
+          <div class="w-12 h-12 flex items-center justify-center bg-gray-100 rounded-full mb-1">
+            <i class="ri-heart-line text-xl text-gray-500"></i>
+          </div>
+          <span class="text-xs text-gray-500">感恩</span>
+        </div>
+        <div class="emotion-item flex flex-col items-center" data-emotion="worried">
+          <div class="w-12 h-12 flex items-center justify-center bg-gray-100 rounded-full mb-1">
+            <i class="ri-emotion-sad-line text-xl text-gray-500"></i>
+          </div>
+          <span class="text-xs text-gray-500">担忧</span>
+        </div>
+        <div class="emotion-item flex flex-col items-center" data-emotion="inspired">
+          <div class="w-12 h-12 flex items-center justify-center bg-gray-100 rounded-full mb-1">
+            <i class="ri-lightbulb-line text-xl text-gray-500"></i>
+          </div>
+          <span class="text-xs text-gray-500">启发</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 位置信息 -->
+    <section class="mt-6">
+      <div class="flex items-center justify-between mb-2">
+        <div class="flex items-center">
+          <h3 class="text-base font-medium text-gray-800">位置信息</h3>
+          <span class="ml-1 text-xs text-gray-500">(选填)</span>
+        </div>
+        <button id="getCurrentLocation" class="text-xs text-primary flex items-center">
+          <i class="ri-map-pin-line mr-1"></i>
+          <span>获取当前位置</span>
+        </button>
+      </div>
+      <div class="relative">
+        <input type="text" id="locationInput" class="w-full border border-gray-200 rounded-lg p-3 pl-9 text-sm text-gray-700" placeholder="添加位置信息...">
+        <i class="ri-map-pin-line absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+      </div>
+    </section>
+
+    <!-- 环保标签 -->
+    <section class="mt-6">
+      <div class="flex items-center mb-3">
+        <h3 class="text-base font-medium text-gray-800">环保标签</h3>
+        <span class="ml-1 text-xs text-gray-500">(最多选择3个)</span>
+      </div>
+      <div class="flex flex-wrap gap-2">
+        <div class="eco-tag px-3 py-1.5 bg-gray-100 rounded-full text-xs text-gray-600 cursor-pointer" data-tag="节能减排">节能减排</div>
+        <div class="eco-tag px-3 py-1.5 bg-gray-100 rounded-full text-xs text-gray-600 cursor-pointer" data-tag="垃圾分类">垃圾分类</div>
+        <div class="eco-tag px-3 py-1.5 bg-gray-100 rounded-full text-xs text-gray-600 cursor-pointer" data-tag="低碳出行">低碳出行</div>
+        <div class="eco-tag px-3 py-1.5 bg-gray-100 rounded-full text-xs text-gray-600 cursor-pointer" data-tag="植物养护">植物养护</div>
+        <div class="eco-tag px-3 py-1.5 bg-gray-100 rounded-full text-xs text-gray-600 cursor-pointer" data-tag="环保宣传">环保宣传</div>
+        <div class="eco-tag px-3 py-1.5 bg-gray-100 rounded-full text-xs text-gray-600 cursor-pointer" data-tag="节约用水">节约用水</div>
+        <div class="eco-tag px-3 py-1.5 bg-gray-100 rounded-full text-xs text-gray-600 cursor-pointer" data-tag="可持续消费">可持续消费</div>
+        <div class="eco-tag px-3 py-1.5 bg-gray-100 rounded-full text-xs text-gray-600 cursor-pointer" data-tag="环保创意">环保创意</div>
+      </div>
+    </section>
+
+    <!-- 环境连接度 -->
+    <section class="mt-6">
+      <div class="flex items-center justify-between mb-2">
+        <h3 class="text-base font-medium text-gray-800">环境连接度</h3>
+        <span id="connectionValue" class="text-sm text-primary">中等</span>
+      </div>
+      <input type="range" id="connectionRange" min="1" max="5" value="3" class="w-full h-2 bg-gray-200 rounded-full appearance-none cursor-pointer">
+      <div class="flex justify-between mt-1 text-xs text-gray-500">
+        <span>微弱</span>
+        <span>较弱</span>
+        <span>中等</span>
+        <span>较强</span>
+        <span>强烈</span>
+      </div>
+    </section>
+  </main>
+
+  <!-- 底部提交按钮 -->
+  <div class="fixed bottom-0 left-0 w-full bg-white border-t border-gray-200 px-4 py-3 z-40">
+    <button id="submitBtn" class="w-full py-3 bg-primary text-white rounded-button flex items-center justify-center cursor-pointer">
+      <span>提交环境回响</span>
+    </button>
+  </div>
+
+  <!-- 提交成功弹窗 -->
+  <div id="successModal" class="fixed inset-0 bg-black/50 z-50 hidden flex items-center justify-center">
+    <div class="bg-white rounded-lg w-4/5 p-5">
+      <div class="flex flex-col items-center">
+        <div class="w-16 h-16 flex items-center justify-center bg-primary/20 rounded-full mb-3">
+          <i class="ri-check-line text-3xl text-primary"></i>
+        </div>
+        <h3 class="text-lg font-medium text-center mb-2">提交成功</h3>
+        <p class="text-sm text-center text-gray-600 mb-4">
+          您的环境回响已成功提交，感谢您为绿岛生态做出的贡献！
+        </p>
+        <a href=""  class="px-5 py-2 bg-primary text-white rounded-button cursor-pointer">
+          返回个人中心
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // 图片上传预览
+      const imageUpload = document.getElementById('imageUpload');
+      const uploadPlaceholder = document.getElementById('uploadPlaceholder');
+      const imagePreview = document.getElementById('imagePreview');
+      const previewImg = document.getElementById('previewImg');
+      const removeImage = document.getElementById('removeImage');
+      const uploadContainer = document.getElementById('uploadContainer');
+      
+      imageUpload.addEventListener('change', function(e) {
+        if (e.target.files && e.target.files[0]) {
+          const reader = new FileReader();
+          reader.onload = function(event) {
+            previewImg.src = event.target.result;
+            uploadPlaceholder.classList.add('hidden');
+            imagePreview.classList.remove('hidden');
+          }
+          reader.readAsDataURL(e.target.files[0]);
+        }
+      });
+      
+      removeImage.addEventListener('click', function(e) {
+        e.stopPropagation();
+        imageUpload.value = '';
+        previewImg.src = '';
+        uploadPlaceholder.classList.remove('hidden');
+        imagePreview.classList.add('hidden');
+      });
+      
+      uploadContainer.addEventListener('click', function() {
+        if (imagePreview.classList.contains('hidden')) {
+          imageUpload.click();
+        }
+      });
+      
+      // 拍照和从相册选择按钮
+      document.getElementById('takePhotoBtn').addEventListener('click', function() {
+        imageUpload.setAttribute('capture', 'environment');
+        imageUpload.click();
+      });
+      
+      document.getElementById('chooseFromAlbumBtn').addEventListener('click', function() {
+        imageUpload.removeAttribute('capture');
+        imageUpload.click();
+      });
+      
+      // 文字描述字数统计
+      const ecoDescription = document.getElementById('ecoDescription');
+      const charCount = document.getElementById('charCount');
+      
+      ecoDescription.addEventListener('input', function() {
+        const count = this.value.length;
+        charCount.textContent = count;
+        
+        if (count > 200) {
+          this.value = this.value.substring(0, 200);
+          charCount.textContent = 200;
+        }
+      });
+      
+      // 情绪状态选择
+      const emotionItems = document.querySelectorAll('.emotion-item');
+      
+      emotionItems.forEach(item => {
+        item.addEventListener('click', function() {
+          emotionItems.forEach(el => {
+            const icon = el.querySelector('i');
+            const text = el.querySelector('span');
+            const bg = el.querySelector('div');
+            
+            bg.classList.remove('bg-primary/20');
+            bg.classList.add('bg-gray-100');
+            icon.classList.remove('text-primary');
+            icon.classList.add('text-gray-500');
+            text.classList.remove('text-primary');
+            text.classList.add('text-gray-500');
+          });
+          
+          const selectedIcon = this.querySelector('i');
+          const selectedText = this.querySelector('span');
+          const selectedBg = this.querySelector('div');
+          
+          selectedBg.classList.remove('bg-gray-100');
+          selectedBg.classList.add('bg-primary/20');
+          selectedIcon.classList.remove('text-gray-500');
+          selectedIcon.classList.add('text-primary');
+          selectedText.classList.remove('text-gray-500');
+          selectedText.classList.add('text-primary');
+        });
+      });
+      
+      // 位置信息获取
+      document.getElementById('getCurrentLocation').addEventListener('click', function() {
+        const locationInput = document.getElementById('locationInput');
+        locationInput.value = "正在获取位置...";
+        
+        setTimeout(() => {
+          locationInput.value = "绿岛生态园区 - 东区植物园";
+        }, 1000);
+      });
+      
+      // 环保标签选择
+      const ecoTags = document.querySelectorAll('.eco-tag');
+      let selectedTags = 0;
+      
+      ecoTags.forEach(tag => {
+        tag.addEventListener('click', function() {
+          if (this.classList.contains('bg-primary')) {
+            this.classList.remove('bg-primary', 'text-white');
+            this.classList.add('bg-gray-100', 'text-gray-600');
+            selectedTags--;
+          } else {
+            if (selectedTags < 3) {
+              this.classList.remove('bg-gray-100', 'text-gray-600');
+              this.classList.add('bg-primary', 'text-white');
+              selectedTags++;
+            }
+          }
+        });
+      });
+      
+      // 环境连接度滑块
+      const connectionRange = document.getElementById('connectionRange');
+      const connectionValue = document.getElementById('connectionValue');
+      const connectionLabels = ['微弱', '较弱', '中等', '较强', '强烈'];
+      
+      connectionRange.addEventListener('input', function() {
+        const value = parseInt(this.value);
+        connectionValue.textContent = connectionLabels[value - 1];
+      });
+      
+      // 自定义滑块样式
+      connectionRange.style.background = 'linear-gradient(to right, #4CAF50 0%, #4CAF50 50%, #e5e7eb 50%, #e5e7eb 100%)';
+      
+      connectionRange.addEventListener('input', function() {
+        const value = parseInt(this.value);
+        const percent = ((value - 1) / 4) * 100;
+        this.style.background = `linear-gradient(to right, #4CAF50 0%, #4CAF50 ${percent}%, #e5e7eb ${percent}%, #e5e7eb 100%)`;
+        connectionValue.textContent = connectionLabels[value - 1];
+      });
+      
+      // 提交按钮
+      document.getElementById('submitBtn').addEventListener('click', function() {
+        const description = ecoDescription.value.trim();
+        let selectedEmotion = null;
+        
+        emotionItems.forEach(item => {
+          if (item.querySelector('div').classList.contains('bg-primary/20')) {
+            selectedEmotion = item.getAttribute('data-emotion');
+          }
+        });
+        
+        if (!description) {
+          showToast('请描述您的环保行为');
+          return;
+        }
+        
+        if (!selectedEmotion) {
+          showToast('请选择您的互动感受');
+          return;
+        }
+        
+        // 显示成功弹窗
+        document.getElementById('successModal').classList.remove('hidden');
+      });
+      
+      // 点击弹窗外部关闭弹窗
+      document.getElementById('successModal').addEventListener('click', function(e) {
+        if (e.target === this) {
+          this.classList.add('hidden');
+        }
+      });
+      
+      // Toast提示
+      function showToast(message) {
+        const toast = document.createElement('div');
+        toast.className = 'fixed top-16 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white text-sm px-4 py-2 rounded-lg z-50';
+        toast.textContent = message;
+        document.body.appendChild(toast);
+        
+        setTimeout(() => {
+          toast.remove();
+        }, 2000);
+      }
+    });
+  </script>
+</body>
+</html>

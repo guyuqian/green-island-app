@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>绿岛欢迎您 · 零碳酒店体验区</title>
+<script src="https://cdn.tailwindcss.com/3.4.16"></script>
+<script>tailwind.config={theme:{extend:{colors:{primary:'#4CAF50',secondary:'#8BC34A'},borderRadius:{'none':'0px','sm':'4px',DEFAULT:'8px','md':'12px','lg':'16px','xl':'20px','2xl':'24px','3xl':'32px','full':'9999px','button':'8px'}}}}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.5.0/echarts.min.js"></script>
+<style>
+:where([class^="ri-"])::before { content: "\f3c2"; }
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+-webkit-appearance: none;
+margin: 0;
+}
+</style>
+</head>
+<body class="bg-gray-50 font-sans">
+<!-- 顶部导航栏 -->
+<header class="fixed top-0 left-0 w-full bg-white shadow-sm z-50">
+<div class="flex items-center justify-between px-4 py-3">
+<a href=""  class="w-8 h-8 flex items-center justify-center cursor-pointer">
+<i class="ri-arrow-left-s-line text-xl text-gray-700"></i>
+</a>
+<div class="flex-1 text-center">
+<h1 class="text-lg font-medium text-gray-800">绿岛酒店</h1>
+</div>
+<div class="w-8 h-8 flex items-center justify-center">
+<i class="ri-share-line text-xl text-gray-700"></i>
+</div>
+</div>
+</header>
+<!-- 搜索栏 -->
+<div class="fixed top-12 left-0 w-full bg-white z-40 px-4 py-3 shadow-sm">
+<div class="relative">
+<input type="text" placeholder="搜索酒店、位置或环保特色" class="w-full py-2 px-10 rounded-full border border-gray-200 text-sm focus:outline-none focus:ring-1 focus:ring-primary">
+<span class="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 flex items-center justify-center text-gray-400">
+<i class="ri-search-line"></i>
+</span>
+<span class="absolute right-3 top-1/2 transform -translate-y-1/2 text-sm text-primary font-medium cursor-pointer">
+搜索
+</span>
+</div>
+</div>
+<!-- 筛选标签 -->
+<div class="fixed top-[108px] left-0 w-full bg-white z-30 border-b border-gray-100">
+<div class="flex items-center overflow-x-auto py-2 px-4 whitespace-nowrap">
+<div class="px-3 py-1.5 bg-primary/10 text-primary rounded-full text-sm mr-2 flex items-center cursor-pointer">
+<span>全部</span>
+<i class="ri-arrow-down-s-line ml-1"></i>
+</div>
+<div class="px-3 py-1.5 bg-gray-100 text-gray-700 rounded-full text-sm mr-2 flex items-center cursor-pointer">
+<span>价格</span>
+<i class="ri-arrow-down-s-line ml-1"></i>
+</div>
+<div class="px-3 py-1.5 bg-gray-100 text-gray-700 rounded-full text-sm mr-2 flex items-center cursor-pointer">
+<span>评分</span>
+<i class="ri-arrow-down-s-line ml-1"></i>
+</div>
+<div class="px-3 py-1.5 bg-gray-100 text-gray-700 rounded-full text-sm mr-2 flex items-center cursor-pointer">
+<span>环保认证</span>
+<i class="ri-arrow-down-s-line ml-1"></i>
+</div>
+<div class="px-3 py-1.5 bg-gray-100 text-gray-700 rounded-full text-sm mr-2 flex items-center cursor-pointer">
+<span>设施</span>
+<i class="ri-arrow-down-s-line ml-1"></i>
+</div>
+<div class="px-3 py-1.5 bg-gray-100 text-gray-700 rounded-full text-sm flex items-center cursor-pointer">
+<span>筛选</span>
+<i class="ri-filter-3-line ml-1"></i>
+</div>
+</div>
+</div>
+<!-- 主内容区域 -->
+<main class="pt-[162px] pb-16">
+<!-- 顶部横幅 -->
+<section class="px-4 py-3 bg-gradient-to-r from-primary/10 to-secondary/10 mb-4">
+<div class="flex items-center">
+<div class="w-8 h-8 flex items-center justify-center bg-primary/20 rounded-full">
+<i class="ri-leaf-fill text-primary"></i>
+</div>
+<div class="ml-2 flex-1">
+<p class="text-sm text-gray-700">绿岛酒店均通过环保认证，入住即可获得绿色积分</p>
+</div>
+</div>
+</section>
+<!-- 酒店列表 -->
+<section class="px-4 space-y-4">
+<!-- 酒店卡片 1 -->
+<div class="bg-white rounded-lg shadow-sm overflow-hidden cursor-pointer" id="hotel1">
+<div class="relative">
+<img src="https://readdy.ai/api/search-image?query=Luxury%2520hotel%2520exterior%2520with%2520emerald%2520green%2520glass%2520facade%252C%2520vertical%2520gardens%2520covering%2520walls%252C%2520modern%2520sustainable%2520architecture%252C%2520green%2520metal%2520and%2520glass%2520materials%252C%2520lush%2520landscaping%252C%2520solar%2520panels%252C%2520professional%2520architectural%2520photography%252C%2520bright%2520daylight%252C%2520isolated%2520building&width=375&height=200&seq=1001&orientation=landscape" class="w-full h-48 object-cover" alt="绿岛明珠酒店">
+<div class="absolute top-3 left-3 px-2 py-1 bg-primary/90 text-white text-xs rounded-full">
+零碳先锋
+</div>
+<div class="absolute bottom-3 right-3 px-2 py-1 bg-black/60 text-white text-xs rounded-full">
+18 张图片
+</div>
+</div>
+<div class="p-3">
+<div class="flex justify-between items-start">
+<h3 class="text-base font-medium">绿岛明珠酒店</h3>
+<div class="flex items-center">
+<span class="text-sm font-semibold text-primary">4.9</span>
+<span class="text-xs text-gray-500 ml-1">(328)</span>
+</div>
+</div>
+<div class="mt-1 flex items-center text-xs text-gray-500">
+<i class="ri-map-pin-line mr-1"></i>
+<span>A-101 · 绿岛明珠酒店</span>
+</div>
+<div class="mt-2 flex flex-wrap gap-1">
+<span class="px-1.5 py-0.5 bg-primary/10 text-primary text-xs rounded">零碳认证</span>
+<span class="px-1.5 py-0.5 bg-gray-100 text-gray-700 text-xs rounded">太阳能</span>
+<span class="px-1.5 py-0.5 bg-gray-100 text-gray-700 text-xs rounded">雨水回收</span>
+<span class="px-1.5 py-0.5 bg-gray-100 text-gray-700 text-xs rounded">有机餐厅</span>
+</div>
+<div class="mt-3 flex justify-between items-end">
+<div>
+<div class="text-xs text-gray-500">绿感评分实时跟踪</div>
+<div class="flex items-center">
+<span class="text-base font-medium">¥ 888</span>
+<span class="text-xs text-gray-500 ml-1">起/晚</span>
+</div>
+</div>
+<button class="px-3 py-1.5 bg-primary text-white text-sm rounded-button">查看详情</button>
+</div>
+</div>
+</div>
+<!-- 酒店卡片 2 -->
+<div class="bg-white rounded-lg shadow-sm overflow-hidden cursor-pointer" id="hotel2">
+<div class="relative">
+<img src="https://readdy.ai/api/search-image?query=Modern%2520forest%2520resort%2520with%2520emerald%2520green%2520exterior%252C%2520living%2520green%2520walls%252C%2520sustainable%2520eco%2520architecture%252C%2520glass%2520and%2520green%2520metal%2520facade%252C%2520infinity%2520pool%252C%2520surrounded%2520by%2520trees%252C%2520professional%2520architectural%2520photography%252C%2520bright%2520daylight%252C%2520isolated%2520building&width=375&height=200&seq=1002&orientation=landscape" class="w-full h-48 object-cover" alt="空气净化静养套房">
+<div class="absolute top-3 left-3 px-2 py-1 bg-secondary/90 text-white text-xs rounded-full">
+静养特色
+</div>
+<div class="absolute bottom-3 right-3 px-2 py-1 bg-black/60 text-white text-xs rounded-full">
+24 张图片
+</div>
+</div>
+<div class="p-3">
+<div class="flex justify-between items-start">
+<h3 class="text-base font-medium">森林氧吧度假酒店</h3>
+<div class="flex items-center">
+<span class="text-sm font-semibold text-primary">4.8</span>
+<span class="text-xs text-gray-500 ml-1">(256)</span>
+</div>
+</div>
+<div class="mt-1 flex items-center text-xs text-gray-500">
+<i class="ri-map-pin-line mr-1"></i>
+<span>B-203 · 森林氧吧度假酒店</span>
+</div>
+<div class="mt-2 flex flex-wrap gap-1">
+<span class="px-1.5 py-0.5 bg-secondary/10 text-secondary text-xs rounded">空气净化</span>
+<span class="px-1.5 py-0.5 bg-gray-100 text-gray-700 text-xs rounded">沉默模式</span>
+<span class="px-1.5 py-0.5 bg-gray-100 text-gray-700 text-xs rounded">森林浴</span>
+<span class="px-1.5 py-0.5 bg-gray-100 text-gray-700 text-xs rounded">负氧离子</span>
+</div>
+<div class="mt-3 flex justify-between items-end">
+<div>
+<div class="text-xs text-gray-500">含沉默模式设备</div>
+<div class="flex items-center">
+<span class="text-base font-medium">¥ 1,280</span>
+<span class="text-xs text-gray-500 ml-1">起/晚</span>
+</div>
+</div>
+<button class="px-3 py-1.5 bg-primary text-white text-sm rounded-button">查看详情</button>
+</div>
+</div>
+</div>
+<!-- 酒店卡片 3 -->
+<div class="bg-white rounded-lg shadow-sm overflow-hidden cursor-pointer" id="hotel3">
+<div class="relative">
+<img src="https://readdy.ai/api/search-image?query=Boutique%2520hotel%2520with%2520emerald%2520green%2520facade%252C%2520vertical%2520gardens%2520covering%2520entire%2520walls%252C%2520modern%2520sustainable%2520architecture%252C%2520green%2520glass%2520and%2520metal%2520materials%252C%2520artistic%2520design%252C%2520professional%2520architectural%2520photography%252C%2520bright%2520daylight%252C%2520isolated%2520building&width=375&height=200&seq=1003&orientation=landscape" class="w-full h-48 object-cover" alt="绿墙酒店">
+<div class="absolute top-3 left-3 px-2 py-1 bg-primary/90 text-white text-xs rounded-full">
+垂直花园
+</div>
+<div class="absolute bottom-3 right-3 px-2 py-1 bg-black/60 text-white text-xs rounded-full">
+15 张图片
+</div>
+</div>
+<div class="p-3">
+<div class="flex justify-between items-start">
+<h3 class="text-base font-medium">垂直花园精品酒店</h3>
+<div class="flex items-center">
+<span class="text-sm font-semibold text-primary">4.7</span>
+<span class="text-xs text-gray-500 ml-1">(193)</span>
+</div>
+</div>
+<div class="mt-1 flex items-center text-xs text-gray-500">
+<i class="ri-map-pin-line mr-1"></i>
+<span>C-305 · 垂直花园精品酒店</span>
+</div>
+<div class="mt-2 flex flex-wrap gap-1">
+<span class="px-1.5 py-0.5 bg-primary/10 text-primary text-xs rounded">垂直绿化</span>
+<span class="px-1.5 py-0.5 bg-gray-100 text-gray-700 text-xs rounded">空气净化</span>
+<span class="px-1.5 py-0.5 bg-gray-100 text-gray-700 text-xs rounded">雨水回收</span>
+<span class="px-1.5 py-0.5 bg-gray-100 text-gray-700 text-xs rounded">艺术空间</span>
+</div>
+<div class="mt-3 flex justify-between items-end">
+<div>
+<div class="text-xs text-gray-500">室内空气品质监测</div>
+<div class="flex items-center">
+<span class="text-base font-medium">¥ 968</span>
+<span class="text-xs text-gray-500 ml-1">起/晚</span>
+</div>
+</div>
+<button class="px-3 py-1.5 bg-primary text-white text-sm rounded-button">查看详情</button>
+</div>
+</div>
+</div>
+<!-- 酒店卡片 4 -->
+<div class="bg-white rounded-lg shadow-sm overflow-hidden cursor-pointer" id="hotel4">
+<div class="relative">
+<img src="https://readdy.ai/api/search-image?query=Futuristic%2520capsule%2520hotel%2520with%2520emerald%2520green%2520exterior%252C%2520metallic%2520green%2520pods%252C%2520modern%2520sustainable%2520architecture%252C%2520green%2520glass%2520and%2520metal%2520facade%252C%2520vertical%2520gardens%252C%2520professional%2520architectural%2520photography%252C%2520bright%2520daylight%252C%2520isolated%2520building&width=375&height=200&seq=1004&orientation=landscape" class="w-full h-48 object-cover" alt="智能胶囊酒店">
+<div class="absolute top-3 left-3 px-2 py-1 bg-secondary/90 text-white text-xs rounded-full">
+智能胶囊
+</div>
+<div class="absolute bottom-3 right-3 px-2 py-1 bg-black/60 text-white text-xs rounded-full">
+12 张图片
+</div>
+</div>
+<div class="p-3">
+<div class="flex justify-between items-start">
+<h3 class="text-base font-medium">绿岛智能胶囊酒店</h3>
+<div class="flex items-center">
+<span class="text-sm font-semibold text-primary">4.6</span>
+<span class="text-xs text-gray-500 ml-1">(178)</span>
+</div>
+</div>
+<div class="mt-1 flex items-center text-xs text-gray-500">
+<i class="ri-map-pin-line mr-1"></i>
+<span>D-407 · 绿岛智能胶囊酒店</span>
+</div>
+<div class="mt-2 flex flex-wrap gap-1">
+<span class="px-1.5 py-0.5 bg-secondary/10 text-secondary text-xs rounded">智能控制</span>
+<span class="px-1.5 py-0.5 bg-gray-100 text-gray-700 text-xs rounded">低能耗</span>
+<span class="px-1.5 py-0.5 bg-gray-100 text-gray-700 text-xs rounded">零废弃</span>
+<span class="px-1.5 py-0.5 bg-gray-100 text-gray-700 text-xs rounded">声控系统</span>
+</div>
+<div class="mt-3 flex justify-between items-end">
+<div>
+<div class="text-xs text-gray-500">零能耗淋浴设备</div>
+<div class="flex items-center">
+<span class="text-base font-medium">¥ 498</span>
+<span class="text-xs text-gray-500 ml-1">起/晚</span>
+</div>
+</div>
+<button class="px-3 py-1.5 bg-primary text-white text-sm rounded-button">查看详情</button>
+</div>
+</div>
+</div>
+<!-- 酒店卡片 5 -->
+<div class="bg-white rounded-lg shadow-sm overflow-hidden cursor-pointer" id="hotel5">
+<div class="relative">
+<img src="https://readdy.ai/api/search-image?query=Luxury%2520treehouse%2520hotel%2520with%2520emerald%2520green%2520exterior%252C%2520modern%2520sustainable%2520architecture%252C%2520green%2520metal%2520and%2520wood%2520materials%252C%2520vertical%2520gardens%252C%2520forest%2520integration%252C%2520professional%2520architectural%2520photography%252C%2520bright%2520daylight%252C%2520isolated%2520building&width=375&height=200&seq=1005&orientation=landscape" class="w-full h-48 object-cover" alt="树屋酒店">
+<div class="absolute top-3 left-3 px-2 py-1 bg-primary/90 text-white text-xs rounded-full">
+树屋体验
+</div>
+<div class="absolute bottom-3 right-3 px-2 py-1 bg-black/60 text-white text-xs rounded-full">
+20 张图片
+</div>
+</div>
+<div class="p-3">
+<div class="flex justify-between items-start">
+<h3 class="text-base font-medium">绿岛生态树屋酒店</h3>
+<div class="flex items-center">
+<span class="text-sm font-semibold text-primary">4.9</span>
+<span class="text-xs text-gray-500 ml-1">(215)</span>
+</div>
+</div>
+<div class="mt-1 flex items-center text-xs text-gray-500">
+<i class="ri-map-pin-line mr-1"></i>
+<span>E-509 · 绿岛生态树屋酒店</span>
+</div>
+<div class="mt-2 flex flex-wrap gap-1">
+<span class="px-1.5 py-0.5 bg-primary/10 text-primary text-xs rounded">生态融合</span>
+<span class="px-1.5 py-0.5 bg-gray-100 text-gray-700 text-xs rounded">太阳能</span>
+<span class="px-1.5 py-0.5 bg-gray-100 text-gray-700 text-xs rounded">自然材料</span>
+<span class="px-1.5 py-0.5 bg-gray-100 text-gray-700 text-xs rounded">森林景观</span>
+</div>
+<div class="mt-3 flex justify-between items-end">
+<div>
+<div class="text-xs text-gray-500">绿值绑定早餐配比</div>
+<div class="flex items-center">
+<span class="text-base font-medium">¥ 1,580</span>
+<span class="text-xs text-gray-500 ml-1">起/晚</span>
+</div>
+</div>
+<button class="px-3 py-1.5 bg-primary text-white text-sm rounded-button">查看详情</button>
+</div>
+</div>
+</div>
+</section>
+<!-- 访问须知 -->
+<section class="mt-6 px-4 py-4 bg-white">
+<h3 class="text-lg font-medium mb-3">访问须知</h3>
+<div class="space-y-3">
+<div class="flex items-start">
+<div class="w-6 h-6 flex items-center justify-center text-primary mt-0.5">
+<i class="ri-information-line"></i>
+</div>
+<div class="ml-2 flex-1">
+<p class="text-sm text-gray-700">所有入住客人需提前提交碳信用快评报告，评分低于 B 级将无法预订部分高级环保酒店</p>
+</div>
+</div>
+<div class="flex items-start">
+<div class="w-6 h-6 flex items-center justify-center text-primary mt-0.5">
+<i class="ri-information-line"></i>
+</div>
+<div class="ml-2 flex-1">
+<p class="text-sm text-gray-700">入住期间能源使用情况将被记录，并影响您的绿岛访问推荐指数</p>
+</div>
+</div>
+<div class="flex items-start">
+<div class="w-6 h-6 flex items-center justify-center text-primary mt-0.5">
+<i class="ri-information-line"></i>
+</div>
+<div class="ml-2 flex-1">
+<p class="text-sm text-gray-700">酒店内咳嗽将触发健康提醒弹窗，请保持良好呼吸习惯</p>
+</div>
+</div>
+</div>
+</section>
+<!-- 环保认证说明 -->
+<section class="mt-3 px-4 py-4 bg-white mb-6">
+<h3 class="text-lg font-medium mb-3">环保认证说明</h3>
+<div class="bg-gray-50 p-3 rounded-lg">
+<div class="flex flex-wrap gap-3">
+<div class="flex items-center">
+<div class="w-8 h-8 flex items-center justify-center bg-primary/20 rounded-full">
+<i class="ri-leaf-fill text-primary"></i>
+</div>
+<span class="ml-2 text-sm">零碳认证</span>
+</div>
+<div class="flex items-center">
+<div class="w-8 h-8 flex items-center justify-center bg-secondary/20 rounded-full">
+<i class="ri-water-flash-fill text-secondary"></i>
+</div>
+<span class="ml-2 text-sm">节水认证</span>
+</div>
+<div class="flex items-center">
+<div class="w-8 h-8 flex items-center justify-center bg-green-600/20 rounded-full">
+<i class="ri-recycle-fill text-green-600"></i>
+</div>
+<span class="ml-2 text-sm">循环认证</span>
+</div>
+<div class="flex items-center">
+<div class="w-8 h-8 flex items-center justify-center bg-blue-500/20 rounded-full">
+<i class="ri-sun-fill text-blue-500"></i>
+</div>
+<span class="ml-2 text-sm">能源认证</span>
+</div>
+</div>
+<div class="mt-3">
+<p class="text-xs text-gray-600">绿岛酒店均需通过严格的环保认证，包括能源使用、水资源管理、废弃物处理和碳排放等多个方面的评估。认证由绿岛环保委员会颁发，每季度重新评估一次。</p>
+</div>
+</div>
+</section>
+</main>
+<!-- 底部导航栏 -->
+<footer class="fixed bottom-0 left-0 w-full bg-white border-t border-gray-200 z-50">
+<div class="grid grid-cols-4 h-14">
+<a href=""  class="flex flex-col items-center justify-center cursor-pointer text-gray-500">
+<div class="w-6 h-6 flex items-center justify-center">
+<i class="ri-home-5-line"></i>
+</div>
+<span class="text-xs mt-0.5">首页</span>
+</a>
+<a href="#" class="flex flex-col items-center justify-center cursor-pointer text-primary">
+<div class="w-6 h-6 flex items-center justify-center">
+<i class="ri-hotel-fill"></i>
+</div>
+<span class="text-xs mt-0.5">酒店</span>
+</a>
+<a href=""  class="flex flex-col items-center justify-center cursor-pointer text-gray-500">
+<div class="w-6 h-6 flex items-center justify-center">
+<i class="ri-qr-code-line"></i>
+</div>
+<span class="text-xs mt-0.5">园区码</span>
+</a>
+<a href=""  class="flex flex-col items-center justify-center cursor-pointer text-gray-500">
+<div class="w-6 h-6 flex items-center justify-center">
+<i class="ri-user-line"></i>
+</div>
+<span class="text-xs mt-0.5">我的</span>
+</a>
+</div>
+</footer>
+<!-- 悬浮按钮 -->
+<div class="fixed right-4 bottom-20 z-40">
+<button class="w-12 h-12 bg-primary rounded-full shadow-lg flex items-center justify-center cursor-pointer">
+<i class="ri-customer-service-2-fill text-white text-xl"></i>
+</button>
+</div>
+<!-- 酒店详情模态框 -->
+<div id="hotelDetailModal" class="fixed inset-0 bg-black/50 z-50 hidden">
+<div class="absolute bottom-0 left-0 right-0 bg-white rounded-t-xl max-h-[90vh] overflow-y-auto">
+<div class="relative">
+<div class="absolute top-4 right-4 z-10 w-8 h-8 flex items-center justify-center bg-black/50 rounded-full cursor-pointer" id="closeModal">
+<i class="ri-close-line text-white"></i>
+</div>
+<img src="https://readdy.ai/api/search-image?query=Luxury%2520hotel%2520exterior%2520at%2520dusk%252C%2520emerald%2520green%2520glass%2520facade%252C%2520vertical%2520gardens%2520covering%2520walls%252C%2520modern%2520sustainable%2520architecture%252C%2520green%2520metal%2520and%2520glass%2520materials%252C%2520dramatic%2520lighting%252C%2520professional%2520architectural%2520photography%252C%2520isolated%2520building&width=375&height=250&seq=1006&orientation=landscape" class="w-full h-56 object-cover" alt="酒店外观">
+<div class="p-4">
+<h2 class="text-xl font-medium">绿岛明珠酒店</h2>
+<div class="mt-1 flex items-center">
+<div class="flex">
+<i class="ri-star-fill text-yellow-400"></i>
+<i class="ri-star-fill text-yellow-400"></i>
+<i class="ri-star-fill text-yellow-400"></i>
+<i class="ri-star-fill text-yellow-400"></i>
+<i class="ri-star-fill text-yellow-400"></i>
+</div>
+<span class="ml-2 text-sm text-gray-700">4.9 (328 评价)</span>
+</div>
+<div class="mt-2 flex items-center text-sm text-gray-700">
+<i class="ri-map-pin-line mr-1"></i>
+<span>A-101 · 绿岛明珠酒店</span>
+</div>
+<div class="mt-4">
+<h3 class="text-lg font-medium mb-2">环保特色</h3>
+<div class="grid grid-cols-2 gap-3">
+<div class="flex items-center">
+<div class="w-8 h-8 flex items-center justify-center bg-primary/10 rounded-full">
+<i class="ri-leaf-fill text-primary"></i>
+</div>
+<span class="ml-2 text-sm">零碳建筑</span>
+</div>
+<div class="flex items-center">
+<div class="w-8 h-8 flex items-center justify-center bg-primary/10 rounded-full">
+<i class="ri-sun-fill text-primary"></i>
+</div>
+<span class="ml-2 text-sm">太阳能供电</span>
+</div>
+<div class="flex items-center">
+<div class="w-8 h-8 flex items-center justify-center bg-primary/10 rounded-full">
+<i class="ri-water-flash-fill text-primary"></i>
+</div>
+<span class="ml-2 text-sm">雨水回收系统</span>
+</div>
+<div class="flex items-center">
+<div class="w-8 h-8 flex items-center justify-center bg-primary/10 rounded-full">
+<i class="ri-restaurant-fill text-primary"></i>
+</div>
+<span class="ml-2 text-sm">有机餐厅</span>
+</div>
+</div>
+</div>
+<div class="mt-4">
+<h3 class="text-lg font-medium mb-2">房型选择</h3>
+<div class="space-y-3">
+<div class="border border-gray-200 rounded-lg p-3">
+<div class="flex justify-between">
+<h4 class="font-medium">标准绿能客房</h4>
+<span class="text-primary font-medium">¥888/晚</span>
+</div>
+<p class="text-sm text-gray-600 mt-1">绿感评分实时跟踪，智能调节室内环境</p>
+<div class="mt-2 flex flex-wrap gap-1">
+<span class="px-1.5 py-0.5 bg-gray-100 text-gray-700 text-xs rounded">25㎡</span>
+<span class="px-1.5 py-0.5 bg-gray-100 text-gray-700 text-xs rounded">大床</span>
+<span class="px-1.5 py-0.5 bg-gray-100 text-gray-700 text-xs rounded">智能控制</span>
+</div>
+<button class="mt-3 w-full py-2 bg-primary text-white rounded-button">预订</button>
+</div>
+<div class="border border-gray-200 rounded-lg p-3">
+<div class="flex justify-between">
+<h4 class="font-medium">空气净化静养套间</h4>
+<span class="text-primary font-medium">¥1,288/晚</span>
+</div>
+<p class="text-sm text-gray-600 mt-1">含沉默模式设备，提供最佳睡眠体验</p>
+<div class="mt-2 flex flex-wrap gap-1">
+<span class="px-1.5 py-0.5 bg-gray-100 text-gray-700 text-xs rounded">40㎡</span>
+<span class="px-1.5 py-0.5 bg-gray-100 text-gray-700 text-xs rounded">大床</span>
+<span class="px-1.5 py-0.5 bg-gray-100 text-gray-700 text-xs rounded">空气净化</span>
+<span class="px-1.5 py-0.5 bg-gray-100 text-gray-700 text-xs rounded">沉默模式</span>
+</div>
+<button class="mt-3 w-full py-2 bg-primary text-white rounded-button">预订</button>
+</div>
+</div>
+</div>
+<div class="mt-4">
+<h3 class="text-lg font-medium mb-2">智能配套</h3>
+<div class="space-y-2">
+<div class="flex items-start">
+<div class="w-6 h-6 flex items-center justify-center text-primary mt-0.5">
+<i class="ri-check-line"></i>
+</div>
+<div class="ml-2 flex-1">
+<p class="text-sm text-gray-700">绿值绑定早餐配比，环保行为越多，早餐选择越丰富</p>
+</div>
+</div>
+<div class="flex items-start">
+<div class="w-6 h-6 flex items-center justify-center text-primary mt-0.5">
+<i class="ri-check-line"></i>
+</div>
+<div class="ml-2 flex-1">
+<p class="text-sm text-gray-700">入住期间咳嗽提醒弹窗，保持良好呼吸习惯</p>
+</div>
+</div>
+<div class="flex items-start">
+<div class="w-6 h-6 flex items-center justify-center text-primary mt-0.5">
+<i class="ri-check-line"></i>
+</div>
+<div class="ml-2 flex-1">
+<p class="text-sm text-gray-700">零能耗淋浴设备试用（限温/限时），体验绿色生活方式</p>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-4">
+<h3 class="text-lg font-medium mb-2">用户评价</h3>
+<div class="space-y-3">
+<div class="border-b border-gray-100 pb-3">
+<div class="flex items-center">
+<img src="https://readdy.ai/api/search-image?query=Professional%2520headshot%252C%2520young%2520Asian%2520woman%252C%2520natural%2520makeup%252C%2520casual%2520style%252C%2520neutral%2520background%252C%2520bright%2520lighting&width=40&height=40&seq=1007&orientation=squarish" class="w-8 h-8 rounded-full" alt="用户头像">
+<div class="ml-2">
+<div class="text-sm font-medium">陈美玲</div>
+<div class="flex items-center text-xs text-gray-500">
+<div class="flex">
+<i class="ri-star-fill text-yellow-400"></i>
+<i class="ri-star-fill text-yellow-400"></i>
+<i class="ri-star-fill text-yellow-400"></i>
+<i class="ri-star-fill text-yellow-400"></i>
+<i class="ri-star-fill text-yellow-400"></i>
+</div>
+<span class="ml-1">2025.04.20</span>
+</div>
+</div>
+</div>
+<p class="text-sm text-gray-700 mt-2">酒店的环保理念贯穿始终，从入住到离开都能感受到对环境的尊重。房间的空气质量监测让我很安心，绿值绑定早餐也是很有趣的体验。</p>
+</div>
+<div class="border-b border-gray-100 pb-3">
+<div class="flex items-center">
+<img src="https://readdy.ai/api/search-image?query=Professional%2520headshot%252C%2520middle-aged%2520Asian%2520man%252C%2520business%2520casual%252C%2520warm%2520smile%252C%2520clean%2520background&width=40&height=40&seq=1008&orientation=squarish" class="w-8 h-8 rounded-full" alt="用户头像">
+<div class="ml-2">
+<div class="text-sm font-medium">王建国</div>
+<div class="flex items-center text-xs text-gray-500">
+<div class="flex">
+<i class="ri-star-fill text-yellow-400"></i>
+<i class="ri-star-fill text-yellow-400"></i>
+<i class="ri-star-fill text-yellow-400"></i>
+<i class="ri-star-fill text-yellow-400"></i>
+<i class="ri-star-fill text-gray-300"></i>
+</div>
+<span class="ml-1">2025.04.18</span>
+</div>
+</div>
+</div>
+<p class="text-sm text-gray-700 mt-2">设施很新，服务很好，但是零能耗淋浴有点难适应，水温和时间都有限制，不过为了环保也能理解。总体来说是很不错的体验。</p>
+</div>
+</div>
+</div>
+<div class="mt-6 mb-4">
+<button class="w-full py-3 bg-primary text-white font-medium rounded-button">立即预订</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+// 点击酒店卡片显示详情
+const hotelCards = document.querySelectorAll('#hotel1, #hotel2, #hotel3, #hotel4, #hotel5');
+const modal = document.getElementById('hotelDetailModal');
+const closeModal = document.getElementById('closeModal');
+hotelCards.forEach(card => {
+card.addEventListener('click', function() {
+modal.classList.remove('hidden');
+document.body.style.overflow = 'hidden';
+});
+});
+closeModal.addEventListener('click', function() {
+modal.classList.add('hidden');
+document.body.style.overflow = 'auto';
+});
+// 点击模态框外部关闭
+modal.addEventListener('click', function(e) {
+if (e.target === modal) {
+modal.classList.add('hidden');
+document.body.style.overflow = 'auto';
+}
+});
+});
+</script>
+</body>
+</html>

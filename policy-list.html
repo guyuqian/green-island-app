@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>政策列表</title>
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+    <script>tailwind.config={theme:{extend:{colors:{primary:'#4F46E5',secondary:'#8B5CF6'},borderRadius:{'none':'0px','sm':'4px',DEFAULT:'8px','md':'12px','lg':'16px','xl':'20px','2xl':'24px','3xl':'32px','full':'9999px','button':'8px'}}}}</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+    <style>
+        :where([class^="ri-"])::before { content: "\f3c2"; }
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background-color: #f8f9fa;
+        }
+        .policy-item:last-child {
+            border-bottom: none;
+        }
+        .nav-bar {
+            height: 56px;
+        }
+        .content-container {
+            padding-top: 56px;
+            min-height: calc(100vh - 56px);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- 顶部导航栏 -->
+    <div class="nav-bar fixed top-0 w-full bg-white border-b border-gray-100 shadow-sm z-10">
+        <div class="flex items-center justify-between px-4 h-full">
+            <a href=""  class="w-10 h-10 flex items-center justify-center cursor-pointer">
+                <i class="ri-arrow-left-s-line ri-lg text-gray-700"></i>
+            </a>
+            <h1 class="text-lg font-medium text-gray-800">政策列表</h1>
+            <div class="w-10 h-10"></div> <!-- 占位元素，保持标题居中 -->
+        </div>
+    </div>
+
+    <!-- 内容区域 -->
+    <div class="content-container px-4 py-5">
+        <!-- 政策列表卡片 -->
+        <div class="bg-white rounded-lg shadow-sm overflow-hidden">
+            <!-- 用户协议 -->
+            <a href="#" class="policy-item flex items-center justify-between p-4 border-b border-gray-100 cursor-pointer hover:bg-gray-50 active:bg-gray-100 transition-colors">
+                <div class="flex items-center">
+                    <div class="w-8 h-8 flex items-center justify-center text-primary">
+                        <i class="ri-file-text-line ri-lg"></i>
+                    </div>
+                    <span class="ml-3 text-gray-800">用户协议</span>
+                </div>
+                <div class="w-6 h-6 flex items-center justify-center text-gray-400">
+                    <i class="ri-arrow-right-s-line"></i>
+                </div>
+            </a>
+
+            <!-- 隐私政策 -->
+            <a href="#" class="policy-item flex items-center justify-between p-4 border-b border-gray-100 cursor-pointer hover:bg-gray-50 active:bg-gray-100 transition-colors">
+                <div class="flex items-center">
+                    <div class="w-8 h-8 flex items-center justify-center text-primary">
+                        <i class="ri-shield-check-line ri-lg"></i>
+                    </div>
+                    <span class="ml-3 text-gray-800">隐私政策</span>
+                </div>
+                <div class="w-6 h-6 flex items-center justify-center text-gray-400">
+                    <i class="ri-arrow-right-s-line"></i>
+                </div>
+            </a>
+
+            <!-- 服务条款 -->
+            <a href="#" class="policy-item flex items-center justify-between p-4 border-b border-gray-100 cursor-pointer hover:bg-gray-50 active:bg-gray-100 transition-colors">
+                <div class="flex items-center">
+                    <div class="w-8 h-8 flex items-center justify-center text-primary">
+                        <i class="ri-service-line ri-lg"></i>
+                    </div>
+                    <span class="ml-3 text-gray-800">服务条款</span>
+                </div>
+                <div class="w-6 h-6 flex items-center justify-center text-gray-400">
+                    <i class="ri-arrow-right-s-line"></i>
+                </div>
+            </a>
+
+            <!-- 儿童隐私保护政策 -->
+            <a href="#" class="policy-item flex items-center justify-between p-4 border-b border-gray-100 cursor-pointer hover:bg-gray-50 active:bg-gray-100 transition-colors">
+                <div class="flex items-center">
+                    <div class="w-8 h-8 flex items-center justify-center text-primary">
+                        <i class="ri-user-smile-line ri-lg"></i>
+                    </div>
+                    <span class="ml-3 text-gray-800">儿童隐私保护政策</span>
+                </div>
+                <div class="w-6 h-6 flex items-center justify-center text-gray-400">
+                    <i class="ri-arrow-right-s-line"></i>
+                </div>
+            </a>
+
+            <!-- 数据处理协议 -->
+            <a href="#" class="policy-item flex items-center justify-between p-4 border-b border-gray-100 cursor-pointer hover:bg-gray-50 active:bg-gray-100 transition-colors">
+                <div class="flex items-center">
+                    <div class="w-8 h-8 flex items-center justify-center text-primary">
+                        <i class="ri-database-2-line ri-lg"></i>
+                    </div>
+                    <span class="ml-3 text-gray-800">数据处理协议</span>
+                </div>
+                <div class="w-6 h-6 flex items-center justify-center text-gray-400">
+                    <i class="ri-arrow-right-s-line"></i>
+                </div>
+            </a>
+
+            <!-- 知识产权政策 -->
+            <a href="#" class="policy-item flex items-center justify-between p-4 border-b border-gray-100 cursor-pointer hover:bg-gray-50 active:bg-gray-100 transition-colors">
+                <div class="flex items-center">
+                    <div class="w-8 h-8 flex items-center justify-center text-primary">
+                        <i class="ri-copyright-line ri-lg"></i>
+                    </div>
+                    <span class="ml-3 text-gray-800">知识产权政策</span>
+                </div>
+                <div class="w-6 h-6 flex items-center justify-center text-gray-400">
+                    <i class="ri-arrow-right-s-line"></i>
+                </div>
+            </a>
+
+            <!-- 社区行为准则 -->
+            <a href="#" class="policy-item flex items-center justify-between p-4 border-b border-gray-100 cursor-pointer hover:bg-gray-50 active:bg-gray-100 transition-colors">
+                <div class="flex items-center">
+                    <div class="w-8 h-8 flex items-center justify-center text-primary">
+                        <i class="ri-group-line ri-lg"></i>
+                    </div>
+                    <span class="ml-3 text-gray-800">社区行为准则</span>
+                </div>
+                <div class="w-6 h-6 flex items-center justify-center text-gray-400">
+                    <i class="ri-arrow-right-s-line"></i>
+                </div>
+            </a>
+
+            <!-- 第三方服务协议 -->
+            <a href="#" class="policy-item flex items-center justify-between p-4 cursor-pointer hover:bg-gray-50 active:bg-gray-100 transition-colors">
+                <div class="flex items-center">
+                    <div class="w-8 h-8 flex items-center justify-center text-primary">
+                        <i class="ri-share-line ri-lg"></i>
+                    </div>
+                    <span class="ml-3 text-gray-800">第三方服务协议</span>
+                </div>
+                <div class="w-6 h-6 flex items-center justify-center text-gray-400">
+                    <i class="ri-arrow-right-s-line"></i>
+                </div>
+            </a>
+        </div>
+
+        <!-- 更新日期信息 -->
+        <div class="mt-4 text-center text-xs text-gray-500">
+            <p>最后更新日期: 2025 年 4 月 30 日</p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const policyItems = document.querySelectorAll('.policy-item');
+            
+            policyItems.forEach(item => {
+                item.addEventListener('click', function(e) {
+                    // 这里可以添加跳转到具体政策详情页的逻辑
+                    // 目前只是阻止默认行为，实际应用中应该跳转到对应的政策详情页
+                    e.preventDefault();
+                    const policyName = this.querySelector('span').textContent;
+                    console.log(`跳转到${policyName}详情页`);
+                });
+            });
+        });
+    </script>
+</body>
+</html>

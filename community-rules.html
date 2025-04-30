@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>居民日常行为标准 · 不解释</title>
+<script src="https://cdn.tailwindcss.com/3.4.16"></script>
+<script>tailwind.config={theme:{extend:{colors:{primary:'#4CAF50',secondary:'#8BC34A'},borderRadius:{'none':'0px','sm':'4px',DEFAULT:'8px','md':'12px','lg':'16px','xl':'20px','2xl':'24px','3xl':'32px','full':'9999px','button':'8px'}}}}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+<style>
+:where([class^="ri-"])::before { content: "\f3c2"; }
+@keyframes fadeIn {
+from { opacity: 0; }
+to { opacity: 1; }
+}
+.fade-in {
+animation: fadeIn 0.5s ease-in-out;
+}
+.rule-number {
+color: #9EC5AB;
+font-family: 'Space Mono', monospace;
+user-select: none;
+font-weight: bold;
+}
+.rule-text {
+font-family: 'Space Mono', monospace;
+user-select: none;
+font-weight: bold;
+}
+body {
+font-weight: bold;
+}
+.search-highlight {
+background-color: rgba(76, 175, 80, 0.2);
+padding: 2px 0;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+-webkit-appearance: none;
+margin: 0;
+}
+</style>
+</head>
+<body class="bg-white font-sans">
+<!-- 顶部导航栏 -->
+<header class="fixed top-0 left-0 w-full bg-white shadow-sm z-50">
+<div class="flex items-center justify-between px-4 py-3">
+<a href=""  class="w-8 h-8 flex items-center justify-center text-gray-700">
+<i class="ri-arrow-left-line text-xl"></i>
+</a>
+<h1 class="text-center text-base font-medium font-['Space_Mono'] tracking-wide">居民日常行为准则</h1>
+<div class="w-8 h-8 flex items-center justify-center text-gray-700">
+<i class="ri-more-line text-xl"></i>
+</div>
+</div>
+</header>
+<!-- 搜索栏 -->
+<div class="fixed top-12 left-0 w-full bg-white z-40 px-4 py-2 border-b border-gray-100">
+<div class="relative">
+<input type="text" id="searchInput" placeholder="搜索规则条款" class="w-full py-2 px-8 rounded-full border border-gray-200 text-sm focus:outline-none focus:ring-1 focus:ring-primary bg-gray-50">
+<span class="absolute left-2.5 top-1/2 transform -translate-y-1/2 w-4 h-4 flex items-center justify-center text-gray-400">
+<i class="ri-search-line"></i>
+</span>
+<button id="clearSearch" class="absolute right-2.5 top-1/2 transform -translate-y-1/2 w-4 h-4 flex items-center justify-center text-gray-400 hidden">
+<i class="ri-close-line"></i>
+</button>
+</div>
+</div>
+<!-- 主内容区域 -->
+<main class="pt-28 pb-24 px-5">
+<!-- 规则说明 -->
+<div class="mb-6 text-sm text-gray-500 border-l-2 border-primary pl-3 py-1">
+<p>以下规则由绿岛管理委员会制定，所有居民必须严格遵守。违反规则将面临相应处罚，严重者将被取消居住资格。</p>
+</div>
+<!-- 规则分类导航 -->
+<div class="mb-6 overflow-x-auto whitespace-nowrap py-2 -mx-5 px-5">
+<div class="inline-flex space-x-2">
+<button class="category-btn px-3 py-1.5 rounded-full bg-primary text-white text-xs font-medium" data-category="all">全部规则</button>
+<button class="category-btn px-3 py-1.5 rounded-full bg-gray-100 text-gray-700 text-xs font-medium" data-category="green">绿意规定</button>
+<button class="category-btn px-3 py-1.5 rounded-full bg-gray-100 text-gray-700 text-xs font-medium" data-category="forbidden">禁止事项</button>
+<button class="category-btn px-3 py-1.5 rounded-full bg-gray-100 text-gray-700 text-xs font-medium" data-category="daily">日常行为</button>
+<button class="category-btn px-3 py-1.5 rounded-full bg-gray-100 text-gray-700 text-xs font-medium" data-category="resource">资源使用</button>
+<button class="category-btn px-3 py-1.5 rounded-full bg-gray-100 text-gray-700 text-xs font-medium" data-category="social">社交规范</button>
+</div>
+</div>
+<!-- 规则列表 -->
+<div id="rulesList" class="space-y-8">
+<!-- 绿意规定 -->
+<div class="rule-section" data-category="green">
+<h3 class="text-sm uppercase tracking-wider text-gray-400 mb-4 font-['Space_Mono']">绿意规定</h3>
+<div class="space-y-5">
+<div class="rule-item py-3 border-b border-gray-100">
+<div class="flex">
+<span class="rule-number text-lg mr-3">01</span>
+<p class="rule-text text-gray-800">每天必须进行一次"绿意微笑"上传，缺失将视为态度涣散。</p>
+</div>
+<div class="ml-8 mt-2 text-xs text-gray-500">
+<p>违规处罚：减少社区积分50分，连续三次未上传将被标记为"绿色态度不佳"。</p>
+</div>
+</div>
+<div class="rule-item py-3 border-b border-gray-100">
+<div class="flex">
+<span class="rule-number text-lg mr-3">02</span>
+<p class="rule-text text-gray-800">所有对"绿色"不适的发言将被记录为逆生态倾向。</p>
+</div>
+<div class="ml-8 mt-2 text-xs text-gray-500">
+<p>违规处罚：强制参加"绿色思想矫正课程"，课程费用自理。</p>
+</div>
+</div>
+<div class="rule-item py-3 border-b border-gray-100">
+<div class="flex">
+<span class="rule-number text-lg mr-3">03</span>
+<p class="rule-text text-gray-800">如果你怀疑这些规则，说明你尚未适应自然。</p>
+</div>
+<div class="ml-8 mt-2 text-xs text-gray-500">
+<p>违规处罚：安排"自然适应性评估"，不合格者需接受为期一周的"绿色生活强化训练"。</p>
+</div>
+</div>
+</div>
+</div>
+<!-- 禁止事项 -->
+<div class="rule-section" data-category="forbidden">
+<h3 class="text-sm uppercase tracking-wider text-gray-400 mb-4 font-['Space_Mono']">禁止事项</h3>
+<div class="space-y-5">
+<div class="rule-item py-3 border-b border-gray-100">
+<div class="flex">
+<span class="rule-number text-lg mr-3">04</span>
+<p class="rule-text text-gray-800">禁止讨论岛外事务。</p>
+</div>
+<div class="ml-8 mt-2 text-xs text-gray-500">
+<p>违规处罚：第一次警告，第二次暂停社区活动参与权，第三次考虑居住资格。</p>
+</div>
+</div>
+<div class="rule-item py-3 border-b border-gray-100">
+<div class="flex">
+<span class="rule-number text-lg mr-3">05</span>
+<p class="rule-text text-gray-800">禁止看向中心塔楼超过10秒。</p>
+</div>
+<div class="ml-8 mt-2 text-xs text-gray-500">
+<p>违规处罚：强制参加"视线管理培训"，并佩戴"视线追踪器"一周。</p>
+</div>
+</div>
+<div class="rule-item py-3 border-b border-gray-100">
+<div class="flex">
+<span class="rule-number text-lg mr-3">06</span>
+<p class="rule-text text-gray-800">禁止质疑"禁止质疑"。</p>
+</div>
+<div class="ml-8 mt-2 text-xs text-gray-500">
+<p>违规处罚：此条款违规后果不予公开说明。</p>
+</div>
+</div>
+</div>
+</div>
+<!-- 日常行为 -->
+<div class="rule-section" data-category="daily">
+<h3 class="text-sm uppercase tracking-wider text-gray-400 mb-4 font-['Space_Mono']">日常行为</h3>
+<div class="space-y-5">
+<div class="rule-item py-3 border-b border-gray-100">
+<div class="flex">
+<span class="rule-number text-lg mr-3">07</span>
+<p class="rule-text text-gray-800">每人每天必须进行一次"绿色反思"，并在社区平台公开分享。</p>
+</div>
+<div class="ml-8 mt-2 text-xs text-gray-500">
+<p>违规处罚：未分享者将被标记为"缺乏绿色意识"，影响月度评估。</p>
+</div>
+</div>
+<div class="rule-item py-3 border-b border-gray-100">
+<div class="flex">
+<span class="rule-number text-lg mr-3">08</span>
+<p class="rule-text text-gray-800">居民须每日佩戴"绿色徽章"，徽章颜色由系统根据环保行为自动调整。</p>
+</div>
+<div class="ml-8 mt-2 text-xs text-gray-500">
+<p>违规处罚：未佩戴者将被限制使用社区公共设施。</p>
+</div>
+</div>
+<div class="rule-item py-3 border-b border-gray-100">
+<div class="flex">
+<span class="rule-number text-lg mr-3">09</span>
+<p class="rule-text text-gray-800">每户需在门口安装"绿色生活视频墙"循环播放本户环保事迹。</p>
+</div>
+<div class="ml-8 mt-2 text-xs text-gray-500">
+<p>违规处罚：未安装或内容不合规者将被扣除"绿色居住积分"。</p>
+</div>
+</div>
+</div>
+</div>
+<!-- 资源使用 -->
+<div class="rule-section" data-category="resource">
+<h3 class="text-sm uppercase tracking-wider text-gray-400 mb-4 font-['Space_Mono']">资源使用</h3>
+<div class="space-y-5">
+<div class="rule-item py-3 border-b border-gray-100">
+<div class="flex">
+<span class="rule-number text-lg mr-3">10</span>
+<p class="rule-text text-gray-800">垃圾必须分成9类以上，分得不够被贴"低碳素质不足"。</p>
+</div>
+<div class="ml-8 mt-2 text-xs text-gray-500">
+<p>违规处罚：垃圾分类不达标者需参加"精细垃圾分类强化课程"。</p>
+</div>
+</div>
+<div class="rule-item py-3 border-b border-gray-100">
+<div class="flex">
+<span class="rule-number text-lg mr-3">11</span>
+<p class="rule-text text-gray-800">不得抱怨天气热，因为冷气统一由"公共风能计划"分配。</p>
+</div>
+<div class="ml-8 mt-2 text-xs text-gray-500">
+<p>违规处罚：抱怨者将被减少风能分配配额。</p>
+</div>
+</div>
+<div class="rule-item py-3 border-b border-gray-100">
+<div class="flex">
+<span class="rule-number text-lg mr-3">12</span>
+<p class="rule-text text-gray-800">每人每天必须骑环保动能车满30分钟，否则家庭用电额度缩减20%。</p>
+</div>
+<div class="ml-8 mt-2 text-xs text-gray-500">
+<p>违规处罚：未完成动能发电任务者，将面临用电限制。</p>
+</div>
+</div>
+</div>
+</div>
+<!-- 社交规范 -->
+<div class="rule-section" data-category="social">
+<h3 class="text-sm uppercase tracking-wider text-gray-400 mb-4 font-['Space_Mono']">社交规范</h3>
+<div class="space-y-5">
+<div class="rule-item py-3 border-b border-gray-100">
+<div class="flex">
+<span class="rule-number text-lg mr-3">13</span>
+<p class="rule-text text-gray-800">儿童须每天背诵"可持续发展五字经"打卡上传。</p>
+</div>
+<div class="ml-8 mt-2 text-xs text-gray-500">
+<p>违规处罚：未完成背诵的儿童将被暂停参加"绿色少年"评选资格。</p>
+</div>
+</div>
+<div class="rule-item py-3 border-b border-gray-100">
+<div class="flex">
+<span class="rule-number text-lg mr-3">14</span>
+<p class="rule-text text-gray-800">社交场合必须使用"绿色用语"，禁止使用可能暗示资源浪费的词汇。</p>
+</div>
+<div class="ml-8 mt-2 text-xs text-gray-500">
+<p>违规处罚：使用不当词汇者需参加"绿色语言矫正课程"。</p>
+</div>
+</div>
+<div class="rule-item py-3 border-b border-gray-100">
+<div class="flex">
+<span class="rule-number text-lg mr-3">15</span>
+<p class="rule-text text-gray-800">每周必须参加至少一次"集体环保意识强化会"，无故缺席将被视为环保态度消极。</p>
+</div>
+<div class="ml-8 mt-2 text-xs text-gray-500">
+<p>违规处罚：缺席者需撰写3000字"我的环保反思"并公开朗读。</p>
+</div>
+</div>
+</div>
+</div>
+<!-- 无搜索结果显示 -->
+<div id="noResults" class="hidden py-10 text-center">
+<div class="w-16 h-16 mx-auto flex items-center justify-center bg-gray-100 rounded-full mb-4">
+<i class="ri-search-line text-2xl text-gray-400"></i>
+</div>
+<p class="text-gray-500">未找到相关规则</p>
+<p class="text-xs text-gray-400 mt-2">请尝试其他关键词</p>
+</div>
+</div>
+<!-- 违规后果说明 -->
+<div class="mt-6 bg-gray-50 p-3 rounded-lg">
+<h3 class="text-sm font-medium mb-2 text-gray-700">违规后果总则</h3>
+<div class="space-y-1.5 text-xs text-gray-600">
+<p class="flex items-start">
+<i class="ri-error-warning-line text-primary mr-1.5 mt-0.5"></i>
+<span>轻微违规：扣除社区积分，限制部分公共设施使用权限</span>
+</p>
+<p class="flex items-start">
+<i class="ri-error-warning-line text-primary mr-1.5 mt-0.5"></i>
+<span>中度违规：强制参加"绿色思想矫正"，公开道歉，临时停用部分居住功能</span>
+</p>
+<p class="flex items-start">
+<i class="ri-error-warning-line text-primary mr-1.5 mt-0.5"></i>
+<span>严重违规：评估居住资格，可能被要求离开绿岛社区</span>
+</p>
+<p class="flex items-start">
+<i class="ri-error-warning-line text-primary mr-1.5 mt-0.5"></i>
+<span>所有违规记录将在"绿色公示墙"展示，并影响个人信用评级</span>
+</p>
+</div>
+</div>
+<!-- 绿色公示墙 -->
+<div class="mt-8">
+<div class="flex items-center justify-between mb-4">
+<h3 class="text-base font-medium text-gray-700">绿色公示墙</h3>
+<span class="text-xs text-gray-400">最近更新：2025-04-30</span>
+</div>
+<!-- 违规记录列表 -->
+<div class="space-y-3">
+<!-- 违规记录项 -->
+<div class="bg-white border border-gray-100 rounded-lg p-3">
+<div class="flex items-start justify-between">
+<div class="flex items-center">
+<div class="w-9 h-9 rounded-full bg-red-50 flex items-center justify-center">
+<i class="ri-close-circle-line text-red-500"></i>
+</div>
+<div class="ml-3">
+<h4 class="text-sm font-medium text-gray-800">陈某某 - A2304室</h4>
+<p class="text-xs text-gray-500 mt-0.5">连续三天未完成"绿意微笑"上传</p>
+</div>
+</div>
+<span class="text-xs text-red-500 px-2 py-1 bg-red-50 rounded">严重违规</span>
+</div>
+<div class="mt-2 text-xs text-gray-600">
+<p class="mb-1">处罚决定：</p>
+<ul class="list-disc list-inside space-y-0.5 ml-2">
+<li>强制参加为期两周的"绿色思想矫正课程"</li>
+<li>社区积分扣除 150 分</li>
+<li>暂停使用公共设施权限 30 天</li>
+</ul>
+</div>
+</div>
+<div class="bg-white border border-gray-100 rounded-lg p-3">
+<div class="flex items-start justify-between">
+<div class="flex items-center">
+<div class="w-9 h-9 rounded-full bg-yellow-50 flex items-center justify-center">
+<i class="ri-error-warning-line text-yellow-500"></i>
+</div>
+<div class="ml-3">
+<h4 class="text-sm font-medium text-gray-800">邢某 - B1502室</h4>
+<p class="text-xs text-gray-500 mt-0.5">垃圾分类准确率低于85%</p>
+</div>
+</div>
+<span class="text-xs text-yellow-500 px-2 py-1 bg-yellow-50 rounded">中度违规</span>
+</div>
+<div class="mt-2 text-xs text-gray-600">
+<p class="mb-1">处罚决定：</p>
+<ul class="list-disc list-inside space-y-0.5 ml-2">
+<li>参加"精细垃圾分类强化课程"</li>
+<li>社区积分扣除 80 分</li>
+<li>佩戴"垃圾分类学习者"标识 7 天</li>
+</ul>
+</div>
+</div>
+<div class="bg-white border border-gray-100 rounded-lg p-3">
+<div class="flex items-start justify-between">
+<div class="flex items-center">
+<div class="w-9 h-9 rounded-full bg-orange-50 flex items-center justify-center">
+<i class="ri-alert-line text-orange-500"></i>
+</div>
+<div class="ml-3">
+<h4 class="text-sm font-medium text-gray-800">郭某某 - C1803室</h4>
+<p class="text-xs text-gray-500 mt-0.5">在社交场合使用"非绿色用语"</p>
+</div>
+</div>
+<span class="text-xs text-orange-500 px-2 py-1 bg-orange-50 rounded">轻微违规</span>
+</div>
+<div class="mt-2 text-xs text-gray-600">
+<p class="mb-1">处罚决定：</p>
+<ul class="list-disc list-inside space-y-0.5 ml-2">
+<li>参加"绿色语言规范课程"</li>
+<li>社区积分扣除 30 分</li>
+<li>撰写500字"绿色用语反思"</li>
+</ul>
+</div>
+</div>
+</div>
+<!-- 底部提示 -->
+<div class="mt-2 flex items-center justify-center">
+<p class="text-xs text-gray-400">违规记录保留期：365天</p>
+</div>
+</div>
+</main>
+<!-- 底部确认区域 -->
+<div class="fixed bottom-0 left-0 w-full bg-white border-t border-gray-200 p-4 z-40">
+<div class="flex items-center mb-3">
+<input type="checkbox" id="agreeCheckbox" class="w-4 h-4 opacity-0 absolute">
+<div class="w-5 h-5 border border-gray-300 rounded flex items-center justify-center mr-2 checkbox-custom">
+<i class="ri-check-line text-white hidden check-icon"></i>
+</div>
+<label for="agreeCheckbox" class="text-sm text-gray-700">我已阅读并同意遵守上述全部规则</label>
+</div>
+<button id="confirmButton" class="w-full py-3 bg-gray-300 text-white rounded-button font-medium transition-colors duration-300 cursor-not-allowed" disabled>提交申诉</button>
+</div>
+<!-- 底部导航栏 -->
+<footer class="fixed bottom-16 left-0 w-full bg-white border-t border-gray-200 z-50">
+<div class="grid grid-cols-3 h-14">
+<a href=""  class="flex flex-col items-center justify-center cursor-pointer text-gray-500">
+<div class="w-6 h-6 flex items-center justify-center">
+<i class="ri-home-5-line"></i>
+</div>
+<span class="text-xs mt-0.5">首页</span>
+</a>
+<a href="#" class="flex flex-col items-center justify-center cursor-pointer text-primary">
+<div class="w-6 h-6 flex items-center justify-center">
+<i class="ri-file-list-3-fill"></i>
+</div>
+<span class="text-xs mt-0.5">社区准则</span>
+</a>
+<a href=""  class="flex flex-col items-center justify-center cursor-pointer text-gray-500">
+<div class="w-6 h-6 flex items-center justify-center">
+<i class="ri-user-line"></i>
+</div>
+<span class="text-xs mt-0.5">我的</span>
+</a>
+</div>
+</footer>
+<!-- 提交成功弹窗 -->
+<div id="successModal" class="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50 hidden">
+<div class="bg-white rounded-lg w-4/5 p-5 fade-in">
+<div class="w-16 h-16 mx-auto flex items-center justify-center bg-primary/10 rounded-full mb-4">
+<i class="ri-check-line text-3xl text-primary"></i>
+</div>
+<h3 class="text-center text-lg font-medium mb-2">提交成功</h3>
+<p class="text-center text-sm text-gray-600 mb-4">您已成功确认遵守绿岛社区准则</p>
+<div class="flex justify-center">
+<button id="closeModal" class="px-6 py-2 bg-primary text-white rounded-button">确定</button>
+</div>
+</div>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+// 搜索功能
+const searchInput = document.getElementById('searchInput');
+const clearSearch = document.getElementById('clearSearch');
+const ruleItems = document.querySelectorAll('.rule-item');
+const noResults = document.getElementById('noResults');
+const ruleSections = document.querySelectorAll('.rule-section');
+searchInput.addEventListener('input', function() {
+const searchTerm = this.value.trim().toLowerCase();
+clearSearch.style.display = searchTerm ? 'flex' : 'none';
+let foundResults = false;
+ruleItems.forEach(item => {
+const ruleText = item.querySelector('.rule-text').textContent.toLowerCase();
+const matchesSearch = ruleText.includes(searchTerm);
+item.style.display = searchTerm && !matchesSearch ? 'none' : 'block';
+if (matchesSearch && searchTerm) {
+foundResults = true;
+// 高亮匹配文本
+const originalText = item.querySelector('.rule-text').textContent;
+const highlightedText = originalText.replace(
+new RegExp(searchTerm, 'gi'),
+match => `<span class="search-highlight">${match}</span>`
+);
+item.querySelector('.rule-text').innerHTML = highlightedText;
+} else if (searchTerm) {
+item.querySelector('.rule-text').innerHTML = item.querySelector('.rule-text').textContent;
+}
+});
+// 隐藏空的分类标题
+ruleSections.forEach(section => {
+const visibleItems = section.querySelectorAll('.rule-item[style="display: block"]').length;
+section.style.display = visibleItems > 0 || !searchTerm ? 'block' : 'none';
+});
+noResults.style.display = !foundResults && searchTerm ? 'block' : 'none';
+});
+clearSearch.addEventListener('click', function() {
+searchInput.value = '';
+searchInput.dispatchEvent(new Event('input'));
+this.style.display = 'none';
+});
+// 分类切换
+const categoryButtons = document.querySelectorAll('.category-btn');
+categoryButtons.forEach(button => {
+button.addEventListener('click', function() {
+const category = this.dataset.category;
+// 更新按钮样式
+categoryButtons.forEach(btn => {
+btn.classList.remove('bg-primary', 'text-white');
+btn.classList.add('bg-gray-100', 'text-gray-700');
+});
+this.classList.remove('bg-gray-100', 'text-gray-700');
+this.classList.add('bg-primary', 'text-white');
+// 显示/隐藏规则
+if (category === 'all') {
+ruleSections.forEach(section => {
+section.style.display = 'block';
+});
+} else {
+ruleSections.forEach(section => {
+section.style.display = section.dataset.category === category ? 'block' : 'none';
+});
+}
+// 重置搜索
+searchInput.value = '';
+clearSearch.style.display = 'none';
+noResults.style.display = 'none';
+// 重置高亮
+ruleItems.forEach(item => {
+item.style.display = 'block';
+item.querySelector('.rule-text').innerHTML = item.querySelector('.rule-text').textContent;
+});
+});
+});
+// 自定义复选框
+const checkbox = document.getElementById('agreeCheckbox');
+const checkboxCustom = document.querySelector('.checkbox-custom');
+const checkIcon = document.querySelector('.check-icon');
+const confirmButton = document.getElementById('confirmButton');
+checkbox.addEventListener('change', function() {
+if (this.checked) {
+checkboxCustom.classList.add('bg-primary', 'border-primary');
+checkboxCustom.classList.remove('border-gray-300');
+checkIcon.classList.remove('hidden');
+confirmButton.classList.remove('bg-gray-300', 'cursor-not-allowed');
+confirmButton.classList.add('bg-primary');
+confirmButton.disabled = false;
+} else {
+checkboxCustom.classList.remove('bg-primary', 'border-primary');
+checkboxCustom.classList.add('border-gray-300');
+checkIcon.classList.add('hidden');
+confirmButton.classList.add('bg-gray-300', 'cursor-not-allowed');
+confirmButton.classList.remove('bg-primary');
+confirmButton.disabled = true;
+}
+});
+// 确认提交
+const successModal = document.getElementById('successModal');
+const closeModal = document.getElementById('closeModal');
+confirmButton.addEventListener('click', function() {
+if (!this.disabled) {
+successModal.classList.remove('hidden');
+}
+});
+closeModal.addEventListener('click', function() {
+successModal.classList.add('hidden');
+});
+// 动态调整内容区域高度，避免被底部导航栏和确认区域遮挡
+const main = document.querySelector('main');
+const footer = document.querySelector('footer');
+const confirmArea = document.querySelector('.fixed.bottom-0');
+const footerHeight = footer.offsetHeight;
+const confirmAreaHeight = confirmArea.offsetHeight;
+main.style.paddingBottom = `${footerHeight + confirmAreaHeight + 16}px`;
+});
+</script>
+</body>
+</html>

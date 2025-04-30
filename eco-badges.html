@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>环保宪章 · 世界不需要你，它只要你是绿色的</title>
+<script src="https://cdn.tailwindcss.com/3.4.16"></script>
+<script>tailwind.config={theme:{extend:{colors:{primary:'#4CAF50',secondary:'#2C3E50'},borderRadius:{'none':'0px','sm':'4px',DEFAULT:'8px','md':'12px','lg':'16px','xl':'20px','2xl':'24px','3xl':'32px','full':'9999px','button':'8px'}}}}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Noto+Sans+SC:wght@900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+<style>
+:where([class^="ri-"])::before { content: "\f3c2"; }
+@keyframes textScroll {
+0% { transform: translateY(100%); opacity: 0; }
+5% { transform: translateY(100%); opacity: 1; }
+95% { transform: translateY(-100%); opacity: 1; }
+100% { transform: translateY(-100%); opacity: 0; }
+}
+@keyframes gradientFlow {
+0% { background-position: 0% 50%; }
+50% { background-position: 100% 50%; }
+100% { background-position: 0% 50%; }
+}
+.scrolling-text {
+animation: textScroll 35s linear infinite;
+}
+.gradient-bg {
+background: linear-gradient(135deg, #2C3E50, #1B4D3E);
+background-size: 200% 200%;
+animation: gradientFlow 30s ease infinite;
+}
+body {
+overflow: hidden;
+font-family: 'Courier New', monospace;
+}
+</style>
+</head>
+<body class="gradient-bg text-gray-200 h-screen flex flex-col">
+<!-- 顶部导航栏 -->
+<header class="fixed top-0 left-0 w-full z-50 p-4">
+<a href=""  class="text-gray-300 hover:text-white text-2xl cursor-pointer">
+<i class="ri-arrow-left-line"></i>
+</a>
+</header>
+<!-- 主内容区域 -->
+<main class="flex-1 flex flex-col items-center justify-center px-6 overflow-hidden">
+<!-- 标题部分 -->
+<div class="text-center mb-4 -mt-20">
+<h1 class="text-4xl font-black text-[#8FBC8F] mb-2" style="font-family: 'Noto Sans SC', sans-serif;">环保宪章</h1>
+<p class="text-base font-light text-[#A8C1B4]">我们团结努力，创建绿色天堂</p>
+</div>
+<!-- 滚动文本容器 -->
+<div class="h-[60vh] relative overflow-hidden w-full">
+<div class="scrolling-text absolute w-full px-4">
+<div class="text-[#A8C1B4] space-y-8 text-center leading-relaxed">
+<p class="text-base">我们不再需要呼吸，这会排放二氧化碳。</p>
+<p class="text-base">我们不再相信阳光，我们只需视觉绿度达标。</p>
+<p class="text-base">我们不再思考，只需听从绿色的指引。</p>
+<p class="text-base">我们不再选择行动，而是被引导至低碳路径。</p>
+<p class="text-base">我们不再相信彼此，我们只相信系统的评分。</p>
+<p class="text-base">我们不是居民，我们是岛的外壳。</p>
+<p class="text-base">我们活着，不是为了体验，而是为了不排放。</p>
+<p class="text-base">我们不再记忆过去，因为绿色不需要历史。</p>
+<p class="text-base">我们不再辨别真实，只需辨别是否合规。</p>
+<p class="text-base">我们不再拥有家庭，我们共享同一声音与过滤空气。</p>
+<p class="text-base">我们不再拥有名字，我们以绿值命名彼此。</p>
+<p class="text-base">我们不再害怕孤独，因为每一台摄像头都在陪伴我们。</p>
+<p class="text-base">我们不再思念自由，自由从未低碳。</p>
+<p class="text-base">我们不再走向未来，我们就在被允许的现在循环。</p>
+<p class="text-base">我们是数据的延伸，是算法的影子，是环境的投影。</p>
+<p class="text-base">我们被选择，被规训，被清洁。</p>
+<p class="text-base">我们是干净的、稳定的、绿色的——</p>
+<p class="text-base">我们是绿岛。</p>
+</div>
+</div>
+</div>
+<!-- 底部标识 -->
+<div class="fixed bottom-20 w-full text-center opacity-40">
+<div class="font-['Pacifico'] text-lg text-[#8FBC8F]">Green Island</div>
+<div class="text-[10px] mt-1 text-[#A8C1B4]">for green existence</div>
+</div>
+</main>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+// 确保文本滚动效果在不同设备上正常工作
+const textElement = document.querySelector('.scrolling-text');
+const containerHeight = document.querySelector('.scrolling-text').parentElement.offsetHeight;
+// 调整文本滚动速度
+textElement.style.animationDuration = `${containerHeight / 10}s`;
+});
+</script>
+</body>
+</html>

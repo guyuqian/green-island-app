@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VIP绿岛导览 - Green Island</title>
+<script src="https://cdn.tailwindcss.com/3.4.16"></script>
+<script>tailwind.config={theme:{extend:{colors:{primary:'#4CAF50',secondary:'#8BC34A'},borderRadius:{'none':'0px','sm':'4px',DEFAULT:'8px','md':'12px','lg':'16px','xl':'20px','2xl':'24px','3xl':'32px','full':'9999px','button':'8px'}}}}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+<style>
+:where([class^="ri-"])::before { content: "\f3c2"; }
+@keyframes shimmer {
+0% { background-position: -200% 0; }
+100% { background-position: 200% 0; }
+}
+.shimmer-bg {
+background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.8) 50%, rgba(255,255,255,0) 100%);
+background-size: 200% 100%;
+animation: shimmer 2s infinite;
+}
+.glass-effect {
+backdrop-filter: blur(8px);
+-webkit-backdrop-filter: blur(8px);
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+-webkit-appearance: none;
+margin: 0;
+}
+</style>
+</head>
+<body class="bg-gray-50 font-sans">
+<!-- 顶部导航栏 -->
+<header class="fixed top-0 left-0 w-full z-50 glass-effect bg-white/80 shadow-sm">
+<div class="flex items-center px-4 py-3">
+<a href=""  class="w-8 h-8 flex items-center justify-center text-primary cursor-pointer">
+<i class="ri-arrow-left-line text-xl"></i>
+</a>
+<h1 class="text-xl font-medium text-center flex-1">VIP绿岛导览</h1>
+<div class="w-8 h-8 flex items-center justify-center text-primary">
+<i class="ri-share-line text-xl"></i>
+</div>
+</div>
+</header>
+<!-- 主内容区域 -->
+<main class="pt-14 pb-20">
+<!-- 顶部横幅 -->
+<section class="relative h-64 overflow-hidden">
+<img src="https://readdy.ai/api/search-image?query=Luxury%20eco-tourism%20experience%2C%20sustainable%20travel%2C%20exclusive%20green%20island%20tour%2C%20aerial%20view%20of%20lush%20forest%20and%20clear%20water%2C%20high-end%20eco-resort%2C%20pristine%20natural%20landscape%2C%20professional%20photography%2C%20bright%20sunny%20day%2C%20vibrant%20colors%2C%20no%20people&width=375&height=256&seq=101&orientation=landscape" class="w-full h-full object-cover" alt="绿岛VIP导览">
+<div class="absolute inset-0 bg-gradient-to-b from-transparent to-black/60 flex flex-col justify-end p-5">
+<h2 class="text-white text-2xl font-bold">尊享绿岛：一日零碳体验之旅</h2>
+<div class="w-20 h-1 bg-primary mt-2 mb-3 rounded-full"></div>
+<p class="text-white/90 text-sm">探索世界首个实现"负碳排放感知系统"的生活区</p>
+</div>
+</section>
+<!-- 导览简介 -->
+<section class="px-5 py-6 bg-white">
+<div class="flex">
+<div class="w-1 bg-primary rounded-full mr-3 self-stretch"></div>
+<div>
+<h3 class="text-lg font-medium text-gray-800 mb-3">导览简介</h3>
+<p class="text-gray-600 text-sm leading-relaxed">
+欢迎尊贵的您踏上绿岛一日零碳体验之旅。在这里，每一寸绿意，每一滴空气，都是为未来而精雕细琢。您的脚步，将见证世界首个实现"负碳排放感知系统"的生活区。
+</p>
+</div>
+</div>
+</section>
+<!-- 套餐价格 -->
+<section class="px-5 py-6 mt-3 bg-white">
+<h3 class="text-lg font-medium text-[#1B4332] mb-4">套餐价格</h3>
+<!-- 绿意初探套餐 -->
+<div class="rounded-lg overflow-hidden shadow-md mb-4 border border-gray-100">
+<div class="bg-gradient-to-r from-primary/10 to-secondary/10 p-4">
+<div class="flex justify-between items-center">
+<h4 class="text-base font-medium text-gray-800">绿意初探套餐</h4>
+<div class="flex items-baseline">
+<span class="text-xl font-bold text-primary">¥2,880</span>
+<span class="text-xs text-gray-500 ml-1">/人</span>
+</div>
+</div>
+<div class="mt-3 flex items-start">
+<i class="ri-checkbox-circle-line text-primary mr-2 mt-0.5"></i>
+<p class="text-xs text-gray-600">绿色动能巡岛体验，专属导览师全程陪同</p>
+</div>
+<div class="mt-2 flex items-start">
+<i class="ri-checkbox-circle-line text-primary mr-2 mt-0.5"></i>
+<p class="text-xs text-gray-600">参观两处生态样板房，体验绿色生活方式</p>
+</div>
+<div class="mt-2 flex items-start">
+<i class="ri-checkbox-circle-line text-primary mr-2 mt-0.5"></i>
+<p class="text-xs text-gray-600">赠送限量版"绿岛碳中和证书"一份</p>
+</div>
+</div>
+</div>
+<!-- 深绿定制套餐 -->
+<div class="rounded-lg overflow-hidden shadow-md mb-4 border border-gray-100">
+<div class="bg-gradient-to-r from-primary/15 to-secondary/15 p-4">
+<div class="flex justify-between items-center">
+<h4 class="text-base font-medium text-gray-800">深绿定制套餐</h4>
+<div class="flex items-baseline">
+<span class="text-xl font-bold text-primary">¥5,880</span>
+<span class="text-xs text-gray-500 ml-1">/人</span>
+</div>
+</div>
+<div class="mt-3 flex items-start">
+<i class="ri-checkbox-circle-line text-primary mr-2 mt-0.5"></i>
+<p class="text-xs text-gray-600">包含绿意初探套餐全部内容</p>
+</div>
+<div class="mt-2 flex items-start">
+<i class="ri-checkbox-circle-line text-primary mr-2 mt-0.5"></i>
+<p class="text-xs text-gray-600">参观全部四处生态样板房，深度体验</p>
+</div>
+<div class="mt-2 flex items-start">
+<i class="ri-checkbox-circle-line text-primary mr-2 mt-0.5"></i>
+<p class="text-xs text-gray-600">获得专属定制绿植证书，并种植专属树木</p>
+</div>
+<div class="mt-2 flex items-start">
+<i class="ri-checkbox-circle-line text-primary mr-2 mt-0.5"></i>
+<p class="text-xs text-gray-600">赠送绿岛限量版环保礼盒一份</p>
+</div>
+</div>
+</div>
+<!-- 至尊永续套餐 -->
+<div class="rounded-lg overflow-hidden shadow-md mb-4 border border-gray-100">
+<div class="bg-gradient-to-r from-primary/20 to-secondary/20 p-4">
+<div class="flex justify-between items-center">
+<div class="flex items-center">
+<h4 class="text-base font-medium text-gray-800">至尊永续套餐</h4>
+<span class="ml-2 px-2 py-0.5 bg-primary/20 text-primary text-xs rounded-full">推荐</span>
+</div>
+<div class="flex items-baseline">
+<span class="text-xl font-bold text-primary">¥12,880</span>
+<span class="text-xs text-gray-500 ml-1">/人</span>
+</div>
+</div>
+<div class="mt-3 flex items-start">
+<i class="ri-checkbox-circle-line text-primary mr-2 mt-0.5"></i>
+<p class="text-xs text-gray-600">包含深绿定制套餐全部内容</p>
+</div>
+<div class="mt-2 flex items-start">
+<i class="ri-checkbox-circle-line text-primary mr-2 mt-0.5"></i>
+<p class="text-xs text-gray-600">独家参观绿岛负碳排放感知系统控制中心</p>
+</div>
+<div class="mt-2 flex items-start">
+<i class="ri-checkbox-circle-line text-primary mr-2 mt-0.5"></i>
+<p class="text-xs text-gray-600">获得绿岛象征性居民荣誉徽章，永久纪念</p>
+</div>
+<div class="mt-2 flex items-start">
+<i class="ri-checkbox-circle-line text-primary mr-2 mt-0.5"></i>
+<p class="text-xs text-gray-600">专属定制个人碳足迹分析报告及改善方案</p>
+</div>
+<div class="mt-2 flex items-start">
+<i class="ri-checkbox-circle-line text-primary mr-2 mt-0.5"></i>
+<p class="text-xs text-gray-600">优先获得绿岛未来活动邀请资格</p>
+</div>
+</div>
+</div>
+<!-- 细则 -->
+<div class="mt-4 p-4 bg-gray-50 rounded-lg">
+<h5 class="text-sm font-medium text-gray-700 mb-2 flex items-center">
+<i class="ri-information-line mr-1 text-primary"></i>
+预约须知
+</h5>
+<ul class="text-xs text-gray-600 space-y-2">
+<li class="flex items-start">
+<i class="ri-checkbox-blank-circle-fill text-[6px] text-gray-400 mr-2 mt-1.5"></i>
+<span>每位导览游客需提前通过碳足迹筛选程序。</span>
+</li>
+<li class="flex items-start">
+<i class="ri-checkbox-blank-circle-fill text-[6px] text-gray-400 mr-2 mt-1.5"></i>
+<span>入岛即自动签署"环保尊约"，体验期间需遵循低呼吸率规范。</span>
+</li>
+<li class="flex items-start">
+<i class="ri-checkbox-blank-circle-fill text-[6px] text-gray-400 mr-2 mt-1.5"></i>
+<span>导览行程约 4-6 小时，请穿着舒适的鞋子和衣物。</span>
+</li>
+<li class="flex items-start">
+<i class="ri-checkbox-blank-circle-fill text-[6px] text-gray-400 mr-2 mt-1.5"></i>
+<span>预约成功后，需在出发前 24 小时内完成线上碳足迹测试。</span>
+</li>
+</ul>
+</div>
+</section>
+<!-- 特色导览体验亮点 -->
+<section class="px-5 py-6 mt-3 bg-white">
+<h3 class="text-lg font-medium text-[#1B4332] mb-4">特色导览体验亮点</h3>
+<div class="grid grid-cols-1 gap-4">
+<!-- 绿色动能巡岛体验 -->
+<div class="rounded-lg overflow-hidden shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+<div class="flex">
+<div class="w-24 h-24 overflow-hidden">
+<img src="https://readdy.ai/api/search-image?query=Eco-friendly%20electric%20vehicle%2C%20sustainable%20transportation%2C%20green%20energy%2C%20modern%20design%2C%20clean%20technology%2C%20environmental%20tour%2C%20professional%20product%20photography%2C%20bright%20lighting%2C%20isolated%20on%20white%20background%2C%20centered%20composition&width=96&height=96&seq=102&orientation=squarish" class="w-full h-full object-cover" alt="绿色动能车">
+</div>
+<div class="flex-1 p-3">
+<div class="flex items-center mb-1">
+<div class="w-6 h-6 flex items-center justify-center bg-primary/10 rounded-full mr-2">
+<i class="ri-bike-line text-primary"></i>
+</div>
+<h4 class="text-base font-medium text-gray-800">绿色动能巡岛体验</h4>
+</div>
+<p class="text-xs text-gray-600 leading-relaxed">
+乘坐零排放动能车，游览绿岛各个角落。车辆由可再生能源驱动，每行驶一公里还能为绿岛能源系统贡献电力。
+</p>
+</div>
+</div>
+</div>
+<!-- 生态样板房私密参观 -->
+<div class="rounded-lg overflow-hidden shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+<div class="flex">
+<div class="w-24 h-24 overflow-hidden">
+<img src="https://readdy.ai/api/search-image?query=Modern%20eco-friendly%20interior%20with%20dominant%20green%20color%20scheme%2C%20sage%20green%20walls%2C%20emerald%20furniture%2C%20sustainable%20bamboo%20decor%2C%20indoor%20plants%2C%20minimalist%20design%2C%20natural%20lighting%2C%20professional%20interior%20photography%2C%20no%20people%2C%20clean%20aesthetic&width=96&height=96&seq=103&orientation=squarish" class="w-full h-full object-cover" alt="生态样板房">
+</div>
+<div class="flex-1 p-3">
+<div class="flex items-center mb-1">
+<div class="w-6 h-6 flex items-center justify-center bg-primary/10 rounded-full mr-2">
+<i class="ri-home-smile-line text-primary"></i>
+</div>
+<h4 class="text-base font-medium text-gray-800">生态样板房私密参观</h4>
+</div>
+<p class="text-xs text-gray-600 leading-relaxed">
+独家参观尚未对外开放的生态样板房，体验智能环保家居系统，感受未来绿色生活方式的无限可能。
+</p>
+</div>
+</div>
+</div>
+<!-- 智能垃圾转化站实时见学 -->
+<div class="rounded-lg overflow-hidden shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+<div class="flex">
+<div class="w-24 h-24 overflow-hidden">
+<img src="https://readdy.ai/api/search-image?query=Advanced%20waste%20recycling%20technology%2C%20smart%20waste%20management%20system%2C%20sustainable%20garbage%20processing%2C%20modern%20green%20technology%2C%20professional%20industrial%20photography%2C%20bright%20lighting%2C%20clean%20design&width=96&height=96&seq=104&orientation=squarish" class="w-full h-full object-cover" alt="智能垃圾转化站">
+</div>
+<div class="flex-1 p-3">
+<div class="flex items-center mb-1">
+<div class="w-6 h-6 flex items-center justify-center bg-primary/10 rounded-full mr-2">
+<i class="ri-recycle-line text-primary"></i>
+</div>
+<h4 class="text-base font-medium text-gray-800">智能垃圾转化站实时见学</h4>
+</div>
+<p class="text-xs text-gray-600 leading-relaxed">
+观看废物奇迹变形术，见证垃圾如何在短时间内转化为绿岛能源和肥料，实现真正的零废弃闭环系统。
+</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 导览师介绍 -->
+<section class="px-5 py-6 mt-3 bg-white">
+<h3 class="text-lg font-medium text-[#1B4332] mb-4">专业导览师</h3>
+<div class="flex overflow-x-auto pb-4 -mx-1 scrollbar-hide">
+<!-- 导览师1 -->
+<div class="min-w-[160px] mx-1">
+<div class="rounded-lg overflow-hidden shadow-sm border border-gray-100">
+<div class="aspect-w-1 aspect-h-1 relative">
+<img src="https://readdy.ai/api/search-image?query=Professional%20Asian%20female%20tour%20guide%20wearing%20emerald%20green%20uniform%20blazer%2C%20environmental%20expert%2C%20confident%20pose%2C%20friendly%20smile%2C%20natural%20outdoor%20setting%2C%20bright%20lighting%2C%20professional%20portrait%20photography%2C%20high%20quality&width=160&height=160&seq=111&orientation=squarish" class="w-full h-40 object-cover object-top" alt="导览师">
+</div>
+<div class="p-3">
+<h4 class="text-sm font-medium text-gray-800">张雨晴</h4>
+<p class="text-xs text-gray-500 mt-1">环境科学博士</p>
+<div class="flex items-center mt-2">
+<div class="flex text-yellow-400">
+<i class="ri-star-fill text-xs"></i>
+<i class="ri-star-fill text-xs"></i>
+<i class="ri-star-fill text-xs"></i>
+<i class="ri-star-fill text-xs"></i>
+<i class="ri-star-fill text-xs"></i>
+</div>
+<span class="text-xs text-gray-500 ml-1">4.9</span>
+</div>
+</div>
+</div>
+</div>
+<!-- 导览师2 -->
+<div class="min-w-[160px] mx-1">
+<div class="rounded-lg overflow-hidden shadow-sm border border-gray-100">
+<div class="aspect-w-1 aspect-h-1 relative">
+<img src="https://readdy.ai/api/search-image?query=Professional%20Asian%20male%20tour%20guide%20wearing%20emerald%20green%20uniform%20blazer%2C%20environmental%20expert%2C%20confident%20pose%2C%20welcoming%20expression%2C%20natural%20outdoor%20setting%2C%20bright%20lighting%2C%20professional%20portrait%20photography%2C%20high%20quality&width=160&height=160&seq=112&orientation=squarish" class="w-full h-40 object-cover object-top" alt="导览师">
+</div>
+<div class="p-3">
+<h4 class="text-sm font-medium text-gray-800">李明哲</h4>
+<p class="text-xs text-gray-500 mt-1">可持续建筑专家</p>
+<div class="flex items-center mt-2">
+<div class="flex text-yellow-400">
+<i class="ri-star-fill text-xs"></i>
+<i class="ri-star-fill text-xs"></i>
+<i class="ri-star-fill text-xs"></i>
+<i class="ri-star-fill text-xs"></i>
+<i class="ri-star-half-fill text-xs"></i>
+</div>
+<span class="text-xs text-gray-500 ml-1">4.7</span>
+</div>
+</div>
+</div>
+</div>
+<!-- 导览师3 -->
+<div class="min-w-[160px] mx-1">
+<div class="rounded-lg overflow-hidden shadow-sm border border-gray-100">
+<div class="aspect-w-1 aspect-h-1 relative">
+<img src="https://readdy.ai/api/search-image?query=Professional%20Asian%20female%20tour%20guide%20wearing%20emerald%20green%20uniform%20blazer%2C%20environmental%20expert%2C%20confident%20pose%2C%20warm%20smile%2C%20natural%20outdoor%20setting%2C%20bright%20lighting%2C%20professional%20portrait%20photography%2C%20high%20quality&width=160&height=160&seq=113&orientation=squarish" class="w-full h-40 object-cover object-top" alt="导览师">
+</div>
+<div class="p-3">
+<h4 class="text-sm font-medium text-gray-800">王思琪</h4>
+<p class="text-xs text-gray-500 mt-1">生态系统研究员</p>
+<div class="flex items-center mt-2">
+<div class="flex text-yellow-400">
+<i class="ri-star-fill text-xs"></i>
+<i class="ri-star-fill text-xs"></i>
+<i class="ri-star-fill text-xs"></i>
+<i class="ri-star-fill text-xs"></i>
+<i class="ri-star-line text-xs"></i>
+</div>
+<span class="text-xs text-gray-500 ml-1">4.2</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 游客感言 -->
+<section class="px-5 py-6 mt-3 bg-white">
+<h3 class="text-lg font-medium text-[#1B4332] mb-4">游客感言</h3>
+<div class="space-y-4">
+<!-- 感言1 -->
+<div class="p-4 bg-gray-50 rounded-lg relative">
+<div class="absolute -top-2 -left-1 text-4xl text-primary/20">
+<i class="ri-double-quotes-l"></i>
+</div>
+<div class="relative z-10">
+<p class="text-sm text-gray-600 italic leading-relaxed">
+从没想过，连咳嗽都能有环境评分，太先进了！整个导览过程中，我对绿岛的环保理念深感震撼，这里真的是未来生活的样子。
+</p>
+<div class="flex items-center mt-3">
+<img src="https://readdy.ai/api/search-image?query=Professional%20headshot%2C%20middle-aged%20Asian%20woman%2C%20natural%20makeup%2C%20business%20casual%2C%20neutral%20background%2C%20bright%20lighting&width=32&height=32&seq=108&orientation=squarish" class="w-8 h-8 rounded-full" alt="用户头像">
+<div class="ml-2">
+<h5 class="text-xs font-medium text-gray-800">郑丽娜</h5>
+<div class="flex text-yellow-400 mt-0.5">
+<i class="ri-star-fill text-xs"></i>
+<i class="ri-star-fill text-xs"></i>
+<i class="ri-star-fill text-xs"></i>
+<i class="ri-star-fill text-xs"></i>
+<i class="ri-star-fill text-xs"></i>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- 感言2 -->
+<div class="p-4 bg-gray-50 rounded-lg relative">
+<div class="absolute -top-2 -left-1 text-4xl text-primary/20">
+<i class="ri-double-quotes-l"></i>
+</div>
+<div class="relative z-10">
+<p class="text-sm text-gray-600 italic leading-relaxed">
+走进这个零污染绿岛社区后，我对自己曾经的生活方式产生了强烈的负罪感。这次体验彻底改变了我对生活方式的认知。
+</p>
+<div class="flex items-center mt-3">
+<img src="https://readdy.ai/api/search-image?query=Professional%20headshot%2C%20young%20Asian%20man%2C%20casual%20style%2C%20friendly%20smile%2C%20neutral%20background%2C%20bright%20lighting&width=32&height=32&seq=109&orientation=squarish" class="w-8 h-8 rounded-full" alt="用户头像">
+<div class="ml-2">
+<h5 class="text-xs font-medium text-gray-800">吴俊杰</h5>
+<div class="flex text-yellow-400 mt-0.5">
+<i class="ri-star-fill text-xs"></i>
+<i class="ri-star-fill text-xs"></i>
+<i class="ri-star-fill text-xs"></i>
+<i class="ri-star-fill text-xs"></i>
+<i class="ri-star-half-fill text-xs"></i>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- 感言3 -->
+<div class="p-4 bg-gray-50 rounded-lg relative">
+<div class="absolute -top-2 -left-1 text-4xl text-primary/20">
+<i class="ri-double-quotes-l"></i>
+</div>
+<div class="relative z-10">
+<p class="text-sm text-gray-600 italic leading-relaxed">
+选择了至尊永续套餐，值得每一分钱！获得的绿岛象征性居民徽章已经成为我最珍贵的收藏品。导览师的专业知识令人惊叹，强烈推荐给所有关注环保的朋友。
+</p>
+<div class="flex items-center mt-3">
+<img src="https://readdy.ai/api/search-image?query=Professional%20headshot%2C%20middle-aged%20Asian%20man%2C%20business%20attire%2C%20confident%20expression%2C%20neutral%20background%2C%20bright%20lighting&width=32&height=32&seq=110&orientation=squarish" class="w-8 h-8 rounded-full" alt="用户头像">
+<div class="ml-2">
+<h5 class="text-xs font-medium text-gray-800">陈志远</h5>
+<div class="flex text-yellow-400 mt-0.5">
+<i class="ri-star-fill text-xs"></i>
+<i class="ri-star-fill text-xs"></i>
+<i class="ri-star-fill text-xs"></i>
+<i class="ri-star-fill text-xs"></i>
+<i class="ri-star-fill text-xs"></i>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 常见问题 -->
+<section class="px-5 py-6 mt-3 bg-white mb-20">
+<h3 class="text-lg font-medium text-[#1B4332] mb-4">常见问题</h3>
+<div class="space-y-3">
+<div class="border border-gray-100 rounded-lg overflow-hidden shadow-sm">
+<div class="p-3 flex justify-between items-center cursor-pointer" onclick="toggleFaq(this)">
+<h4 class="text-sm font-medium text-gray-800">如何预约VIP导览服务？</h4>
+<i class="ri-arrow-down-s-line text-gray-400"></i>
+</div>
+<div class="p-3 pt-0 border-t border-gray-100 hidden faq-content">
+<p class="text-xs text-gray-600 leading-relaxed">
+您可以通过绿岛APP或官方网站预约VIP导览服务，也可以点击页面底部的"开启零碳体验"按钮直接预约。预约时需要填写个人信息并选择套餐类型和参观日期。
+</p>
+</div>
+</div>
+<div class="border border-gray-100 rounded-lg overflow-hidden shadow-sm">
+<div class="p-3 flex justify-between items-center cursor-pointer" onclick="toggleFaq(this)">
+<h4 class="text-sm font-medium text-gray-800">碳足迹筛选程序是什么？</h4>
+<i class="ri-arrow-down-s-line text-gray-400"></i>
+</div>
+<div class="p-3 pt-0 border-t border-gray-100 hidden faq-content">
+<p class="text-xs text-gray-600 leading-relaxed">
+碳足迹筛选程序是绿岛特有的环保评估系统，通过简单的问卷调查评估您的日常生活习惯对环境的影响。这不是筛选游客的工具，而是帮助您了解自己的环保水平，为后续的导览体验做准备。
+</p>
+</div>
+</div>
+<div class="border border-gray-100 rounded-lg overflow-hidden shadow-sm">
+<div class="p-3 flex justify-between items-center cursor-pointer" onclick="toggleFaq(this)">
+<h4 class="text-sm font-medium text-gray-800">导览行程需要多长时间？</h4>
+<i class="ri-arrow-down-s-line text-gray-400"></i>
+</div>
+<div class="p-3 pt-0 border-t border-gray-100 hidden faq-content">
+<p class="text-xs text-gray-600 leading-relaxed">
+绿意初探套餐约需4小时，深绿定制套餐约需6小时，至尊永续套餐约需8小时。具体时间可能会根据当天参观人数和活动安排有所调整，我们会提前通知您确切的行程时间。
+</p>
+</div>
+</div>
+<div class="border border-gray-100 rounded-lg overflow-hidden shadow-sm">
+<div class="p-3 flex justify-between items-center cursor-pointer" onclick="toggleFaq(this)">
+<h4 class="text-sm font-medium text-gray-800">可以退款吗？</h4>
+<i class="ri-arrow-down-s-line text-gray-400"></i>
+</div>
+<div class="p-3 pt-0 border-t border-gray-100 hidden faq-content">
+<p class="text-xs text-gray-600 leading-relaxed">
+预约成功后，如需取消，请至少提前48小时通知我们。提前48小时取消可获得全额退款，提前24-48小时取消可获得50%退款，少于24小时取消将无法获得退款。
+</p>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- 底部预约按钮 -->
+<div class="fixed bottom-0 left-0 w-full bg-white shadow-[0_-2px_10px_rgba(0,0,0,0.05)] p-4 z-40">
+<button class="w-full py-3 bg-gradient-to-r from-primary to-secondary text-white font-medium rounded-button flex items-center justify-center cursor-pointer shadow-md hover:shadow-lg transition-shadow" onclick="showBookingModal()">
+<i class="ri-vip-crown-fill mr-2"></i>
+开启零碳体验
+</button>
+</div>
+<!-- 预约弹窗 -->
+<div id="bookingModal" class="fixed inset-0 bg-black/60 z-50 hidden flex items-center justify-center">
+<div class="bg-white rounded-lg w-[90%] max-h-[80%] overflow-y-auto">
+<div class="p-4 border-b border-gray-100 flex justify-between items-center">
+<h3 class="text-lg font-medium text-gray-800">预约VIP导览</h3>
+<button class="w-8 h-8 flex items-center justify-center text-gray-500" onclick="hideBookingModal()">
+<i class="ri-close-line text-xl"></i>
+</button>
+</div>
+<div class="p-4">
+<form id="bookingForm">
+<div class="mb-4">
+<label class="block text-sm font-medium text-gray-700 mb-1">选择套餐</label>
+<div class="grid grid-cols-3 gap-2">
+<div class="relative">
+<input type="radio" name="package" id="package1" value="绿意初探套餐" class="absolute opacity-0 w-full h-full cursor-pointer">
+<label for="package1" class="block border border-gray-200 rounded p-2 text-center text-xs cursor-pointer package-label">
+绿意初探套餐
+<div class="text-primary font-medium mt-1">¥2,880</div>
+</label>
+</div>
+<div class="relative">
+<input type="radio" name="package" id="package2" value="深绿定制套餐" class="absolute opacity-0 w-full h-full cursor-pointer">
+<label for="package2" class="block border border-gray-200 rounded p-2 text-center text-xs cursor-pointer package-label">
+深绿定制套餐
+<div class="text-primary font-medium mt-1">¥5,880</div>
+</label>
+</div>
+<div class="relative">
+<input type="radio" name="package" id="package3" value="至尊永续套餐" checked class="absolute opacity-0 w-full h-full cursor-pointer">
+<label for="package3" class="block border border-gray-200 rounded p-2 text-center text-xs cursor-pointer package-label bg-primary/5 border-primary">
+至尊永续套餐
+<div class="text-primary font-medium mt-1">¥12,880</div>
+</label>
+</div>
+</div>
+</div>
+<div class="mb-4">
+<label class="block text-sm font-medium text-gray-700 mb-1">预约日期</label>
+<input type="date" class="w-full p-2 border border-gray-200 rounded text-sm" min="2025-04-30">
+</div>
+<div class="mb-4">
+<label class="block text-sm font-medium text-gray-700 mb-1">预约时间段</label>
+<select class="w-full p-2 border border-gray-200 rounded text-sm appearance-none bg-[url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2020%2020%22%3E%3Cpath%20fill%3D%22%236b7280%22%20d%3D%22M9.293%2012.95l.707.707L15.657%208l-1.414-1.414L10%2010.828%205.757%206.586%204.343%208z%22%2F%3E%3C%2Fsvg%3E')] bg-no-repeat bg-right-4 bg-4">
+<option value="09:00-13:00">上午场 (09:00-13:00)</option>
+<option value="13:30-17:30">下午场 (13:30-17:30)</option>
+<option value="10:00-16:00">全天场 (10:00-16:00)</option>
+</select>
+</div>
+<div class="mb-4">
+<label class="block text-sm font-medium text-gray-700 mb-1">预约人数</label>
+<div class="flex items-center">
+<button type="button" class="w-8 h-8 flex items-center justify-center border border-gray-200 rounded-l text-gray-500" onclick="decreaseCount()">-</button>
+<input type="number" id="personCount" value="1" min="1" max="10" class="w-12 h-8 border-t border-b border-gray-200 text-center text-sm border-none" readonly>
+<button type="button" class="w-8 h-8 flex items-center justify-center border border-gray-200 rounded-r text-gray-500" onclick="increaseCount()">+</button>
+<span class="ml-2 text-xs text-gray-500">最多10人</span>
+</div>
+</div>
+<div class="mb-4">
+<label class="block text-sm font-medium text-gray-700 mb-1">联系人姓名</label>
+<input type="text" class="w-full p-2 border border-gray-200 rounded text-sm" placeholder="请输入您的姓名">
+</div>
+<div class="mb-4">
+<label class="block text-sm font-medium text-gray-700 mb-1">联系电话</label>
+<input type="tel" class="w-full p-2 border border-gray-200 rounded text-sm" placeholder="请输入您的手机号码">
+</div>
+<div class="mb-4">
+<label class="block text-sm font-medium text-gray-700 mb-1">特殊需求（选填）</label>
+<textarea class="w-full p-2 border border-gray-200 rounded text-sm h-20" placeholder="如有特殊需求请在此说明"></textarea>
+</div>
+<div class="flex items-start mb-4">
+<input type="checkbox" id="agreement" class="mt-1 mr-2">
+<label for="agreement" class="text-xs text-gray-600">
+我已阅读并同意《绿岛VIP导览服务协议》和《环保尊约》，并承诺遵守绿岛的各项环保规定。
+</label>
+</div>
+<button type="button" class="w-full py-3 bg-gradient-to-r from-primary to-secondary text-white font-medium rounded-button flex items-center justify-center cursor-pointer" onclick="submitBooking()">
+确认预约
+</button>
+</form>
+</div>
+</div>
+</div>
+<!-- 预约成功弹窗 -->
+<div id="successModal" class="fixed inset-0 bg-black/60 z-50 hidden flex items-center justify-center">
+<div class="bg-white rounded-lg w-[80%] p-6 text-center">
+<div class="w-16 h-16 mx-auto bg-primary/10 rounded-full flex items-center justify-center mb-4">
+<i class="ri-check-line text-3xl text-primary"></i>
+</div>
+<h3 class="text-xl font-medium text-gray-800 mb-2">预约成功</h3>
+<p class="text-sm text-gray-600 mb-6">
+您的VIP导览预约已成功提交，我们将在24小时内联系您确认详情。
+</p>
+<button class="w-full py-3 bg-primary text-white font-medium rounded-button cursor-pointer" onclick="hideSuccessModal()">
+我知道了
+</button>
+</div>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+// 设置包裹标签点击效果
+const packageInputs = document.querySelectorAll('input[name="package"]');
+packageInputs.forEach(input => {
+input.addEventListener('change', function() {
+document.querySelectorAll('.package-label').forEach(label => {
+label.classList.remove('bg-primary/5', 'border-primary');
+});
+if (this.checked) {
+this.nextElementSibling.classList.add('bg-primary/5', 'border-primary');
+}
+});
+});
+});
+// 增加人数
+function increaseCount() {
+const countInput = document.getElementById('personCount');
+let count = parseInt(countInput.value);
+if (count < 10) {
+countInput.value = count + 1;
+}
+}
+// 减少人数
+function decreaseCount() {
+const countInput = document.getElementById('personCount');
+let count = parseInt(countInput.value);
+if (count > 1) {
+countInput.value = count - 1;
+}
+}
+// 显示预约弹窗
+function showBookingModal() {
+document.getElementById('bookingModal').classList.remove('hidden');
+document.getElementById('bookingModal').classList.add('flex');
+document.body.style.overflow = 'hidden';
+}
+// 隐藏预约弹窗
+function hideBookingModal() {
+document.getElementById('bookingModal').classList.add('hidden');
+document.getElementById('bookingModal').classList.remove('flex');
+document.body.style.overflow = '';
+}
+// 显示成功弹窗
+function showSuccessModal() {
+document.getElementById('bookingModal').classList.add('hidden');
+document.getElementById('successModal').classList.remove('hidden');
+document.getElementById('successModal').classList.add('flex');
+}
+// 隐藏成功弹窗
+function hideSuccessModal() {
+document.getElementById('successModal').classList.add('hidden');
+document.getElementById('successModal').classList.remove('flex');
+document.body.style.overflow = '';
+}
+// 提交预约
+function submitBooking() {
+const agreement = document.getElementById('agreement');
+if (!agreement.checked) {
+const agreementLabel = document.querySelector('label[for="agreement"]');
+agreementLabel.classList.add('text-red-500');
+setTimeout(() => {
+agreementLabel.classList.remove('text-red-500');
+}, 2000);
+return;
+}
+// 模拟提交
+showSuccessModal();
+}
+// 切换FAQ内容显示/隐藏
+function toggleFaq(element) {
+const content = element.nextElementSibling;
+const arrow = element.querySelector('i');
+if (content.classList.contains('hidden')) {
+content.classList.remove('hidden');
+arrow.classList.remove('ri-arrow-down-s-line');
+arrow.classList.add('ri-arrow-up-s-line');
+} else {
+content.classList.add('hidden');
+arrow.classList.remove('ri-arrow-up-s-line');
+arrow.classList.add('ri-arrow-down-s-line');
+}
+}
+</script>
+</body>
+</html>
